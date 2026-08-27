@@ -14,7 +14,7 @@ import {
   Coins
 } from 'lucide-react';
 
-export default function Header({ activeTab, setActiveTab, onOpenAddModal, onLogout }) {
+export default function Header({ activeTab, setActiveTab, onOpenAddModal, onOpenRedeemModal, onLogout }) {
   const { 
     users, 
     currentUser, 
@@ -340,6 +340,19 @@ export default function Header({ activeTab, setActiveTab, onOpenAddModal, onLogo
                       </button>
                     </div>
                   ))}
+                </div>
+
+                <div style={{ marginTop: '12px', paddingTop: '10px', borderTop: '2px dashed #000' }}>
+                  <button
+                    onClick={() => {
+                      setShowTokenDropdown(false);
+                      if (onOpenRedeemModal) onOpenRedeemModal();
+                    }}
+                    className="btn btn-sm btn-primary"
+                    style={{ width: '100%', fontSize: '0.75rem', padding: '6px' }}
+                  >
+                    Open Rewards Store & Perks →
+                  </button>
                 </div>
               </div>
             )}

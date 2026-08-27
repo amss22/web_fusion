@@ -11,6 +11,7 @@ import CommunityRequests from './components/CommunityRequests';
 import AdminPanel from './components/AdminPanel';
 import AddResourceModal from './components/AddResourceModal';
 import RatingModal from './components/RatingModal';
+import RedeemModal from './components/RedeemModal';
 import { 
   Search, 
   PlusCircle, 
@@ -43,6 +44,7 @@ function CampusApp({ onLogout }) {
 
   const [selectedItem, setSelectedItem] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showRedeemModal, setShowRedeemModal] = useState(false);
   const [ratingExchange, setRatingExchange] = useState(null);
 
   const categories = [
@@ -84,6 +86,7 @@ function CampusApp({ onLogout }) {
         activeTab={activeTab} 
         setActiveTab={setActiveTab} 
         onOpenAddModal={() => setShowAddModal(true)} 
+        onOpenRedeemModal={() => setShowRedeemModal(true)}
         onLogout={onLogout}
       />
 
@@ -333,6 +336,10 @@ function CampusApp({ onLogout }) {
             setRatingExchange(null);
           }}
         />
+      )}
+
+      {showRedeemModal && (
+        <RedeemModal onClose={() => setShowRedeemModal(false)} />
       )}
 
       {/* Toast Alerts */}

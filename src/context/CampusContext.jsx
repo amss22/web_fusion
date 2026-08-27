@@ -179,12 +179,19 @@ export function CampusProvider({ children }) {
   };
 
   // Create Exchange Request
-  const createExchangeRequest = async ({ item, durationType, durationValue, pickupLocation, purpose }) => {
+  const createExchangeRequest = async ({ item, durationType, durationValue, pickupLocation, purpose, tokensRedeemed = 0, tokenDiscount = 0 }) => {
     const rate = durationType === 'Hourly' ? item.hourlyRate : item.dailyRate;
     const borrowingCharge = rate * durationValue;
-    const platformFee = Math.round(borrowingCharge * (platformConfig.platformFeePercent / 100));
+    const basePlatformFee = Math.round(borrowingCharge * (platformConfig.platformFeePercent / 100));
+    const platformFee = Math.max(0, basePlatformFee - tokenDiscount);
     const securityDeposit = item.deposit;
     const totalEscrowAmount = borrowingCharge + platformFee + securityDeposit;
+
+    if (tokensRedeemed > 0) {
+      setUsers(prev => prev.map(u => 
+        u.id === currentUser.id ? { ...u, tokenBalance: Math.max(0, (u.tokenBalance || 0) - tokensRedeemed) } : u
+      ));
+    }
 
     const lender = users.find(u => u.id === item.ownerId) || { name: "Campus Peer", avatar: item.image };
 
@@ -208,6 +215,8 @@ export function CampusProvider({ children }) {
       borrowingCharge,
       platformFeeRate: platformConfig.platformFeePercent / 100,
       platformFee,
+      tokensRedeemed,
+      tokenDiscount,
       securityDeposit,
       totalEscrowAmount,
       

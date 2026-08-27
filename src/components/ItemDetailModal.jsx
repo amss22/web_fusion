@@ -12,7 +12,8 @@ import {
   Info,
   Calendar,
   Sparkles,
-  ArrowRight
+  ArrowRight,
+  Coins
 } from 'lucide-react';
 
 export default function ItemDetailModal({ item, onClose, onConfirmRequest }) {
@@ -24,14 +25,18 @@ export default function ItemDetailModal({ item, onClose, onConfirmRequest }) {
   const [pickupLocation, setPickupLocation] = useState(item.location);
   const [purpose, setPurpose] = useState('');
   const [agreeToRules, setAgreeToRules] = useState(false);
+  const [selectedCoupon, setSelectedCoupon] = useState(null);
 
   // Escrow Calculations
   const rate = durationType === 'Hourly' ? item.hourlyRate : item.dailyRate;
   const borrowingCharge = rate * durationValue;
-  const platformFee = Math.max(
+  const basePlatformFee = Math.max(
     platformConfig.minPlatformFee || 10,
     Math.round(borrowingCharge * ((platformConfig.platformFeePercent || 5) / 100))
   );
+
+  const tokenDiscount = selectedCoupon ? selectedCoupon.discountAmount : 0;
+  const platformFee = Math.max(0, basePlatformFee - tokenDiscount);
   const securityDeposit = item.deposit;
   const totalEscrow = borrowingCharge + platformFee + securityDeposit;
 
@@ -44,7 +49,9 @@ export default function ItemDetailModal({ item, onClose, onConfirmRequest }) {
       durationType,
       durationValue,
       pickupLocation,
-      purpose
+      purpose,
+      tokensRedeemed: selectedCoupon ? selectedCoupon.tokenCost : 0,
+      tokenDiscount
     });
   };
 
@@ -195,6 +202,82 @@ export default function ItemDetailModal({ item, onClose, onConfirmRequest }) {
                   </div>
                 </div>
 
+                {/* Redeem Tokens for Discount Section */}
+                <div style={{
+                  background: selectedCoupon ? '#F0FFF4' : 'var(--bg-primary)',
+                  border: selectedCoupon ? '2.5px solid #2ECC71' : '2px solid #000',
+                  borderRadius: '12px',
+                  padding: '14px',
+                  marginBottom: '16px',
+                  boxShadow: '2.5px 2.5px 0px #000'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.85rem', fontWeight: 800, color: '#000' }}>
+                      <Coins size={16} color="#000" />
+                      Redeem Reward Tokens:
+                    </div>
+                    <span style={{
+                      background: 'var(--pop-yellow)',
+                      color: '#000',
+                      fontSize: '0.72rem',
+                      fontWeight: 900,
+                      padding: '2px 6px',
+                      borderRadius: '4px',
+                      border: '1.5px solid #000'
+                    }}>
+                      Balance: {currentUser.tokenBalance || 0}
+                    </span>
+                  </div>
+
+                  {(currentUser.tokenBalance || 0) < 50 ? (
+                    <div style={{ fontSize: '0.74rem', color: '#666', fontWeight: 600 }}>
+                      Earn 15 tokens per completed deal. Need 50 tokens for discount.
+                    </div>
+                  ) : (
+                    <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                      <button
+                        type="button"
+                        onClick={() => setSelectedCoupon(null)}
+                        style={{
+                          background: selectedCoupon === null ? '#000' : '#FFF',
+                          color: selectedCoupon === null ? '#FFF' : '#000',
+                          border: '1.5px solid #000',
+                          borderRadius: '6px',
+                          padding: '4px 8px',
+                          fontSize: '0.72rem',
+                          fontWeight: 800,
+                          cursor: 'pointer'
+                        }}
+                      >
+                        No Discount
+                      </button>
+                      {(platformConfig.discountCoupons || []).filter(c => (currentUser.tokenBalance || 0) >= c.tokenCost).map(c => {
+                        const isSelected = selectedCoupon?.id === c.id;
+                        return (
+                          <button
+                            key={c.id}
+                            type="button"
+                            onClick={() => setSelectedCoupon(isSelected ? null : c)}
+                            style={{
+                              background: isSelected ? 'var(--pop-mint)' : '#FFF',
+                              color: '#000',
+                              border: '1.5px solid #000',
+                              borderRadius: '6px',
+                              padding: '4px 8px',
+                              fontSize: '0.72rem',
+                              fontWeight: 800,
+                              cursor: 'pointer',
+                              boxShadow: isSelected ? '1.5px 1.5px 0px #000' : 'none'
+                            }}
+                          >
+                            {c.label} ({c.tokenCost} pts)
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+
                 {/* Escrow Breakdown Box */}
                 <div style={{
                   background: '#fff',
@@ -216,8 +299,14 @@ export default function ItemDetailModal({ item, onClose, onConfirmRequest }) {
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                       <span>Platform Service Fee ({platformConfig.platformFeePercent}%):</span>
-                      <strong style={{ color: '#222', fontFamily: 'var(--font-mono)' }}>₹{platformFee}</strong>
+                      <strong style={{ color: '#222', fontFamily: 'var(--font-mono)' }}>₹{basePlatformFee}</strong>
                     </div>
+                    {tokenDiscount > 0 && (
+                      <div style={{ display: 'flex', justifyContent: 'space-between', color: '#2ECC71' }}>
+                        <span>🪙 Token Discount Applied ({selectedCoupon?.tokenCost} tokens):</span>
+                        <strong style={{ fontFamily: 'var(--font-mono)' }}>-₹{tokenDiscount}</strong>
+                      </div>
+                    )}
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                       <span>Refundable Security Deposit:</span>
                       <strong style={{ color: '#2ECC71', fontFamily: 'var(--font-mono)' }}>₹{securityDeposit}</strong>
