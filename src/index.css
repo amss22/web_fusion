@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800;12..96,900&family=Space+Grotesk:wght@500;600;700;800&family=Syne:wght@700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800;900&display=swap');
 
 :root {
   /* === AUTHENTIC NEO-BRUTALISM UI PALETTE === */
@@ -25,9 +25,9 @@
   --text-secondary: #222222;
   --text-muted: #666666;
   
-  --font-heading: 'Syne', 'Bricolage Grotesque', sans-serif;
-  --font-body: 'Space Grotesk', sans-serif;
-  --font-mono: 'Space Grotesk', monospace;
+  --font-heading: 'Lexend', sans-serif;
+  --font-body: 'Lexend', sans-serif;
+  --font-mono: 'Lexend', monospace;
   
   --radius-sm: 6px;
   --radius-md: 10px;
@@ -341,6 +341,79 @@ h1, h2, h3, h4, h5, h6 {
 @keyframes popIn {
   from { opacity: 0; transform: scale(0.92); }
   to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes urgentPulse {
+  0%, 100% { box-shadow: 4px 4px 0px #000, 0 0 0px rgba(255, 50, 50, 0); }
+  50% { box-shadow: 4px 4px 0px #000, 0 0 18px rgba(255, 50, 50, 0.5); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-100%); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes urgentBadgePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+/* === URGENT REQUEST CARDS === */
+.urgent-card {
+  border: 3px solid #FF3333 !important;
+  animation: urgentPulse 2s ease-in-out infinite;
+  position: relative;
+}
+
+.urgent-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #FF3333, #FF8811, #FF3333);
+  background-size: 200% 100%;
+  animation: urgentStripe 2s linear infinite;
+  border-radius: 9px 9px 0 0;
+}
+
+@keyframes urgentStripe {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 200% 0%; }
+}
+
+/* === URGENT ALERT BANNER === */
+.urgent-banner {
+  background: linear-gradient(135deg, #FF3333, #FF6644);
+  border: 3px solid #000;
+  border-radius: 12px;
+  padding: 14px 20px;
+  box-shadow: 4px 4px 0px #000;
+  animation: slideDown 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), urgentPulse 2.5s ease-in-out infinite;
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.urgent-banner-dismiss {
+  background: rgba(0,0,0,0.25);
+  border: 2px solid rgba(255,255,255,0.4);
+  color: #FFF;
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.12s ease;
+  white-space: nowrap;
+}
+
+.urgent-banner-dismiss:hover {
+  background: rgba(0,0,0,0.45);
+  border-color: #FFF;
 }
 
 /* === UTILITY LAYOUTS === */

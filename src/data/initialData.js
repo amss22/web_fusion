@@ -16,6 +16,7 @@ export const INITIAL_USERS = [
     disputes: 0,
     moneySaved: "₹14,200",
     walletBalance: 2500,
+    tokenBalance: 120,
     room: "Hostel 3, Room 204",
     phone: "+91 98765 43210"
   },
@@ -36,6 +37,7 @@ export const INITIAL_USERS = [
     disputes: 0,
     moneySaved: "₹38,900",
     walletBalance: 6800,
+    tokenBalance: 350,
     room: "Hostel 1, Room 112",
     badge: "Campus Star Lender",
     phone: "+91 98111 22334"
@@ -57,6 +59,7 @@ export const INITIAL_USERS = [
     disputes: 1,
     moneySaved: "₹6,500",
     walletBalance: 1200,
+    tokenBalance: 45,
     room: "Day Scholar (Andheri West)",
     phone: "+91 97654 32198"
   },
@@ -77,6 +80,7 @@ export const INITIAL_USERS = [
     disputes: 0,
     moneySaved: "₹3,48,500",
     walletBalance: 50000,
+    tokenBalance: 0,
     room: "Admin Block, Room 102",
     badge: "Official Moderator"
   }
@@ -500,6 +504,22 @@ export const INITIAL_COMMUNITY_REQUESTS = [
     description: "Need graphing calculator with matrix and integral plotting capability for 2 days study camp.",
     responses: 1,
     fulfilled: false
+  },
+  {
+    id: "req-urgent-1",
+    title: "DSLR Camera + Tripod for Event Shoot in 2 Hours",
+    category: "Cameras & Audio",
+    requesterId: "u2",
+    requesterName: "Priya Nair",
+    requesterAvatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80",
+    department: "CS Engg, Final Yr",
+    neededDate: "Today ASAP",
+    budget: "₹500/day",
+    description: "Cultural committee event starting at 5 PM. Original photographer cancelled. Need a DSLR with at least 24MP and a sturdy tripod immediately.",
+    responses: 0,
+    fulfilled: false,
+    isUrgent: true,
+    urgentFeePaid: 50
   }
 ];
 
@@ -510,5 +530,14 @@ export const INITIAL_PLATFORM_CONFIG = {
   maxLateFeePerDay: 200,
   disputeGracePeriodHours: 24,
   allowPeerChat: true,
-  autoApproveVerifiedListings: false
+  autoApproveVerifiedListings: false,
+  urgentRequestFee: 50,
+  tokensPerCompletedExchange: 15,
+  tokenRedemptionRate: 10,
+  discountCoupons: [
+    { id: 'coupon-50', tokenCost: 50, discountAmount: 5, label: '₹5 Off' },
+    { id: 'coupon-100', tokenCost: 100, discountAmount: 10, label: '₹10 Off' },
+    { id: 'coupon-200', tokenCost: 200, discountAmount: 25, label: '₹25 Off (Bonus)' },
+    { id: 'coupon-500', tokenCost: 500, discountAmount: 75, label: '₹75 Off (Premium)' }
+  ]
 };

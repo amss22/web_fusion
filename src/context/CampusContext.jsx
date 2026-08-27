@@ -32,6 +32,20 @@ export function CampusProvider({ children }) {
   const [communityRequests, setCommunityRequests] = useState([]);
   const [platformConfig, setPlatformConfig] = useState(INITIAL_PLATFORM_CONFIG);
   const [toastMessage, setToastMessage] = useState(null);
+  const [urgentAlerts, setUrgentAlerts] = useState(() => {
+    // Seed from any initial urgent community requests
+    const initialUrgent = INITIAL_COMMUNITY_REQUESTS.filter(r => r.isUrgent);
+    return initialUrgent.map(r => ({
+      id: `alert-${r.id}`,
+      requestId: r.id,
+      title: r.title,
+      requesterName: r.requesterName,
+      requesterAvatar: r.requesterAvatar,
+      neededDate: r.neededDate,
+      category: r.category,
+      createdAt: Date.now()
+    }));
+  });
 
   // Sync with SQLite backend database
   useEffect(() => {
@@ -282,17 +296,20 @@ export function CampusProvider({ children }) {
       }
 
       if (nextStage === "Rated") {
+        const tokensToAward = platformConfig.tokensPerCompletedExchange || 15;
         setUsers(uList => uList.map(u => {
           if (u.id === ex.borrowerId || u.id === ex.lenderId) {
             return {
               ...u,
               successfulExchanges: u.successfulExchanges + 1,
-              trustScore: Math.min(100, u.trustScore + 1)
+              trustScore: Math.min(100, u.trustScore + 1),
+              tokenBalance: (u.tokenBalance || 0) + tokensToAward
             };
           }
           return u;
         }));
         setItems(iList => iList.map(i => i.id === ex.itemId ? { ...i, status: "Available", usageCount: i.usageCount + 1 } : i));
+        showToast(`+${tokensToAward} reward tokens earned by both parties!`, 'success');
       }
 
       return updated;
@@ -399,9 +416,112 @@ export function CampusProvider({ children }) {
     return fallback;
   };
 
+  // Add Urgent Request (premium fee)
+  const addUrgentRequest = async (reqData) => {
+    const fee = platformConfig.urgentRequestFee || 50;
+
+    // Deduct fee from wallet
+    if (currentUser.walletBalance < fee) {
+      showToast(`Insufficient wallet balance. You need \u20b9${fee} for an urgent broadcast.`, 'warning');
+      return null;
+    }
+
+    setUsers(prev => prev.map(u =>
+      u.id === currentUser.id ? { ...u, walletBalance: u.walletBalance - fee } : u
+    ));
+
+    const newReq = {
+      title: reqData.title,
+      category: reqData.category,
+      requesterId: currentUser.id,
+      requesterName: currentUser.name,
+      requesterAvatar: currentUser.avatar,
+      department: `${currentUser.department}, ${currentUser.year}`,
+      neededDate: reqData.neededDate,
+      budget: reqData.budget,
+      description: reqData.description,
+      isUrgent: true,
+      urgentFeePaid: fee
+    };
+
+    let createdReq;
+    try {
+      const res = await fetch(`${API_BASE}/community-requests`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newReq)
+      });
+      if (res.ok) {
+        createdReq = await res.json();
+      }
+    } catch (e) {
+      console.error(e);
+    }
+
+    if (!createdReq) {
+      createdReq = { id: `req-urgent-${Date.now()}`, ...newReq, responses: 0, fulfilled: false };
+    }
+
+    setCommunityRequests(prev => [createdReq, ...prev]);
+
+    // Create broadcast alert for all users
+    const alert = {
+      id: `alert-${createdReq.id}`,
+      requestId: createdReq.id,
+      title: createdReq.title,
+      requesterName: currentUser.name,
+      requesterAvatar: currentUser.avatar,
+      neededDate: reqData.neededDate,
+      category: reqData.category,
+      createdAt: Date.now()
+    };
+    setUrgentAlerts(prev => [alert, ...prev]);
+
+    // Auto-dismiss after 15 seconds
+    setTimeout(() => {
+      setUrgentAlerts(prev => prev.filter(a => a.id !== alert.id));
+    }, 15000);
+
+    showToast(`URGENT broadcast sent! \u20b9${fee} platform fee charged.`, 'warning');
+    return createdReq;
+  };
+
+  // Dismiss a specific urgent alert
+  const dismissUrgentAlert = (alertId) => {
+    setUrgentAlerts(prev => prev.filter(a => a.id !== alertId));
+  };
+
   const fulfillRequest = (requestId) => {
     setCommunityRequests(prev => prev.map(r => r.id === requestId ? { ...r, fulfilled: true, responses: r.responses + 1 } : r));
     showToast("Offered to fulfill student request!", "success");
+  };
+
+  // Redeem Tokens for Discount Coupons
+  const redeemTokens = (couponId) => {
+    const coupons = platformConfig.discountCoupons || [];
+    const coupon = coupons.find(c => c.id === couponId);
+    if (!coupon) {
+      showToast('Invalid coupon.', 'warning');
+      return false;
+    }
+    if ((currentUser.tokenBalance || 0) < coupon.tokenCost) {
+      showToast(`Not enough tokens. You need ${coupon.tokenCost} tokens.`, 'warning');
+      return false;
+    }
+
+    setUsers(prev => prev.map(u => {
+      if (u.id === currentUser.id) {
+        return {
+          ...u,
+          tokenBalance: (u.tokenBalance || 0) - coupon.tokenCost,
+          walletBalance: (u.walletBalance || 0) + coupon.discountAmount
+        };
+      }
+      return u;
+    }));
+
+    showToast(`Redeemed ${coupon.tokenCost} tokens for \u20b9${coupon.discountAmount} wallet credit!`, 'success');
+    return true;
   };
 
   const updatePlatformConfig = (newConfig) => {
@@ -476,6 +596,10 @@ export function CampusProvider({ children }) {
       purgeAllData,
       toastMessage,
       showToast,
+      urgentAlerts,
+      addUrgentRequest,
+      dismissUrgentAlert,
+      redeemTokens,
       impactStats: {
         totalMoneySaved: `₹${totalMoneySavedValue.toLocaleString()}`,
         totalResourcesShared: items.length,

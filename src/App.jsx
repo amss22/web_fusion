@@ -16,7 +16,9 @@ import {
   PlusCircle, 
   CheckCircle2, 
   PackageSearch,
-  Tag
+  Tag,
+  Zap,
+  X
 } from 'lucide-react';
 
 function CampusApp({ onLogout }) {
@@ -29,7 +31,9 @@ function CampusApp({ onLogout }) {
     advanceExchangeStage,
     raiseDispute,
     resolveDispute,
-    toastMessage 
+    toastMessage,
+    urgentAlerts,
+    dismissUrgentAlert
   } = useCampus();
 
   const [activeTab, setActiveTab] = useState('browse');
@@ -82,6 +86,56 @@ function CampusApp({ onLogout }) {
         onOpenAddModal={() => setShowAddModal(true)} 
         onLogout={onLogout}
       />
+
+      {/* Urgent Alert Banner */}
+      {urgentAlerts && urgentAlerts.length > 0 && (
+        <div className="container" style={{ paddingTop: '12px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {urgentAlerts.map(alert => (
+              <div key={alert.id} className="urgent-banner">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1 }}>
+                  <div style={{
+                    background: 'rgba(0,0,0,0.2)',
+                    borderRadius: '8px',
+                    padding: '6px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                    <Zap size={20} color="#FFE853" />
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontWeight: 800, fontSize: '0.88rem', marginBottom: '2px' }}>
+                      URGENT: {alert.title}
+                    </div>
+                    <div style={{ fontSize: '0.76rem', opacity: 0.9, fontWeight: 600 }}>
+                      {alert.requesterName} needs this by {alert.neededDate} - {alert.category}
+                    </div>
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <button
+                    onClick={() => {
+                      setActiveTab('community');
+                      dismissUrgentAlert(alert.id);
+                    }}
+                    className="urgent-banner-dismiss"
+                    style={{ background: 'rgba(255,255,255,0.2)', border: '2px solid #FFF' }}
+                  >
+                    View & Help
+                  </button>
+                  <button
+                    onClick={() => dismissUrgentAlert(alert.id)}
+                    className="urgent-banner-dismiss"
+                  >
+                    <X size={13} />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Main Body */}
       <main style={{ flex: 1, padding: '36px 0 60px' }}>
@@ -304,7 +358,7 @@ function CampusApp({ onLogout }) {
       }}>
         <div className="container">
           <div style={{ fontWeight: 900, color: '#000000', marginBottom: '4px', fontSize: '1rem', fontFamily: 'var(--font-heading)' }}>
-            Campus Circular • Neo-Brutalism Interface
+            Campus Circular
           </div>
           <div style={{ fontSize: '0.82rem', color: '#555555' }}>
             Built with React, Express REST API, SQLite & AI Need-Based Discovery

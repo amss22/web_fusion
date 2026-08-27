@@ -10,7 +10,8 @@ import {
   Radio, 
   ChevronDown, 
   CheckCircle2, 
-  LogOut
+  LogOut,
+  Coins
 } from 'lucide-react';
 
 export default function Header({ activeTab, setActiveTab, onOpenAddModal, onLogout }) {
@@ -19,10 +20,13 @@ export default function Header({ activeTab, setActiveTab, onOpenAddModal, onLogo
     currentUser, 
     switchUser, 
     exchanges, 
-    communityRequests 
+    communityRequests,
+    platformConfig,
+    redeemTokens
   } = useCampus();
 
   const [showUserDropdown, setShowUserDropdown] = useState(false);
+  const [showTokenDropdown, setShowTokenDropdown] = useState(false);
 
   const activeExchangesCount = exchanges.filter(ex => ex.stageIndex > 0 && ex.stageIndex < 9).length;
   const activeRequestsCount = communityRequests.filter(r => !r.fulfilled).length;
@@ -41,7 +45,10 @@ export default function Header({ activeTab, setActiveTab, onOpenAddModal, onLogo
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        height: '70px'
+        height: '58px',
+        gap: '10px',
+        maxWidth: '100%',
+        padding: '0 16px'
       }}>
         
         {/* Playful Brand Logo */}
@@ -50,55 +57,59 @@ export default function Header({ activeTab, setActiveTab, onOpenAddModal, onLogo
           style={{ 
             display: 'flex', 
             alignItems: 'center', 
-            gap: '12px', 
+            gap: '8px', 
             cursor: 'pointer',
             transform: 'rotate(-1deg)',
-            transition: 'transform 0.15s ease'
+            transition: 'transform 0.15s ease',
+            flexShrink: 0
           }}
         >
           <div style={{
-            width: '44px',
-            height: '44px',
-            borderRadius: '10px',
+            width: '34px',
+            height: '34px',
+            borderRadius: '8px',
             background: 'var(--pop-yellow)',
-            border: '3px solid #000000',
-            boxShadow: '3px 3px 0px #000000',
+            border: '2.5px solid #000000',
+            boxShadow: '2px 2px 0px #000000',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center'
           }}>
-            <Repeat size={24} color="#000000" />
+            <Repeat size={18} color="#000000" />
           </div>
           <div>
             <span style={{ 
               fontFamily: 'var(--font-heading)', 
               fontWeight: 900, 
-              fontSize: '1.45rem', 
+              fontSize: '1.15rem', 
               color: '#000000',
               letterSpacing: '-0.03em'
             }}>
-              Campus<span style={{ color: 'var(--pop-periwinkle)', textShadow: '1.5px 1.5px 0px #000000' }}>Circular</span>
+              Campus<span style={{ color: 'var(--pop-periwinkle)', textShadow: '1px 1px 0px #000000' }}>Circular</span>
             </span>
-            <div style={{ fontSize: '0.72rem', color: '#000000', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            <div style={{ fontSize: '0.6rem', color: '#000000', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
               Trusted Peer Sharing
             </div>
           </div>
         </div>
 
         {/* Neo-Brutalist Navigation Tabs */}
-        <nav style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <nav style={{ display: 'flex', alignItems: 'center', gap: '5px', flexWrap: 'nowrap' }}>
           <button
             onClick={() => setActiveTab('browse')}
             className="btn btn-sm"
             style={{
               background: activeTab === 'browse' ? 'var(--pop-yellow)' : '#FFFFFF',
               color: '#000000',
-              boxShadow: activeTab === 'browse' ? '3px 3px 0px #000000' : '2px 2px 0px #000000',
-              border: '2.5px solid #000000',
-              transform: activeTab === 'browse' ? 'translate(-2px, -2px)' : 'none'
+              boxShadow: activeTab === 'browse' ? '2px 2px 0px #000000' : '1.5px 1.5px 0px #000000',
+              border: '2px solid #000000',
+              transform: activeTab === 'browse' ? 'translate(-1px, -1px)' : 'none',
+              fontSize: '0.72rem',
+              padding: '4px 10px',
+              gap: '4px'
             }}
           >
-            <Sparkles size={15} />
+            <Sparkles size={13} />
             Browse & AI
           </button>
 
@@ -108,12 +119,15 @@ export default function Header({ activeTab, setActiveTab, onOpenAddModal, onLogo
             style={{
               background: activeTab === 'exchanges' ? 'var(--pop-periwinkle)' : '#FFFFFF',
               color: '#000000',
-              boxShadow: activeTab === 'exchanges' ? '3px 3px 0px #000000' : '2px 2px 0px #000000',
-              border: '2.5px solid #000000',
-              transform: activeTab === 'exchanges' ? 'translate(-2px, -2px)' : 'none'
+              boxShadow: activeTab === 'exchanges' ? '2px 2px 0px #000000' : '1.5px 1.5px 0px #000000',
+              border: '2px solid #000000',
+              transform: activeTab === 'exchanges' ? 'translate(-1px, -1px)' : 'none',
+              fontSize: '0.72rem',
+              padding: '4px 10px',
+              gap: '4px'
             }}
           >
-            <Layers size={15} />
+            <Layers size={13} />
             Exchanges
             {activeExchangesCount > 0 && (
               <span style={{
@@ -136,12 +150,15 @@ export default function Header({ activeTab, setActiveTab, onOpenAddModal, onLogo
             style={{
               background: activeTab === 'community' ? 'var(--pop-mint)' : '#FFFFFF',
               color: '#000000',
-              boxShadow: activeTab === 'community' ? '3px 3px 0px #000000' : '2px 2px 0px #000000',
-              border: '2.5px solid #000000',
-              transform: activeTab === 'community' ? 'translate(-2px, -2px)' : 'none'
+              boxShadow: activeTab === 'community' ? '2px 2px 0px #000000' : '1.5px 1.5px 0px #000000',
+              border: '2px solid #000000',
+              transform: activeTab === 'community' ? 'translate(-1px, -1px)' : 'none',
+              fontSize: '0.72rem',
+              padding: '4px 10px',
+              gap: '4px'
             }}
           >
-            <Radio size={15} />
+            <Radio size={13} />
             Requests
             {activeRequestsCount > 0 && (
               <span style={{
@@ -164,12 +181,15 @@ export default function Header({ activeTab, setActiveTab, onOpenAddModal, onLogo
             style={{
               background: activeTab === 'impact' ? 'var(--pop-cyan)' : '#FFFFFF',
               color: '#000000',
-              boxShadow: activeTab === 'impact' ? '3px 3px 0px #000000' : '2px 2px 0px #000000',
-              border: '2.5px solid #000000',
-              transform: activeTab === 'impact' ? 'translate(-2px, -2px)' : 'none'
+              boxShadow: activeTab === 'impact' ? '2px 2px 0px #000000' : '1.5px 1.5px 0px #000000',
+              border: '2px solid #000000',
+              transform: activeTab === 'impact' ? 'translate(-1px, -1px)' : 'none',
+              fontSize: '0.72rem',
+              padding: '4px 10px',
+              gap: '4px'
             }}
           >
-            <BarChart3 size={15} />
+            <BarChart3 size={13} />
             Impact
           </button>
 
@@ -179,12 +199,15 @@ export default function Header({ activeTab, setActiveTab, onOpenAddModal, onLogo
             style={{
               background: activeTab === 'admin' ? 'var(--pop-pink)' : '#FFFFFF',
               color: '#000000',
-              boxShadow: activeTab === 'admin' ? '3px 3px 0px #000000' : '2px 2px 0px #000000',
-              border: '2.5px solid #000000',
-              transform: activeTab === 'admin' ? 'translate(-2px, -2px)' : 'none'
+              boxShadow: activeTab === 'admin' ? '2px 2px 0px #000000' : '1.5px 1.5px 0px #000000',
+              border: '2px solid #000000',
+              transform: activeTab === 'admin' ? 'translate(-1px, -1px)' : 'none',
+              fontSize: '0.72rem',
+              padding: '4px 10px',
+              gap: '4px'
             }}
           >
-            <ShieldCheck size={15} />
+            <ShieldCheck size={13} />
             Admin
             {pendingDisputesCount > 0 && (
               <span style={{
@@ -203,15 +226,124 @@ export default function Header({ activeTab, setActiveTab, onOpenAddModal, onLogo
         </nav>
 
         {/* Right Actions */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
           
           <button 
             onClick={onOpenAddModal}
             className="btn btn-emerald btn-sm"
+            style={{ fontSize: '0.72rem', padding: '4px 10px', gap: '4px' }}
           >
-            <PlusCircle size={16} />
+            <PlusCircle size={13} />
             + List Item
           </button>
+
+          {/* Token Badge & Redeem Dropdown */}
+          <div style={{ position: 'relative' }}>
+            <button
+              onClick={() => { setShowTokenDropdown(!showTokenDropdown); setShowUserDropdown(false); }}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',
+                background: 'var(--pop-yellow)',
+                border: '2px solid #000',
+                borderRadius: '8px',
+                padding: '3px 8px',
+                cursor: 'pointer',
+                boxShadow: '1.5px 1.5px 0px #000',
+                fontSize: '0.75rem',
+                fontWeight: 800,
+                color: '#000'
+              }}
+            >
+              <Coins size={14} color="#000" />
+              {currentUser.tokenBalance || 0}
+            </button>
+
+            {showTokenDropdown && (
+              <div style={{
+                position: 'absolute',
+                top: '110%',
+                right: 0,
+                width: '280px',
+                background: '#FFFFFF',
+                border: '3px solid #000',
+                borderRadius: '12px',
+                boxShadow: '5px 5px 0px #000',
+                padding: '14px',
+                zIndex: 200
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+                  <div style={{ fontSize: '0.72rem', fontWeight: 900, color: '#666', textTransform: 'uppercase' }}>
+                    Reward Tokens
+                  </div>
+                  <div style={{
+                    background: 'var(--pop-yellow)',
+                    border: '2px solid #000',
+                    borderRadius: '6px',
+                    padding: '2px 8px',
+                    fontSize: '0.82rem',
+                    fontWeight: 900,
+                    color: '#000',
+                    boxShadow: '1.5px 1.5px 0px #000'
+                  }}>
+                    <Coins size={12} style={{ verticalAlign: 'middle', marginRight: '4px' }} />
+                    {currentUser.tokenBalance || 0} tokens
+                  </div>
+                </div>
+
+                <div style={{ fontSize: '0.72rem', color: '#666', fontWeight: 600, marginBottom: '10px' }}>
+                  Earn {platformConfig.tokensPerCompletedExchange || 15} tokens per completed exchange. Redeem for wallet credit:
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  {(platformConfig.discountCoupons || []).map(coupon => (
+                    <div
+                      key={coupon.id}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        padding: '8px 10px',
+                        borderRadius: '8px',
+                        border: '2px solid #000',
+                        background: (currentUser.tokenBalance || 0) >= coupon.tokenCost ? '#FFF' : '#F5F5F5'
+                      }}
+                    >
+                      <div>
+                        <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#000' }}>
+                          {coupon.label}
+                        </div>
+                        <div style={{ fontSize: '0.66rem', fontWeight: 600, color: '#888' }}>
+                          Cost: {coupon.tokenCost} tokens
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => {
+                          redeemTokens(coupon.id);
+                          setShowTokenDropdown(false);
+                        }}
+                        disabled={(currentUser.tokenBalance || 0) < coupon.tokenCost}
+                        style={{
+                          background: (currentUser.tokenBalance || 0) >= coupon.tokenCost ? 'var(--pop-mint)' : '#DDD',
+                          border: '2px solid #000',
+                          borderRadius: '6px',
+                          padding: '3px 10px',
+                          fontSize: '0.68rem',
+                          fontWeight: 800,
+                          cursor: (currentUser.tokenBalance || 0) >= coupon.tokenCost ? 'pointer' : 'not-allowed',
+                          color: '#000',
+                          boxShadow: (currentUser.tokenBalance || 0) >= coupon.tokenCost ? '1.5px 1.5px 0px #000' : 'none'
+                        }}
+                      >
+                        Redeem
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
 
           {/* User Profile Selector */}
           <div style={{ position: 'relative' }}>
@@ -220,24 +352,24 @@ export default function Header({ activeTab, setActiveTab, onOpenAddModal, onLogo
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '8px',
+                gap: '5px',
                 background: '#FFFFFF',
-                border: '2.5px solid #000000',
-                borderRadius: '10px',
-                padding: '4px 12px 4px 6px',
+                border: '2px solid #000000',
+                borderRadius: '8px',
+                padding: '3px 8px 3px 4px',
                 cursor: 'pointer',
-                boxShadow: '2.5px 2.5px 0px #000000'
+                boxShadow: '1.5px 1.5px 0px #000000'
               }}
             >
               <img 
                 src={currentUser.avatar} 
                 alt={currentUser.name}
-                style={{ width: '28px', height: '28px', borderRadius: '6px', border: '1.5px solid #000000' }}
+                style={{ width: '24px', height: '24px', borderRadius: '4px', border: '1.5px solid #000000' }}
               />
-              <span style={{ fontSize: '0.85rem', fontWeight: 900, color: '#000000', fontFamily: 'var(--font-heading)' }}>
+              <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#000000', fontFamily: 'var(--font-body)' }}>
                 {currentUser.name.split(' ')[0]}
               </span>
-              <ChevronDown size={14} color="#000000" />
+              <ChevronDown size={12} color="#000000" />
             </button>
 
             {showUserDropdown && (
@@ -290,7 +422,7 @@ export default function Header({ activeTab, setActiveTab, onOpenAddModal, onLogo
             onClick={onLogout}
             className="btn btn-sm btn-secondary"
             title="Sign out"
-            style={{ padding: '6px 10px' }}
+            style={{ padding: '4px 8px' }}
           >
             <LogOut size={15} />
           </button>
