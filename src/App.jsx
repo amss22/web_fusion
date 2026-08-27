@@ -26,6 +26,7 @@ function CampusApp({ onLogout }) {
     users,
     exchanges,
     createExchangeRequest,
+    advanceExchangeStage,
     toastMessage 
   } = useCampus();
 
@@ -267,7 +268,13 @@ function CampusApp({ onLogout }) {
         <RatingModal 
           exchange={ratingExchange} 
           onClose={() => setRatingExchange(null)} 
-          onSubmitRating={() => setRatingExchange(null)}
+          onSubmitRating={(exchangeId, ratingData) => {
+            advanceExchangeStage(exchangeId, {
+              ...ratingData,
+              timelineNote: `Peer trust rating submitted: ${ratingData.borrowerRating}/5 stars`
+            });
+            setRatingExchange(null);
+          }}
         />
       )}
 

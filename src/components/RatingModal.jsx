@@ -20,7 +20,6 @@ export default function RatingModal({ exchange, onClose, onSubmitRating }) {
       lenderRating: rating,
       lenderFeedback: feedback
     });
-    onClose();
   };
 
   return (
