@@ -329,20 +329,26 @@ export function CampusProvider({ children }) {
       const finalDamage = Number(approvedDamageDeduction) || 0;
       const totalDeduction = late + finalDamage;
       
+      const nextStageIndex = ex.stageIndex === 7 ? 8 : ex.stageIndex;
+      const nextStage = LIFECYCLE_STAGES[nextStageIndex].key;
+      
       return {
         ...ex,
+        stageIndex: nextStageIndex,
+        status: nextStage,
         damageDeduction: finalDamage,
         disputeStatus: "Resolved",
         disputeResolutionNote: adminNote,
         refundToBorrower: Math.max(0, ex.securityDeposit - totalDeduction),
         payoutToLender: ex.borrowingCharge + finalDamage + late,
+        settlementCompleted: true,
         timeline: [
           ...ex.timeline,
-          { stage: "Dispute Resolved", time: "Just now", note: `Admin Verdict: ₹${finalDamage} damage deduction approved. Note: ${adminNote}` }
+          { stage: "Dispute Resolved", time: "Just now", note: `Admin Verdict: ₹${finalDamage} damage deduction approved. Note: ${adminNote || "Dispute claim resolved."}` }
         ]
       };
     }));
-    showToast("Dispute resolved by Admin.", "success");
+    showToast("Dispute resolved & damage claim processed!", "success");
   };
 
   // Rate Exchange
