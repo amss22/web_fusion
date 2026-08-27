@@ -3,18 +3,13 @@ import { useCampus } from '../context/CampusContext';
 import { 
   Repeat, 
   ShieldCheck, 
-  ArrowRight, 
   Sparkles, 
-  Lock, 
-  Mail, 
-  Eye, 
-  EyeOff,
-  GraduationCap,
-  CheckCircle2,
-  Leaf,
-  Users,
-  TrendingUp,
-  UserPlus,
+  GraduationCap, 
+  CheckCircle2, 
+  Leaf, 
+  Users, 
+  TrendingUp, 
+  UserPlus, 
   LogIn
 } from 'lucide-react';
 
@@ -66,15 +61,15 @@ export default function LoginPage({ onLogin }) {
       setTimeout(() => {
         setIsSubmitting(false);
         onLogin(selectedRole);
-      }, 600);
+      }, 500);
     }
   };
 
   const impactStats = [
-    { label: "Active Members", value: `${users.length}`, icon: Users, color: '#4ECDC4' },
-    { label: "Sharing System", value: "LIVE", icon: Repeat, color: '#FF6B9D' },
-    { label: "Safety", value: "100%", icon: TrendingUp, color: '#C7F464' },
-    { label: "Eco Impact", value: "✓", icon: Leaf, color: '#FFE66D' }
+    { label: "Active Members", value: `${users.length}`, icon: Users, color: '#BEE9E8' },
+    { label: "Sharing System", value: "LIVE", icon: Repeat, color: '#FFDAC1' },
+    { label: "Safety Rating", value: "100%", icon: TrendingUp, color: '#B5EAD7' },
+    { label: "Eco Saved", value: "Clean", icon: Leaf, color: '#FFD166' }
   ];
 
   return (
@@ -83,116 +78,112 @@ export default function LoginPage({ onLogin }) {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      padding: '20px',
+      padding: '24px',
       position: 'relative'
     }}>
 
-      {/* Main Container - Retro Window */}
+      {/* Main Minimal Cartoon Window */}
       <div style={{
         display: 'grid',
         gridTemplateColumns: '1fr 1fr',
         width: '100%',
-        maxWidth: '1000px',
-        minHeight: '580px',
-        border: '3px solid #222',
-        borderRadius: '16px',
+        maxWidth: '960px',
+        minHeight: '560px',
+        border: '2.5px solid #1E1E1E',
+        borderRadius: '28px',
         overflow: 'hidden',
-        boxShadow: '8px 8px 0px #222',
-        animation: 'popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)'
+        boxShadow: '6px 6px 0px #1E1E1E',
+        animation: 'bounceIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
+        background: '#FFFFFF'
       }}>
 
-        {/* LEFT PANEL: Branding */}
+        {/* LEFT PANEL */}
         <div style={{
-          background: '#4ECDC4',
-          padding: '40px 36px',
+          background: 'var(--pop-yellow)',
+          padding: '44px 38px',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          borderRight: '3px solid #222',
-          position: 'relative',
-          overflow: 'hidden'
+          borderRight: '2.5px solid #1E1E1E',
+          position: 'relative'
         }}>
-          {/* Decorative circles */}
-          <div style={{ position: 'absolute', top: '-30px', right: '-30px', width: '120px', height: '120px', borderRadius: '50%', background: '#FFE66D', border: '3px solid #222', opacity: 0.6 }} />
-          <div style={{ position: 'absolute', bottom: '-20px', left: '-20px', width: '80px', height: '80px', borderRadius: '50%', background: '#FF6B9D', border: '3px solid #222', opacity: 0.5 }} />
-
-          <div style={{ position: 'relative', zIndex: 1 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '28px' }}>
               <div style={{
-                width: '52px',
-                height: '52px',
-                borderRadius: '12px',
-                background: '#FFE66D',
+                width: '48px',
+                height: '48px',
+                borderRadius: '16px',
+                background: 'var(--pop-pink)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                border: '3px solid #222',
-                boxShadow: '3px 3px 0px #222'
+                border: '2.5px solid #1E1E1E',
+                boxShadow: '3px 3px 0px #1E1E1E'
               }}>
-                <Repeat size={26} color="#222" />
+                <Repeat size={26} color="#fff" />
               </div>
               <div>
-                <h1 style={{ fontSize: '1.8rem', fontWeight: 700, margin: 0, color: '#222' }}>
-                  Campus<span style={{ color: '#fff' }}>Circular</span>
+                <h1 style={{ fontSize: '1.7rem', fontWeight: 800, margin: 0, color: '#1E1E1E', fontFamily: 'var(--font-heading)' }}>
+                  Campus<span style={{ color: 'var(--pop-pink)' }}>Circular</span>
                 </h1>
-                <div style={{ fontSize: '0.78rem', color: '#1a6b65', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                  WebFusion 2.0 • CodeCrafters
+                <div style={{ fontSize: '0.76rem', color: '#555', fontWeight: 700, letterSpacing: '0.04em' }}>
+                  WebFusion 2.0 • CodeCrafters ✨
                 </div>
               </div>
             </div>
 
-            <h2 style={{ fontSize: '1.6rem', fontWeight: 700, lineHeight: '1.3', marginBottom: '12px', color: '#222' }}>
+            <h2 style={{ fontSize: '1.6rem', fontWeight: 800, lineHeight: '1.3', marginBottom: '14px', color: '#1E1E1E', fontFamily: 'var(--font-heading)' }}>
               From Ownership<br />
               <span style={{ 
-                background: '#FFE66D', 
-                padding: '2px 8px', 
-                border: '2px solid #222',
+                background: '#fff', 
+                padding: '2px 10px', 
+                borderRadius: 'var(--radius-full)',
+                border: '2px solid #1E1E1E',
                 display: 'inline-block',
-                transform: 'rotate(-1deg)'
+                transform: 'rotate(-1.5deg)',
+                boxShadow: '2px 2px 0px #1E1E1E'
               }}>to Access.</span>
             </h2>
 
-            <p style={{ fontSize: '0.9rem', color: '#1a5c57', lineHeight: '1.6', marginBottom: '20px', fontWeight: 500 }}>
-              A trusted peer-to-peer platform for college students to discover, share, lend, borrow & settle campus resources — safely & transparently.
+            <p style={{ fontSize: '0.9rem', color: '#444', lineHeight: '1.6', marginBottom: '24px', fontWeight: 500 }}>
+              A trusted digital peer-to-peer platform for college students to discover, share, lend, borrow, and settle campus gear safely.
             </p>
 
-            {/* Quote Box */}
             <div style={{
               background: '#fff',
-              border: '3px solid #222',
-              borderRadius: '8px',
-              padding: '12px 16px',
-              boxShadow: '3px 3px 0px #222',
+              border: '2.5px solid #1E1E1E',
+              borderRadius: '16px',
+              padding: '14px 18px',
+              boxShadow: '3px 3px 0px #1E1E1E',
               display: 'flex',
               alignItems: 'center',
               gap: '10px'
             }}>
-              <Sparkles size={18} color="#FF6B9D" />
-              <span style={{ fontSize: '0.84rem', color: '#222', fontWeight: 600, fontStyle: 'italic' }}>
+              <Sparkles size={18} color="var(--pop-pink)" />
+              <span style={{ fontSize: '0.85rem', color: '#1E1E1E', fontWeight: 700, fontStyle: 'italic' }}>
                 "Why buy what someone nearby already has?" 🤔
               </span>
             </div>
           </div>
 
-          {/* Bottom: Impact Stats */}
-          <div style={{ position: 'relative', zIndex: 1 }}>
-            <div style={{ fontSize: '0.72rem', color: '#1a5c57', fontWeight: 700, textTransform: 'uppercase', marginBottom: '8px', letterSpacing: '0.06em' }}>
+          <div>
+            <div style={{ fontSize: '0.72rem', color: '#555', fontWeight: 800, textTransform: 'uppercase', marginBottom: '10px', letterSpacing: '0.05em' }}>
               ⚡ Campus Stats
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '6px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px' }}>
               {impactStats.map((stat, i) => (
                 <div key={i} style={{
                   background: '#fff',
-                  border: '2px solid #222',
-                  borderRadius: '8px',
-                  padding: '8px 6px',
+                  border: '2px solid #1E1E1E',
+                  borderRadius: '12px',
+                  padding: '10px 6px',
                   textAlign: 'center',
-                  boxShadow: '2px 2px 0px #222'
+                  boxShadow: '2px 2px 0px #1E1E1E'
                 }}>
-                  <div style={{ fontSize: '1.1rem', fontWeight: 700, color: '#222', fontFamily: 'var(--font-mono)' }}>
+                  <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#1E1E1E', fontFamily: 'var(--font-heading)' }}>
                     {stat.value}
                   </div>
-                  <div style={{ fontSize: '0.6rem', color: '#666', fontWeight: 600, textTransform: 'uppercase' }}>
+                  <div style={{ fontSize: '0.62rem', color: '#666', fontWeight: 700, textTransform: 'uppercase' }}>
                     {stat.label}
                   </div>
                 </div>
@@ -201,24 +192,24 @@ export default function LoginPage({ onLogin }) {
           </div>
         </div>
 
-        {/* RIGHT PANEL: Auth Form */}
+        {/* RIGHT PANEL */}
         <div style={{
-          background: '#FFF8E7',
-          padding: '36px 32px',
+          background: '#FFFFFF',
+          padding: '44px 38px',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center'
         }}>
           
-          {/* Mode Switcher Tabs */}
+          {/* Mode Tabs */}
           <div style={{
             display: 'flex',
-            background: '#fff',
-            border: '3px solid #222',
-            borderRadius: '8px',
-            marginBottom: '18px',
-            overflow: 'hidden',
-            boxShadow: '3px 3px 0px #222'
+            background: '#FAF7F2',
+            border: '2.5px solid #1E1E1E',
+            borderRadius: 'var(--radius-full)',
+            padding: '4px',
+            marginBottom: '20px',
+            boxShadow: '2px 2px 0px #1E1E1E'
           }}>
             <button
               type="button"
@@ -226,15 +217,14 @@ export default function LoginPage({ onLogin }) {
               style={{
                 flex: 1,
                 padding: '10px',
+                borderRadius: 'var(--radius-full)',
                 border: 'none',
-                borderRight: '2px solid #222',
-                background: authMode === 'login' ? '#FFE66D' : '#fff',
-                color: '#222',
-                fontWeight: 700,
+                background: authMode === 'login' ? 'var(--pop-yellow)' : 'transparent',
+                color: '#1E1E1E',
+                fontWeight: 800,
                 fontSize: '0.85rem',
                 cursor: 'pointer',
-                textTransform: 'uppercase',
-                letterSpacing: '0.04em',
+                fontFamily: 'var(--font-heading)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -250,14 +240,14 @@ export default function LoginPage({ onLogin }) {
               style={{
                 flex: 1,
                 padding: '10px',
+                borderRadius: 'var(--radius-full)',
                 border: 'none',
-                background: authMode === 'register' ? '#C7F464' : '#fff',
-                color: '#222',
-                fontWeight: 700,
+                background: authMode === 'register' ? 'var(--pop-mint)' : 'transparent',
+                color: '#1E1E1E',
+                fontWeight: 800,
                 fontSize: '0.85rem',
                 cursor: 'pointer',
-                textTransform: 'uppercase',
-                letterSpacing: '0.04em',
+                fontFamily: 'var(--font-heading)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -270,58 +260,54 @@ export default function LoginPage({ onLogin }) {
           </div>
 
           {/* Role Selection */}
-          <div style={{ marginBottom: '14px' }}>
-            <label style={{ fontSize: '0.76rem', fontWeight: 700, color: '#222', textTransform: 'uppercase', display: 'block', marginBottom: '6px', letterSpacing: '0.05em' }}>
-              👤 Select Role
+          <div style={{ marginBottom: '18px' }}>
+            <label style={{ fontSize: '0.76rem', fontWeight: 800, color: '#1E1E1E', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>
+              Select Role
             </label>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
               
               <div 
                 onClick={() => handleSelectRole('student')}
                 style={{
-                  padding: '12px',
-                  borderRadius: '8px',
-                  background: selectedRole === 'student' ? '#4ECDC4' : '#fff',
-                  border: '3px solid #222',
+                  padding: '12px 14px',
+                  borderRadius: '16px',
+                  background: selectedRole === 'student' ? '#BEE9E8' : '#FAF7F2',
+                  border: '2.5px solid #1E1E1E',
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '8px',
-                  boxShadow: selectedRole === 'student' ? '4px 4px 0px #222' : '2px 2px 0px #222',
-                  transform: selectedRole === 'student' ? 'translate(-2px, -2px)' : 'none',
+                  gap: '10px',
+                  boxShadow: selectedRole === 'student' ? '3px 3px 0px #1E1E1E' : 'none',
                   transition: 'all 0.15s ease'
                 }}
               >
-                <GraduationCap size={20} color="#222" />
+                <GraduationCap size={20} color="#1E1E1E" />
                 <div>
-                  <div style={{ fontSize: '0.88rem', fontWeight: 700, color: '#222' }}>Student</div>
-                  <div style={{ fontSize: '0.66rem', color: selectedRole === 'student' ? '#1a5c57' : '#888' }}>Borrow & Lend</div>
+                  <div style={{ fontSize: '0.88rem', fontWeight: 800, color: '#1E1E1E' }}>Student</div>
+                  <div style={{ fontSize: '0.66rem', color: '#666', fontWeight: 600 }}>Borrow & Lend</div>
                 </div>
-                {selectedRole === 'student' && <CheckCircle2 size={16} color="#222" style={{ marginLeft: 'auto' }} />}
               </div>
 
               <div 
                 onClick={() => handleSelectRole('admin')}
                 style={{
-                  padding: '12px',
-                  borderRadius: '8px',
-                  background: selectedRole === 'admin' ? '#FF6B9D' : '#fff',
-                  border: '3px solid #222',
+                  padding: '12px 14px',
+                  borderRadius: '16px',
+                  background: selectedRole === 'admin' ? 'var(--pop-pink)' : '#FAF7F2',
+                  border: '2.5px solid #1E1E1E',
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '8px',
-                  boxShadow: selectedRole === 'admin' ? '4px 4px 0px #222' : '2px 2px 0px #222',
-                  transform: selectedRole === 'admin' ? 'translate(-2px, -2px)' : 'none',
+                  gap: '10px',
+                  boxShadow: selectedRole === 'admin' ? '3px 3px 0px #1E1E1E' : 'none',
                   transition: 'all 0.15s ease'
                 }}
               >
-                <ShieldCheck size={20} color="#222" />
+                <ShieldCheck size={20} color="#1E1E1E" />
                 <div>
-                  <div style={{ fontSize: '0.88rem', fontWeight: 700, color: '#222' }}>Admin</div>
-                  <div style={{ fontSize: '0.66rem', color: selectedRole === 'admin' ? '#7a2a42' : '#888' }}>Moderator</div>
+                  <div style={{ fontSize: '0.88rem', fontWeight: 800, color: '#1E1E1E' }}>Admin</div>
+                  <div style={{ fontSize: '0.66rem', color: '#1E1E1E', fontWeight: 600 }}>Moderator</div>
                 </div>
-                {selectedRole === 'admin' && <CheckCircle2 size={16} color="#222" style={{ marginLeft: 'auto' }} />}
               </div>
 
             </div>
@@ -332,25 +318,25 @@ export default function LoginPage({ onLogin }) {
             
             {authMode === 'register' && (
               <>
-                <div style={{ marginBottom: '10px' }}>
-                  <label style={{ fontSize: '0.76rem', fontWeight: 700, color: '#222', display: 'block', marginBottom: '4px' }}>Full Name:</label>
+                <div style={{ marginBottom: '12px' }}>
+                  <label style={{ fontSize: '0.76rem', fontWeight: 700, color: '#1E1E1E', display: 'block', marginBottom: '4px' }}>Full Name:</label>
                   <input type="text" className="input-field" required placeholder="e.g. Ananya Patel" value={regName} onChange={(e) => setRegName(e.target.value)} />
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '10px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '12px' }}>
                   <div>
-                    <label style={{ fontSize: '0.76rem', fontWeight: 700, color: '#222', display: 'block', marginBottom: '4px' }}>Dept:</label>
+                    <label style={{ fontSize: '0.76rem', fontWeight: 700, color: '#1E1E1E', display: 'block', marginBottom: '4px' }}>Dept:</label>
                     <input type="text" className="input-field" placeholder="IT / CS / Mech" value={regDept} onChange={(e) => setRegDept(e.target.value)} />
                   </div>
                   <div>
-                    <label style={{ fontSize: '0.76rem', fontWeight: 700, color: '#222', display: 'block', marginBottom: '4px' }}>Year:</label>
+                    <label style={{ fontSize: '0.76rem', fontWeight: 700, color: '#1E1E1E', display: 'block', marginBottom: '4px' }}>Year:</label>
                     <input type="text" className="input-field" placeholder="3rd Year" value={regYear} onChange={(e) => setRegYear(e.target.value)} />
                   </div>
                 </div>
               </>
             )}
 
-            <div style={{ marginBottom: '10px' }}>
-              <label style={{ fontSize: '0.76rem', fontWeight: 700, color: '#222', display: 'block', marginBottom: '4px' }}>
+            <div style={{ marginBottom: '12px' }}>
+              <label style={{ fontSize: '0.76rem', fontWeight: 700, color: '#1E1E1E', display: 'block', marginBottom: '4px' }}>
                 📧 Campus Email:
               </label>
               <input 
@@ -360,8 +346,8 @@ export default function LoginPage({ onLogin }) {
               />
             </div>
 
-            <div style={{ marginBottom: '16px' }}>
-              <label style={{ fontSize: '0.76rem', fontWeight: 700, color: '#222', display: 'block', marginBottom: '4px' }}>
+            <div style={{ marginBottom: '20px' }}>
+              <label style={{ fontSize: '0.76rem', fontWeight: 700, color: '#1E1E1E', display: 'block', marginBottom: '4px' }}>
                 🔒 Password:
               </label>
               <input 
@@ -374,15 +360,11 @@ export default function LoginPage({ onLogin }) {
             <button 
               type="submit"
               disabled={isSubmitting}
-              className="btn"
+              className="btn btn-emerald"
               style={{
                 width: '100%',
                 padding: '14px',
-                fontSize: '1rem',
-                background: selectedRole === 'admin' ? '#FF6B9D' : '#4ECDC4',
-                color: '#222',
-                borderRadius: '8px',
-                opacity: isSubmitting ? 0.7 : 1
+                fontSize: '1rem'
               }}
             >
               {isSubmitting ? '⏳ Processing...' : authMode === 'register' ? (
@@ -392,26 +374,6 @@ export default function LoginPage({ onLogin }) {
               )}
             </button>
           </form>
-
-          {/* Demo Credentials */}
-          {authMode === 'login' && (
-            <div style={{
-              marginTop: '14px',
-              padding: '10px 12px',
-              background: '#fff',
-              border: '2px solid #222',
-              borderRadius: '8px',
-              fontSize: '0.74rem',
-              color: '#555',
-              boxShadow: '2px 2px 0px #222'
-            }}>
-              <div style={{ fontWeight: 700, color: '#222', marginBottom: '2px', textTransform: 'uppercase', fontSize: '0.68rem' }}>
-                💡 Demo Credentials (auto-filled):
-              </div>
-              <div>🎓 <strong>Student</strong>: rahul.sharma@tsec.edu / campus2026</div>
-              <div>🛡️ <strong>Admin</strong>: admin@tsec.edu / admin2026</div>
-            </div>
-          )}
 
         </div>
 

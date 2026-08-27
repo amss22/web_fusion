@@ -13,13 +13,8 @@ import AddResourceModal from './components/AddResourceModal';
 import RatingModal from './components/RatingModal';
 import { 
   Search, 
-  Filter, 
-  SlidersHorizontal, 
-  Sparkles, 
   PlusCircle, 
   CheckCircle2, 
-  AlertCircle,
-  HelpCircle,
   PackageSearch,
   Tag
 } from 'lucide-react';
@@ -77,7 +72,7 @@ function CampusApp({ onLogout }) {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: 'var(--bg-primary)' }}>
       
-      {/* Retro Top Header */}
+      {/* Top Header */}
       <Header 
         activeTab={activeTab} 
         setActiveTab={setActiveTab} 
@@ -85,15 +80,14 @@ function CampusApp({ onLogout }) {
         onLogout={onLogout}
       />
 
-      {/* Main App Content Body */}
-      <main style={{ flex: 1, padding: '32px 0 60px' }}>
+      {/* Main Body */}
+      <main style={{ flex: 1, padding: '36px 0 60px' }}>
         <div className="container">
           
-          {/* TAB 1: BROWSE & AI DISCOVERY */}
+          {/* TAB 1: BROWSE */}
           {activeTab === 'browse' && (
             <div>
               
-              {/* AI Discovery Header Box */}
               <AiDiscovery 
                 items={items}
                 onSelectItem={(item) => setSelectedItem(item)}
@@ -102,46 +96,41 @@ function CampusApp({ onLogout }) {
                 }}
               />
 
-              {/* Catalog Controls Header */}
+              {/* Minimal Search & Sort Bar */}
               <div style={{
-                background: '#fff',
-                border: '3px solid #222',
-                borderRadius: '12px',
-                padding: '16px',
-                marginBottom: '24px',
-                boxShadow: '4px 4px 0px #222',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 flexWrap: 'wrap',
-                gap: '12px'
+                gap: '16px',
+                marginBottom: '24px'
               }}>
                 
-                {/* Search input */}
-                <div style={{ position: 'relative', flex: '1', minWidth: '260px' }}>
-                  <Search size={18} color="#222" style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)' }} />
+                {/* Search Bar */}
+                <div style={{ position: 'relative', flex: '1', minWidth: '280px' }}>
+                  <Search size={18} color="#1E1E1E" style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)' }} />
                   <input 
                     type="text" 
                     className="input-field" 
-                    placeholder="Search gear, calculators, location..." 
+                    placeholder="Search campus resources..." 
                     value={searchFilter}
                     onChange={(e) => setSearchFilter(e.target.value)}
-                    style={{ paddingLeft: '40px', background: '#fff' }}
+                    style={{ paddingLeft: '44px', background: '#fff', borderRadius: 'var(--radius-full)' }}
                   />
                 </div>
 
-                {/* Sort Dropdown */}
+                {/* Sort selector */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <label style={{ fontSize: '0.78rem', fontWeight: 800, color: '#222', textTransform: 'uppercase' }}>
-                    Sort By:
-                  </label>
+                  <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#1E1E1E', textTransform: 'uppercase' }}>
+                    Sort:
+                  </span>
                   <select 
                     className="input-field"
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    style={{ width: '180px', padding: '10px 14px', background: '#fff' }}
+                    style={{ width: '180px', padding: '10px 16px', background: '#fff', borderRadius: 'var(--radius-full)' }}
                   >
-                    <option value="trust">⭐ Trust Rating</option>
+                    <option value="trust">⭐ Trust Score</option>
                     <option value="priceAsc">💰 Price: Low to High</option>
                     <option value="priceDesc">💎 Price: High to Low</option>
                   </select>
@@ -149,19 +138,18 @@ function CampusApp({ onLogout }) {
 
               </div>
 
-              {/* Category Pills Bar */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap', marginBottom: '28px' }}>
+              {/* Minimal Category Pills Bar */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap', marginBottom: '32px' }}>
                 {categories.map((cat) => (
                   <button
                     key={cat}
                     onClick={() => setSelectedCategory(cat)}
                     className="btn btn-sm"
                     style={{
-                      background: selectedCategory === cat ? '#FF6B9D' : '#fff',
-                      color: selectedCategory === cat ? '#fff' : '#222',
-                      border: '3px solid #222',
-                      boxShadow: selectedCategory === cat ? '3px 3px 0px #222' : '2px 2px 0px #222',
-                      transform: selectedCategory === cat ? 'translate(-2px, -2px)' : 'none'
+                      background: selectedCategory === cat ? 'var(--pop-pink)' : '#fff',
+                      color: selectedCategory === cat ? '#fff' : '#1E1E1E',
+                      boxShadow: selectedCategory === cat ? '3px 3px 0px #1E1E1E' : 'none',
+                      border: '2px solid #1E1E1E'
                     }}
                   >
                     <Tag size={13} />
@@ -170,22 +158,22 @@ function CampusApp({ onLogout }) {
                 ))}
               </div>
 
-              {/* Items Grid */}
+              {/* Grid */}
               {filteredItems.length === 0 ? (
                 <div style={{
                   background: '#fff',
-                  border: '3px solid #222',
-                  borderRadius: '16px',
-                  padding: '48px 20px',
+                  border: '2.5px solid #1E1E1E',
+                  borderRadius: '24px',
+                  padding: '56px 20px',
                   textAlign: 'center',
-                  boxShadow: '6px 6px 0px #222'
+                  boxShadow: '4px 4px 0px #1E1E1E'
                 }}>
-                  <PackageSearch size={48} color="#FF6B9D" style={{ marginBottom: '12px' }} />
-                  <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#222', marginBottom: '6px' }}>
-                    No items match your filter
+                  <PackageSearch size={52} color="var(--pop-pink)" style={{ marginBottom: '16px' }} />
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#1E1E1E', marginBottom: '8px', fontFamily: 'var(--font-heading)' }}>
+                    No resources found
                   </h3>
-                  <p style={{ fontSize: '0.86rem', color: '#666', marginBottom: '16px' }}>
-                    Try searching for another resource or click "+ List Item" to share your own equipment!
+                  <p style={{ fontSize: '0.88rem', color: '#666', marginBottom: '20px', fontWeight: 500 }}>
+                    Try searching for another keyword or list your own equipment!
                   </p>
                   <button onClick={() => setShowAddModal(true)} className="btn btn-emerald btn-sm">
                     <PlusCircle size={16} /> List Resource Item
@@ -195,7 +183,7 @@ function CampusApp({ onLogout }) {
                 <div style={{
                   display: 'grid',
                   gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-                  gap: '24px'
+                  gap: '28px'
                 }}>
                   {filteredItems.map((item) => (
                     <ItemCard 
@@ -211,30 +199,30 @@ function CampusApp({ onLogout }) {
             </div>
           )}
 
-          {/* TAB 2: ACTIVE & COMPLETED EXCHANGES */}
+          {/* TAB 2: EXCHANGES */}
           {activeTab === 'exchanges' && (
             <div>
               <div style={{
-                background: '#FFE66D',
-                border: '3px solid #222',
-                borderRadius: '16px',
-                padding: '24px',
-                marginBottom: '24px',
-                boxShadow: '6px 6px 0px #222'
+                background: 'var(--pop-yellow)',
+                border: '2.5px solid #1E1E1E',
+                borderRadius: '24px',
+                padding: '28px',
+                marginBottom: '32px',
+                boxShadow: '4px 4px 0px #1E1E1E'
               }}>
-                <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#222', marginBottom: '4px' }}>
-                  My Active & Past Resource Exchanges 🔄
+                <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1E1E1E', marginBottom: '6px', fontFamily: 'var(--font-heading)' }}>
+                  My Exchanges & Borrowing Status 🔄
                 </h1>
-                <p style={{ fontSize: '0.86rem', color: '#333', fontWeight: 600 }}>
-                  Track 10-stage borrowing status, handover checklists, return due timers, and dispute logs.
+                <p style={{ fontSize: '0.88rem', color: '#333', fontWeight: 600 }}>
+                  Track your 10-stage exchange status, physical inspection checklists, and escrow refunds.
                 </p>
               </div>
 
               {exchanges.length === 0 ? (
-                <div style={{ background: '#fff', border: '3px solid #222', borderRadius: '16px', padding: '48px', textAlign: 'center', boxShadow: '6px 6px 0px #222' }}>
-                  <HelpCircle size={48} color="#4ECDC4" style={{ marginBottom: '12px' }} />
-                  <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#222' }}>No active exchanges yet</h3>
-                  <p style={{ fontSize: '0.86rem', color: '#666' }}>Browse campus listings to borrow gear!</p>
+                <div style={{ background: '#fff', border: '2.5px solid #1E1E1E', borderRadius: '24px', padding: '56px', textAlign: 'center', boxShadow: '4px 4px 0px #1E1E1E' }}>
+                  <PackageSearch size={48} color="var(--pop-blue)" style={{ marginBottom: '16px' }} />
+                  <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#1E1E1E' }}>No active exchanges</h3>
+                  <p style={{ fontSize: '0.88rem', color: '#666', fontWeight: 500 }}>Browse the campus catalog to borrow gear!</p>
                 </div>
               ) : (
                 exchanges.map((ex) => (
@@ -253,16 +241,16 @@ function CampusApp({ onLogout }) {
           {/* TAB 3: BROADCAST BOARD */}
           {activeTab === 'community' && <CommunityRequests />}
 
-          {/* TAB 4: IMPACT DASHBOARD */}
+          {/* TAB 4: IMPACT */}
           {activeTab === 'impact' && <ImpactDashboard />}
 
-          {/* TAB 5: ADMIN PANEL */}
+          {/* TAB 5: ADMIN */}
           {activeTab === 'admin' && <AdminPanel />}
 
         </div>
       </main>
 
-      {/* Item Detail Modal */}
+      {/* Modals */}
       {selectedItem && (
         <ItemDetailModal 
           item={selectedItem} 
@@ -271,12 +259,10 @@ function CampusApp({ onLogout }) {
         />
       )}
 
-      {/* Add Resource Modal */}
       {showAddModal && (
         <AddResourceModal onClose={() => setShowAddModal(false)} />
       )}
 
-      {/* Rating Modal */}
       {ratingExchange && (
         <RatingModal 
           exchange={ratingExchange} 
@@ -285,7 +271,7 @@ function CampusApp({ onLogout }) {
         />
       )}
 
-      {/* Global Toast Alerts */}
+      {/* Toast Alerts */}
       {toastMessage && (
         <div className="toast-container">
           <div className={`toast toast-${toastMessage.type}`}>
@@ -295,23 +281,23 @@ function CampusApp({ onLogout }) {
         </div>
       )}
 
-      {/* Retro Footer */}
+      {/* Minimal Footer */}
       <footer style={{
-        background: '#FFF8E7',
-        borderTop: '3px solid #222',
+        background: '#FFFFFF',
+        borderTop: '2.5px solid #1E1E1E',
         padding: '24px 0',
         marginTop: 'auto',
-        fontSize: '0.82rem',
+        fontSize: '0.85rem',
         color: '#555',
         textAlign: 'center',
         fontWeight: 600
       }}>
         <div className="container">
-          <div style={{ fontWeight: 800, color: '#222', marginBottom: '4px' }}>
-            Campus Circular • 90s Retro & Neo-Brutalist Interface
+          <div style={{ fontWeight: 800, color: '#1E1E1E', marginBottom: '4px' }}>
+            Campus Circular • Minimal Modern & Cartoonish UI
           </div>
-          <div>
-            Built with React, Express REST API, SQLite Local Database & AI Need-Based Discovery
+          <div style={{ fontSize: '0.78rem', color: '#777' }}>
+            Built with React, Express REST API, SQLite & AI Need-Based Discovery
           </div>
         </div>
       </footer>

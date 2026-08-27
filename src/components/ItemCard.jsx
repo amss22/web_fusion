@@ -1,13 +1,8 @@
 import React from 'react';
 import { 
-  ShieldCheck, 
   MapPin, 
-  Star, 
   Tag, 
-  CheckCircle2, 
-  UserCheck, 
-  ArrowRight,
-  Clock
+  ArrowRight
 } from 'lucide-react';
 
 export default function ItemCard({ item, owner, onSelectItem }) {
@@ -21,16 +16,16 @@ export default function ItemCard({ item, owner, onSelectItem }) {
         height: '100%',
         cursor: 'pointer',
         overflow: 'hidden',
-        background: '#fff',
-        border: '3px solid #222',
-        borderRadius: '12px',
-        boxShadow: '4px 4px 0px #222',
-        transition: 'all 0.15s ease',
+        background: '#FFFFFF',
+        border: '2.5px solid #1E1E1E',
+        borderRadius: '20px',
+        boxShadow: '4px 4px 0px #1E1E1E',
+        transition: 'all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)',
         position: 'relative'
       }}
     >
-      {/* Top Banner Image with Category Overlay */}
-      <div style={{ position: 'relative', height: '180px', background: '#FFF3D6', overflow: 'hidden', borderBottom: '3px solid #222' }}>
+      {/* Clean Cover Image */}
+      <div style={{ position: 'relative', height: '190px', background: '#F3EFE6', overflow: 'hidden', borderBottom: '2.5px solid #1E1E1E' }}>
         <img 
           src={item.image} 
           alt={item.title}
@@ -42,7 +37,7 @@ export default function ItemCard({ item, owner, onSelectItem }) {
         />
 
         {/* Category Pill */}
-        <div style={{ position: 'absolute', top: '10px', left: '10px' }}>
+        <div style={{ position: 'absolute', top: '12px', left: '12px' }}>
           <span className="badge badge-amber">
             <Tag size={11} />
             {item.category}
@@ -50,30 +45,24 @@ export default function ItemCard({ item, owner, onSelectItem }) {
         </div>
 
         {/* Condition Tag */}
-        <div style={{ position: 'absolute', top: '10px', right: '10px' }}>
+        <div style={{ position: 'absolute', top: '12px', right: '12px' }}>
           <span className="badge badge-emerald">
             {item.condition}
           </span>
         </div>
-
-        {/* Status Indicator */}
-        <div style={{ position: 'absolute', bottom: '10px', right: '10px' }}>
-          <span className={`badge ${item.status === 'Available' ? 'badge-cyan' : 'badge-rose'}`}>
-            {item.status}
-          </span>
-        </div>
       </div>
 
-      {/* Card Content */}
-      <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'space-between' }}>
+      {/* Card Content with Generous Whitespace */}
+      <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'space-between' }}>
         <div>
           {/* Title */}
           <h3 style={{ 
-            fontSize: '1.05rem', 
+            fontSize: '1.08rem', 
             fontWeight: 800, 
-            color: '#222', 
-            marginBottom: '8px', 
-            lineHeight: '1.3' 
+            color: '#1E1E1E', 
+            marginBottom: '10px', 
+            lineHeight: '1.35',
+            fontFamily: 'var(--font-heading)'
           }}>
             {item.title}
           </h3>
@@ -83,49 +72,44 @@ export default function ItemCard({ item, owner, onSelectItem }) {
             <img 
               src={owner?.avatar || item.image} 
               alt={owner?.name || "Owner"}
-              style={{ width: '22px', height: '22px', borderRadius: '50%', border: '1px solid #222' }}
+              style={{ width: '24px', height: '24px', borderRadius: '50%', border: '1.5px solid #1E1E1E' }}
             />
-            <span style={{ fontSize: '0.78rem', color: '#555', fontWeight: 700 }}>
+            <span style={{ fontSize: '0.8rem', color: '#555', fontWeight: 700 }}>
               {owner?.name || "Campus Member"}
             </span>
             {owner?.trustScore && (
               <span style={{ 
                 fontSize: '0.7rem', 
-                background: '#FFE66D', 
-                color: '#222', 
-                padding: '1px 5px', 
-                borderRadius: '4px', 
-                border: '1px solid #222',
-                fontWeight: 800,
-                fontFamily: 'var(--font-mono)'
+                background: '#B5EAD7', 
+                color: '#1E1E1E', 
+                padding: '2px 6px', 
+                borderRadius: 'var(--radius-full)', 
+                border: '1.5px solid #1E1E1E',
+                fontWeight: 800
               }}>
                 ★ {owner.trustScore}% Trust
               </span>
             )}
           </div>
 
-          {/* Location & Distance */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.76rem', color: '#666', marginBottom: '14px' }}>
-            <MapPin size={13} color="#FF6B9D" />
-            <span style={{ fontWeight: 600 }}>{item.location}</span>
-            <span style={{ color: '#888' }}>• {item.distance}</span>
+          {/* Location */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.78rem', color: '#666', marginBottom: '16px', fontWeight: 600 }}>
+            <MapPin size={14} color="#FF85A1" />
+            <span>{item.location}</span>
           </div>
         </div>
 
-        {/* Rates & Quick CTA */}
+        {/* Rates & CTA */}
         <div style={{ 
-          paddingTop: '12px', 
-          borderTop: '2px solid #222', 
+          paddingTop: '14px', 
+          borderTop: '2px dashed #1E1E1E', 
           display: 'flex', 
           alignItems: 'center', 
           justifyContent: 'space-between' 
         }}>
           <div>
-            <div style={{ fontSize: '1.15rem', fontWeight: 900, color: '#222', fontFamily: 'var(--font-mono)' }}>
-              ₹{item.dailyRate}<span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#666' }}>/day</span>
-            </div>
-            <div style={{ fontSize: '0.7rem', color: '#666', fontWeight: 600 }}>
-              Deposit: ₹{item.deposit}
+            <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#1E1E1E', fontFamily: 'var(--font-heading)' }}>
+              ₹{item.dailyRate}<span style={{ fontSize: '0.78rem', fontWeight: 600, color: '#666' }}>/day</span>
             </div>
           </div>
 
