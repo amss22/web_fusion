@@ -133,9 +133,9 @@ function CampusApp({ onLogout }) {
                     onChange={(e) => setSortBy(e.target.value)}
                     style={{ width: '180px', padding: '10px 16px', background: '#fff', borderRadius: 'var(--radius-full)' }}
                   >
-                    <option value="trust">⭐ Trust Score</option>
-                    <option value="priceAsc">💰 Price: Low to High</option>
-                    <option value="priceDesc">💎 Price: High to Low</option>
+                    <option value="trust">Trust Score</option>
+                    <option value="priceAsc">Price: Low to High</option>
+                    <option value="priceDesc">Price: High to Low</option>
                   </select>
                 </div>
 
@@ -214,7 +214,7 @@ function CampusApp({ onLogout }) {
                 boxShadow: '4px 4px 0px #1E1E1E'
               }}>
                 <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1E1E1E', marginBottom: '6px', fontFamily: 'var(--font-heading)' }}>
-                  My Exchanges & Borrowing Status 🔄
+                  My Exchanges & Borrowing Status
                 </h1>
                 <p style={{ fontSize: '0.88rem', color: '#333', fontWeight: 600 }}>
                   Track your 10-stage exchange status, physical inspection checklists, and escrow refunds.

@@ -28,7 +28,7 @@ export default function RatingModal({ exchange, onClose, onSubmitRating }) {
         
         <div className="modal-header">
           <div style={{ fontWeight: 800, fontSize: '0.95rem', color: '#222' }}>
-            ⭐ Submit Peer Trust Feedback
+            Submit Peer Trust Feedback
           </div>
           <button onClick={onClose} style={{ background: '#fff', border: '2px solid #222', borderRadius: '6px', cursor: 'pointer', padding: '4px' }}>
             <X size={18} color="#222" />
@@ -55,16 +55,18 @@ export default function RatingModal({ exchange, onClose, onSubmitRating }) {
                     borderRadius: '8px',
                     padding: '8px 12px',
                     cursor: 'pointer',
-                    fontSize: '1.2rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                     boxShadow: '2px 2px 0px #222'
                   }}
                 >
-                  ★
+                  <Star size={18} color="#222" fill={star <= rating ? "#222" : "none"} />
                 </button>
               ))}
             </div>
             <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#FF6B9D' }}>
-              {rating === 5 ? 'Excellent & Punctual! 🌟' : rating >= 4 ? 'Good Peer Experience 👍' : 'Fair Exchange'}
+              {rating === 5 ? 'Excellent & Punctual' : rating >= 4 ? 'Good Peer Experience' : 'Fair Exchange'}
             </div>
           </div>
 

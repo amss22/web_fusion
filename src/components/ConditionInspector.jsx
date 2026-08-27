@@ -29,7 +29,7 @@ export default function ConditionInspector({ exchange, onClose, onVerify }) {
         
         <div className="modal-header">
           <div style={{ fontWeight: 800, fontSize: '0.95rem', color: '#222' }}>
-            📸 Physical Handover & Inspection Checklist
+            Physical Handover & Inspection Checklist
           </div>
           <button onClick={onClose} style={{ background: '#fff', border: '2px solid #222', borderRadius: '6px', cursor: 'pointer', padding: '4px' }}>
             <X size={18} color="#222" />
@@ -48,7 +48,7 @@ export default function ConditionInspector({ exchange, onClose, onVerify }) {
           {/* Photo Comparison */}
           <div>
             <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#222', textTransform: 'uppercase', marginBottom: '8px' }}>
-              📷 Verified Baseline Photos:
+              Verified Baseline Photos:
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
               <div style={{ border: '2px solid #222', borderRadius: '8px', overflow: 'hidden' }}>
@@ -65,7 +65,7 @@ export default function ConditionInspector({ exchange, onClose, onVerify }) {
           {/* Inspection Items */}
           <div>
             <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#222', textTransform: 'uppercase', marginBottom: '8px' }}>
-              ☑️ Physical Inspection Verification Checklist:
+              Physical Inspection Verification Checklist:
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {checklist.map((item, idx) => (

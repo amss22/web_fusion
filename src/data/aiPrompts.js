@@ -1,16 +1,16 @@
 export const PRESET_AI_PROMPTS = [
   {
-    label: "🎬 Media Club Reel Shoot",
+    label: "Media Club Reel Shoot",
     query: "I need to make a reel for my club event tomorrow afternoon",
     category: "Cameras & Audio",
     explanation: "Detected need for high-quality video capture, stable panning, crisp directional audio, and controlled daylight illumination.",
     matchedItemIds: ["item-1", "item-2", "item-3", "item-4"],
     bundleName: "Ultimate Campus Reel & Content Creator Kit",
-    bundleDiscount: 15, // 15% bundle discount
+    bundleDiscount: 15,
     totalValue: "₹1,300/day value"
   },
   {
-    label: "📐 Mechanics & Graphics Exam",
+    label: "Mechanics & Graphics Exam",
     query: "Need to prepare for Applied Mechanics practicals and drawing exam tonight",
     category: "Academic & Calculators",
     explanation: "Identified academic exam requirement: High-precision scientific computation + drafting instruments for machine drawing.",
@@ -20,7 +20,7 @@ export const PRESET_AI_PROMPTS = [
     totalValue: "₹140/day value"
   },
   {
-    label: "⚡ Robotics & IoT Prototype",
+    label: "Robotics & IoT Prototype",
     query: "Need microcontroller and testing instruments to debug our line follower robot",
     category: "Tech & Electronics",
     explanation: "Detected embedded systems project: High-pinout Arduino controller board + precision multimeter for circuit continuity.",
@@ -30,7 +30,7 @@ export const PRESET_AI_PROMPTS = [
     totalValue: "₹240/day value"
   },
   {
-    label: "🏸 Intra-Hostel Badminton Match",
+    label: "Intra-Hostel Badminton Match",
     query: "Hosting an evening badminton doubles match with hostel friends",
     category: "Sports & Fitness",
     explanation: "Detected recreation & sports need: Pair of matched graphite rackets and high-durability nylon shuttles.",
@@ -40,7 +40,7 @@ export const PRESET_AI_PROMPTS = [
     totalValue: "₹100/day value"
   },
   {
-    label: "🎉 Hostel Birthday & Quad Party",
+    label: "Hostel Birthday & Quad Party",
     query: "Organizing an outdoor music jam and dance session in hostel courtyard",
     category: "Event & Decor",
     explanation: "Detected event requirement: High-bass splashproof PA speaker system with wireless connectivity.",

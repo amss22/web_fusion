@@ -32,7 +32,7 @@ export default function ImpactDashboard() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
           <Leaf size={28} color="#222" />
           <h1 style={{ fontSize: '1.6rem', fontWeight: 800, margin: 0, color: '#222' }}>
-            Campus Circular Economy Impact Dashboard 🌱
+            Campus Circular Economy Impact Dashboard
           </h1>
         </div>
         <p style={{ fontSize: '0.9rem', fontWeight: 600, color: '#333' }}>
@@ -132,7 +132,7 @@ export default function ImpactDashboard() {
 
                 <div style={{ textAlign: 'right' }}>
                   <div style={{ fontSize: '0.9rem', fontWeight: 800, color: '#2ECC71', fontFamily: 'var(--font-mono)' }}>
-                    ★ {u.trustScore}%
+                    {u.trustScore}%
                   </div>
                   <div style={{ fontSize: '0.68rem', color: '#666', fontWeight: 700 }}>
                     {u.successfulExchanges} exchanges
@@ -153,7 +153,7 @@ export default function ImpactDashboard() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             <div style={{ background: '#FFF3D6', padding: '12px', border: '2px solid #222', borderRadius: '8px' }}>
               <div style={{ fontWeight: 800, color: '#222', fontSize: '0.88rem', marginBottom: '2px' }}>
-                💡 1. Reduces Student Financial Burden
+                1. Reduces Student Financial Burden
               </div>
               <div style={{ fontSize: '0.78rem', color: '#444' }}>
                 Students save up to 85% by borrowing high-cost gear (cameras, lab sensors, calculators) for exact project durations instead of purchasing outright.
@@ -162,7 +162,7 @@ export default function ImpactDashboard() {
 
             <div style={{ background: '#FFF3D6', padding: '12px', border: '2px solid #222', borderRadius: '8px' }}>
               <div style={{ fontWeight: 800, color: '#222', fontSize: '0.88rem', marginBottom: '2px' }}>
-                ♻️ 2. Maximizes Equipment Lifecycle
+                2. Maximizes Equipment Lifecycle
               </div>
               <div style={{ fontSize: '0.78rem', color: '#444' }}>
                 Prevents idle resources from sitting unused in hostel rooms, increasing utility rate per device by 4.5x.
@@ -171,7 +171,7 @@ export default function ImpactDashboard() {
 
             <div style={{ background: '#FFF3D6', padding: '12px', border: '2px solid #222', borderRadius: '8px' }}>
               <div style={{ fontWeight: 800, color: '#222', fontSize: '0.88rem', marginBottom: '2px' }}>
-                🛡️ 3. Builds Transparent Peer Trust
+                3. Builds Transparent Peer Trust
               </div>
               <div style={{ fontSize: '0.78rem', color: '#444' }}>
                 Escrow locks, damage checks, and mutual ratings foster a safe campus ecosystem backed by faculty moderation.

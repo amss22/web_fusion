@@ -79,7 +79,7 @@ export default function Header({ activeTab, setActiveTab, onOpenAddModal, onLogo
               Campus<span style={{ color: 'var(--pop-pink)' }}>Circular</span>
             </span>
             <div style={{ fontSize: '0.7rem', color: '#666', fontWeight: 700, letterSpacing: '0.04em' }}>
-              Trusted Peer Sharing ✨
+              Trusted Peer Sharing
             </div>
           </div>
         </div>

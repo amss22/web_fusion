@@ -134,7 +134,7 @@ export default function LifecycleTracker({ exchange, onRaiseDispute, onResolveDi
       {/* Current Stage Actions Box */}
       <div style={{ background: '#FFF9E6', border: '2.5px solid #1E1E1E', borderRadius: '18px', padding: '22px', marginBottom: '20px', boxShadow: '3px 3px 0px #1E1E1E' }}>
         <div style={{ fontWeight: 800, color: '#1E1E1E', fontSize: '1rem', marginBottom: '8px', textTransform: 'uppercase', fontFamily: 'var(--font-heading)' }}>
-          📍 Current Action Needed (Stage {exchange.stageIndex}: {LIFECYCLE_STAGES[exchange.stageIndex]?.label})
+          Current Action Needed (Stage {exchange.stageIndex}: {LIFECYCLE_STAGES[exchange.stageIndex]?.label})
         </div>
         <p style={{ fontSize: '0.88rem', color: '#444', marginBottom: '16px', fontWeight: 600 }}>
           {LIFECYCLE_STAGES[exchange.stageIndex]?.desc}
@@ -221,7 +221,7 @@ export default function LifecycleTracker({ exchange, onRaiseDispute, onResolveDi
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
             <div style={{ fontWeight: 800, fontSize: '1.05rem', color: '#1E1E1E', display: 'flex', alignItems: 'center', gap: '8px', fontFamily: 'var(--font-heading)' }}>
               <AlertTriangle size={20} color="#E55A5A" />
-              {exchange.disputeStatus === 'Resolved' ? '✅ DISPUTE RESOLVED & SETTLED' : '⚠️ ACTIVE DISPUTE LOGGED & UNDER REVIEW'}
+              {exchange.disputeStatus === 'Resolved' ? 'DISPUTE RESOLVED & SETTLED' : 'ACTIVE DISPUTE LOGGED & UNDER REVIEW'}
             </div>
             <span className={`badge ${exchange.disputeStatus === 'Resolved' ? 'badge-emerald' : 'badge-rose'}`}>
               Status: {exchange.disputeStatus}

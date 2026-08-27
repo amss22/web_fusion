@@ -110,7 +110,7 @@ export default function ItemDetailModal({ item, onClose, onConfirmRequest }) {
                 <div>
                   <div style={{ fontSize: '0.85rem', fontWeight: 800, color: '#222' }}>{owner.name}</div>
                   <div style={{ fontSize: '0.72rem', color: '#555' }}>
-                    {owner.department} • <strong style={{ color: '#2ECC71' }}>★ {owner.trustScore}% Trust Score</strong>
+                    {owner.department} • <strong style={{ color: '#2ECC71' }}>{owner.trustScore}% Trust Score</strong>
                   </div>
                 </div>
               </div>
@@ -122,7 +122,7 @@ export default function ItemDetailModal({ item, onClose, onConfirmRequest }) {
               {/* Checklist */}
               <div style={{ marginBottom: '16px' }}>
                 <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#222', textTransform: 'uppercase', marginBottom: '8px' }}>
-                  📋 Inspection Checklist Items:
+                  Inspection Checklist Items:
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                   {item.checklistItems?.map((check, i) => (
@@ -141,7 +141,7 @@ export default function ItemDetailModal({ item, onClose, onConfirmRequest }) {
                 
                 <div style={{ background: '#FFE66D', border: '3px solid #222', borderRadius: '12px', padding: '16px', marginBottom: '16px', boxShadow: '3px 3px 0px #222' }}>
                   <div style={{ fontWeight: 800, color: '#222', fontSize: '0.9rem', marginBottom: '12px', textTransform: 'uppercase' }}>
-                    ⏱️ Select Duration:
+                    Select Duration:
                   </div>
 
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '12px' }}>

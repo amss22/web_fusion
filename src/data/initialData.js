@@ -37,7 +37,7 @@ export const INITIAL_USERS = [
     moneySaved: "₹38,900",
     walletBalance: 6800,
     room: "Hostel 1, Room 112",
-    badge: "Campus Star Lender 🌟",
+    badge: "Campus Star Lender",
     phone: "+91 98111 22334"
   },
   {
@@ -78,7 +78,7 @@ export const INITIAL_USERS = [
     moneySaved: "₹3,48,500",
     walletBalance: 50000,
     room: "Admin Block, Room 102",
-    badge: "Official Moderator 🛡️"
+    badge: "Official Moderator"
   }
 ];
 

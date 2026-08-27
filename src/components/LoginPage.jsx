@@ -127,7 +127,7 @@ export default function LoginPage({ onLogin }) {
                   Campus<span style={{ color: 'var(--pop-pink)' }}>Circular</span>
                 </h1>
                 <div style={{ fontSize: '0.76rem', color: '#555', fontWeight: 700, letterSpacing: '0.04em' }}>
-                  WebFusion 2.0 • CodeCrafters ✨
+                  WebFusion 2.0 • CodeCrafters
                 </div>
               </div>
             </div>
@@ -161,14 +161,14 @@ export default function LoginPage({ onLogin }) {
             }}>
               <Sparkles size={18} color="var(--pop-pink)" />
               <span style={{ fontSize: '0.85rem', color: '#1E1E1E', fontWeight: 700, fontStyle: 'italic' }}>
-                "Why buy what someone nearby already has?" 🤔
+                "Why buy what someone nearby already has?"
               </span>
             </div>
           </div>
 
           <div>
             <div style={{ fontSize: '0.72rem', color: '#555', fontWeight: 800, textTransform: 'uppercase', marginBottom: '10px', letterSpacing: '0.05em' }}>
-              ⚡ Campus Stats
+              Campus Stats
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px' }}>
               {impactStats.map((stat, i) => (
@@ -337,7 +337,7 @@ export default function LoginPage({ onLogin }) {
 
             <div style={{ marginBottom: '12px' }}>
               <label style={{ fontSize: '0.76rem', fontWeight: 700, color: '#1E1E1E', display: 'block', marginBottom: '4px' }}>
-                📧 Campus Email:
+                Campus Email:
               </label>
               <input 
                 type="email" className="input-field" required placeholder="yourname@tsec.edu"
@@ -348,7 +348,7 @@ export default function LoginPage({ onLogin }) {
 
             <div style={{ marginBottom: '20px' }}>
               <label style={{ fontSize: '0.76rem', fontWeight: 700, color: '#1E1E1E', display: 'block', marginBottom: '4px' }}>
-                🔒 Password:
+                Password:
               </label>
               <input 
                 type={showPassword ? 'text' : 'password'} className="input-field" required placeholder="Enter password"
@@ -367,10 +367,10 @@ export default function LoginPage({ onLogin }) {
                 fontSize: '1rem'
               }}
             >
-              {isSubmitting ? '⏳ Processing...' : authMode === 'register' ? (
+              {isSubmitting ? 'Processing...' : authMode === 'register' ? (
                 <><UserPlus size={16} /> Create Profile & Sign In</>
               ) : (
-                <><LogIn size={16} /> Sign In as {selectedRole === 'admin' ? 'Admin 🛡️' : 'Student 🎓'}</>
+                <><LogIn size={16} /> Sign In as {selectedRole === 'admin' ? 'Admin' : 'Student'}</>
               )}
             </button>
           </form>

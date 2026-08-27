@@ -59,7 +59,7 @@ export default function CommunityRequests() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
             <Radio size={28} color="#222" />
             <h1 style={{ fontSize: '1.6rem', fontWeight: 800, margin: 0, color: '#222' }}>
-              Campus Gear Broadcast Board 📢
+              Campus Gear Broadcast Board
             </h1>
           </div>
           <p style={{ fontSize: '0.88rem', fontWeight: 600, color: '#222' }}>
@@ -87,7 +87,7 @@ export default function CommunityRequests() {
           animation: 'popIn 0.2s ease-out'
         }}>
           <div style={{ fontWeight: 800, fontSize: '1rem', color: '#222', marginBottom: '14px' }}>
-            📢 Post New Campus Need:
+            Post New Campus Need:
           </div>
 
           <form onSubmit={handleSubmit}>
@@ -143,7 +143,7 @@ export default function CommunityRequests() {
                   <Tag size={10} /> {req.category}
                 </span>
                 <span className={`badge ${req.fulfilled ? 'badge-emerald' : 'badge-amber'}`} style={{ fontSize: '0.68rem' }}>
-                  {req.fulfilled ? 'Fulfilled ✓' : 'Active Request'}
+                  {req.fulfilled ? 'Fulfilled' : 'Active Request'}
                 </span>
               </div>
 

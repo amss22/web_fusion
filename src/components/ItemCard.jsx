@@ -87,7 +87,7 @@ export default function ItemCard({ item, owner, onSelectItem }) {
                 border: '1.5px solid #1E1E1E',
                 fontWeight: 800
               }}>
-                ★ {owner.trustScore}% Trust
+                {owner.trustScore}% Trust
               </span>
             )}
           </div>

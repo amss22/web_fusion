@@ -55,7 +55,7 @@ export default function AdminPanel() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
             <ShieldCheck size={28} color="#222" />
             <h1 style={{ fontSize: '1.6rem', fontWeight: 800, margin: 0, color: '#222' }}>
-              Campus Administration & Governance Panel 🛡️
+              Campus Administration & Governance Panel
             </h1>
           </div>
           <p style={{ fontSize: '0.88rem', fontWeight: 600, color: '#222' }}>
@@ -124,7 +124,7 @@ export default function AdminPanel() {
 
           {disputes.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '30px', color: '#888', fontWeight: 600, fontSize: '0.85rem' }}>
-              ✅ No active disputes! Campus community is operating smoothly.
+              No active disputes! Campus community is operating smoothly.
             </div>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -149,7 +149,7 @@ export default function AdminPanel() {
       <div style={{ background: '#fff', border: '3px solid #222', borderRadius: '16px', padding: '20px', boxShadow: '4px 4px 0px #222' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
           <div style={{ fontWeight: 800, fontSize: '1rem', color: '#222' }}>
-            👥 Campus User Profiles & Moderation ({users.length})
+            Campus User Profiles & Moderation ({users.length})
           </div>
           <input 
             type="text" 
@@ -183,8 +183,8 @@ export default function AdminPanel() {
                       <div style={{ fontSize: '0.68rem', color: '#666' }}>{u.department}</div>
                     </div>
                   </td>
-                  <td style={{ padding: '10px', fontWeight: 700 }}>{u.role === 'admin' ? '🛡️ Admin' : '🎓 Student'}</td>
-                  <td style={{ padding: '10px', fontWeight: 800, color: '#2ECC71', fontFamily: 'var(--font-mono)' }}>★ {u.trustScore}%</td>
+                  <td style={{ padding: '10px', fontWeight: 700 }}>{u.role === 'admin' ? 'Admin' : 'Student'}</td>
+                  <td style={{ padding: '10px', fontWeight: 800, color: '#2ECC71', fontFamily: 'var(--font-mono)' }}>{u.trustScore}%</td>
                   <td style={{ padding: '10px', fontWeight: 700 }}>{u.successfulExchanges}</td>
                   <td style={{ padding: '10px' }}>
                     <span className={`badge ${u.isSuspended ? 'badge-rose' : 'badge-emerald'}`}>

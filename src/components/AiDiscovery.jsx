@@ -5,7 +5,8 @@ import {
   ArrowRight, 
   Bot,
   Sparkles,
-  CheckCircle2
+  CheckCircle2,
+  Package
 } from 'lucide-react';
 
 export default function AiDiscovery({ items, onSelectItem, onSelectBundle }) {
@@ -59,7 +60,7 @@ export default function AiDiscovery({ items, onSelectItem, onSelectBundle }) {
           </div>
           <div>
             <h2 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#1E1E1E', margin: 0, fontFamily: 'var(--font-heading)' }}>
-              AI Need-Based Discovery Engine 🤖
+              AI Need-Based Discovery Engine
             </h2>
             <div style={{ fontSize: '0.82rem', color: '#555', fontWeight: 600 }}>
               Tell us what project you are working on to match gear automatically!
@@ -68,7 +69,7 @@ export default function AiDiscovery({ items, onSelectItem, onSelectBundle }) {
         </div>
 
         <span className="badge badge-purple" style={{ fontSize: '0.75rem' }}>
-          ✨ Smart NLP Match
+          Smart NLP Match
         </span>
       </div>
 
@@ -119,7 +120,7 @@ export default function AiDiscovery({ items, onSelectItem, onSelectBundle }) {
       {/* Preset Prompts */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
         <span style={{ fontSize: '0.78rem', fontWeight: 800, color: '#1E1E1E', textTransform: 'uppercase' }}>
-          💡 Presets:
+          Presets:
         </span>
         {PRESET_AI_PROMPTS.map((preset) => (
           <button
@@ -156,7 +157,7 @@ export default function AiDiscovery({ items, onSelectItem, onSelectBundle }) {
         }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
             <div style={{ fontWeight: 800, color: '#1E1E1E', fontSize: '1.05rem', fontFamily: 'var(--font-heading)' }}>
-              🎯 Match Found: <span style={{ color: 'var(--pop-pink)' }}>{aiResult.bundleName || "Smart Recommendation"}</span>
+              Match Found: <span style={{ color: 'var(--pop-pink)' }}>{aiResult.bundleName || "Smart Recommendation"}</span>
             </div>
             <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#06D6A0' }}>
               {aiResult.confidence || 95}% Confidence
@@ -209,7 +210,7 @@ export default function AiDiscovery({ items, onSelectItem, onSelectBundle }) {
             }}>
               <div>
                 <div style={{ fontSize: '0.92rem', fontWeight: 800, color: '#1E1E1E' }}>
-                  📦 Recommended Bundle Package ({aiResult.discount}% Discount)
+                  Recommended Bundle Package ({aiResult.discount}% Discount)
                 </div>
                 <div style={{ fontSize: '0.8rem', color: '#333', fontWeight: 600 }}>
                   Combined bundle offer for all matched gear
