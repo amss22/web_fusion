@@ -1,0 +1,514 @@
+export const INITIAL_USERS = [
+  {
+    id: "u1",
+    email: "rahul.sharma@tsec.edu",
+    password: "campus2026",
+    name: "Rahul Sharma",
+    role: "student",
+    department: "Mechanical Engineering",
+    year: "3rd Year (Semester 5)",
+    avatar: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=150&q=80",
+    verified: true,
+    trustScore: 94,
+    rating: 4.8,
+    successfulExchanges: 18,
+    lateReturns: 1,
+    disputes: 0,
+    moneySaved: "₹14,200",
+    walletBalance: 2500,
+    room: "Hostel 3, Room 204",
+    phone: "+91 98765 43210"
+  },
+  {
+    id: "u2",
+    email: "priya.nair@tsec.edu",
+    password: "campus2026",
+    name: "Priya Nair",
+    role: "student",
+    department: "Computer Science & Engg",
+    year: "Final Year (Semester 7)",
+    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80",
+    verified: true,
+    trustScore: 98,
+    rating: 4.95,
+    successfulExchanges: 42,
+    lateReturns: 0,
+    disputes: 0,
+    moneySaved: "₹38,900",
+    walletBalance: 6800,
+    room: "Hostel 1, Room 112",
+    badge: "Campus Star Lender 🌟",
+    phone: "+91 98111 22334"
+  },
+  {
+    id: "u3",
+    email: "rohan.mehta@tsec.edu",
+    password: "campus2026",
+    name: "Rohan Mehta",
+    role: "student",
+    department: "Electronics & Telecom",
+    year: "2nd Year (Semester 3)",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80",
+    verified: true,
+    trustScore: 89,
+    rating: 4.6,
+    successfulExchanges: 9,
+    lateReturns: 1,
+    disputes: 1,
+    moneySaved: "₹6,500",
+    walletBalance: 1200,
+    room: "Day Scholar (Andheri West)",
+    phone: "+91 97654 32198"
+  },
+  {
+    id: "admin1",
+    email: "admin@tsec.edu",
+    password: "admin2026",
+    name: "Dr. V. Sharma (Moderator)",
+    role: "admin",
+    department: "Student Affairs & Innovation Cell",
+    year: "Faculty In-Charge",
+    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&q=80",
+    verified: true,
+    trustScore: 100,
+    rating: 5.0,
+    successfulExchanges: 1540,
+    lateReturns: 0,
+    disputes: 0,
+    moneySaved: "₹3,48,500",
+    walletBalance: 50000,
+    room: "Admin Block, Room 102",
+    badge: "Official Moderator 🛡️"
+  }
+];
+
+export const INITIAL_ITEMS = [
+  {
+    id: "item-1",
+    title: "Sony Alpha A7 III 4K Mirrorless Camera",
+    category: "Cameras & Audio",
+    ownerId: "u2",
+    hourlyRate: 150,
+    dailyRate: 650,
+    deposit: 3000,
+    condition: "Like New",
+    status: "Available",
+    isApproved: true,
+    location: "Block A - Media & Coding Lab",
+    distance: "120m away",
+    image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=600&q=80",
+    description: "Professional full-frame mirrorless camera for 4K video recording, reels, short films, and campus event coverage. Includes 28-70mm lens, 2x batteries, and 64GB high-speed SD card.",
+    includedAccessories: ["28-70mm f/3.5-5.6 Lens", "2x 2280mAh Batteries", "Dual Slot USB Charger", "64GB Sandisk Extreme Pro SD", "Padded Carry Bag"],
+    borrowingRules: "Handle with neck strap at all times. Do not touch sensor glass. Return with 100% charged battery.",
+    checklistItems: [
+      { name: "Camera body free of drops or deep scratches", defaultChecked: true },
+      { name: "Lens glass clean & free of fungus/scratches", defaultChecked: true },
+      { name: "Sensor clean & functional shutter", defaultChecked: true },
+      { name: "All 2 batteries & charger present", defaultChecked: true },
+      { name: "64GB SD Card working & formatted", defaultChecked: true }
+    ],
+    usageCount: 28,
+    rating: 4.9,
+    reviews: 19
+  },
+  {
+    id: "item-2",
+    title: "Heavy Duty Fluid Head Aluminum Video Tripod",
+    category: "Cameras & Audio",
+    ownerId: "u2",
+    hourlyRate: 40,
+    dailyRate: 180,
+    deposit: 800,
+    condition: "Excellent",
+    status: "Available",
+    isApproved: true,
+    location: "Block A - Media & Coding Lab",
+    distance: "120m away",
+    image: "https://images.unsplash.com/photo-1588854337236-6889d631faa8?auto=format&fit=crop&w=600&q=80",
+    description: "Stable fluid-head video tripod with smooth 360-degree pan & tilt. Quick release plate included. Extends up to 180cm height.",
+    includedAccessories: ["Quick Release Plate", "Carrying Bag with Strap", "Hex Key Tool"],
+    borrowingRules: "Tighten locks before mounting heavy gear. Do not force pan handle.",
+    checklistItems: [
+      { name: "Fluid head smooth pan & tilt motion", defaultChecked: true },
+      { name: "All 3 leg lock clips firmly grip", defaultChecked: true },
+      { name: "Quick release plate with 1/4 screw intact", defaultChecked: true }
+    ],
+    usageCount: 16,
+    rating: 4.8,
+    reviews: 12
+  },
+  {
+    id: "item-3",
+    title: "Rode Wireless GO II Dual Lavalier Mic Kit",
+    category: "Cameras & Audio",
+    ownerId: "u3",
+    hourlyRate: 60,
+    dailyRate: 250,
+    deposit: 1200,
+    condition: "Like New",
+    status: "Available",
+    isApproved: true,
+    location: "Block D - Electronics Lab",
+    distance: "250m away",
+    image: "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&w=600&q=80",
+    description: "Dual-channel wireless microphone system. Crystal clear audio for interviews, reels, podcasts, and outdoor video shoots. Range up to 200m.",
+    includedAccessories: ["2x Transmitters (TX)", "1x Receiver (RX)", "3x Furry Windshields", "3.5mm TRS cable", "USB-C charging cable"],
+    borrowingRules: "Always use furry windshields outdoors. Return in hard zipper case.",
+    checklistItems: [
+      { name: "Both TX units pair instantly with RX", defaultChecked: true },
+      { name: "Both internal microphones clean", defaultChecked: true },
+      { name: "All 3 windshields and 3.5mm cable included", defaultChecked: true }
+    ],
+    usageCount: 14,
+    rating: 4.7,
+    reviews: 9
+  },
+  {
+    id: "item-4",
+    title: "Godox SL60W LED Continuous Video Light + Softbox",
+    category: "Cameras & Audio",
+    ownerId: "u2",
+    hourlyRate: 50,
+    dailyRate: 220,
+    deposit: 1000,
+    condition: "Good",
+    status: "Available",
+    isApproved: true,
+    location: "Block A - Media Lab",
+    distance: "120m away",
+    image: "https://images.unsplash.com/photo-1524712245354-2c4e5e7121c0?auto=format&fit=crop&w=600&q=80",
+    description: "60W 5600K Daylight LED continuous lighting with Bowens mount 60x90cm softbox with honeycomb grid. Perfect for portrait, studio and reel lighting.",
+    includedAccessories: ["SL60W Light Body", "Standard Reflector", "60x90cm Softbox with Diffusers", "Power Cable", "Light Stand 2m"],
+    borrowingRules: "Allow light to cool for 5 minutes before packing. Indoor use only.",
+    checklistItems: [
+      { name: "LED bulb powers on with dimming knob working", defaultChecked: true },
+      { name: "Cooling fan operates quietly", defaultChecked: true },
+      { name: "Softbox rods and diffusers intact", defaultChecked: true }
+    ],
+    usageCount: 22,
+    rating: 4.9,
+    reviews: 15
+  },
+  {
+    id: "item-5",
+    title: "Casio FX-991CW Advanced Scientific Calculator",
+    category: "Academic & Calculators",
+    ownerId: "u1",
+    hourlyRate: 15,
+    dailyRate: 60,
+    deposit: 500,
+    condition: "Like New",
+    status: "Available",
+    isApproved: true,
+    location: "Block C - Mech Dept",
+    distance: "50m away",
+    image: "https://images.unsplash.com/photo-1594980596870-8aa52a78d8cd?auto=format&fit=crop&w=600&q=80",
+    description: "Latest ClassWiz scientific calculator with 540+ functions, matrix operations, quadratic equation solver, and high-res natural textbook display. Allowed in university exams.",
+    includedAccessories: ["Hard Slide-on Case", "Quick Reference Card"],
+    borrowingRules: "Do not write with pen/markers on case. Return with battery working.",
+    checklistItems: [
+      { name: "LCD screen display crisp without missing pixels", defaultChecked: true },
+      { name: "All numeric & scientific keys respond freely", defaultChecked: true },
+      { name: "Original slide protective cover included", defaultChecked: true }
+    ],
+    usageCount: 45,
+    rating: 5.0,
+    reviews: 32
+  },
+  {
+    id: "item-6",
+    title: "Omega Engineering Mini Drafter & Drafting Board Kit",
+    category: "Academic & Calculators",
+    ownerId: "u1",
+    hourlyRate: 20,
+    dailyRate: 80,
+    deposit: 600,
+    condition: "Good",
+    status: "Available",
+    isApproved: true,
+    location: "Hostel 3, Room 204",
+    distance: "180m away",
+    image: "https://images.unsplash.com/photo-1581291518655-9523c932edcf?auto=format&fit=crop&w=600&q=80",
+    description: "Standard engineering graphics mini drafter with stainless steel clamp, clear transparent scales, drawing clips, and roller scale for machine drawing and CAD graphics coursework.",
+    includedAccessories: ["Mini Drafter with Clamps", "A2 Hard Drafting Sheet Board", "Set Squares (45 & 60 deg)", "Pro-Circle & Roller Scale"],
+    borrowingRules: "Do not overtighten clamp screw on board edges. Keep arms calibrated.",
+    checklistItems: [
+      { name: "Mini drafter arm pivot rotation is zero-backlash", defaultChecked: true },
+      { name: "Scale markings clearly legible", defaultChecked: true },
+      { name: "Board surface clean without punctures", defaultChecked: true }
+    ],
+    usageCount: 19,
+    rating: 4.8,
+    reviews: 14
+  },
+  {
+    id: "item-7",
+    title: "Arduino Mega 2560 R3 Starter & Sensor Robotics Kit",
+    category: "Tech & Electronics",
+    ownerId: "u3",
+    hourlyRate: 35,
+    dailyRate: 150,
+    deposit: 1200,
+    condition: "Excellent",
+    status: "Available",
+    isApproved: true,
+    location: "Block D - Robotics Room",
+    distance: "210m away",
+    image: "https://images.unsplash.com/photo-1553406830-ef2513450d76?auto=format&fit=crop&w=600&q=80",
+    description: "Complete electronics prototyping bundle: Arduino Mega 2560 board with 54 digital I/O pins, Ultrasonic sensors, L298N motor driver, OLED display, servo motor, and 65x jumper wires.",
+    includedAccessories: ["Arduino Mega Board", "USB Programming Cable", "Breadboard 830-point", "Sensor Kit (Ultrasonic, IR, DHT11)", "L298N Dual Motor Driver", "Plastic Storage Box"],
+    borrowingRules: "Check voltage before connecting external power supply. Avoid short circuits on 5V rail.",
+    checklistItems: [
+      { name: "Mega board boots & detected on COM port", defaultChecked: true },
+      { name: "All sensor pins straight & unbent", defaultChecked: true },
+      { name: "Storage box organized with components", defaultChecked: true }
+    ],
+    usageCount: 11,
+    rating: 4.7,
+    reviews: 8
+  },
+  {
+    id: "item-8",
+    title: "Yonex Carbonex 8000 Plus Graphite Badminton Kit (Pair)",
+    category: "Sports & Fitness",
+    ownerId: "u3",
+    hourlyRate: 25,
+    dailyRate: 100,
+    deposit: 500,
+    condition: "Good",
+    status: "Available",
+    isApproved: true,
+    location: "Campus Sports Complex / Hostel 1",
+    distance: "300m away",
+    image: "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?auto=format&fit=crop&w=600&q=80",
+    description: "Pair of lightweight full graphite badminton rackets strung at 24 lbs with G4 grip. Comes with a 3-pack tube of Yonex Mavis 350 nylon shuttlecocks and full cover case.",
+    includedAccessories: ["2x Yonex Carbonex 8000 Rackets", "1x Tube of 3 Mavis 350 Shuttlecocks", "Double Compartment Full Cover"],
+    borrowingRules: "Do not clash rackets on hard court floor. Wipe grips after play.",
+    checklistItems: [
+      { name: "Both racket frames free of cracks", defaultChecked: true },
+      { name: "Strings tight & unfrayed", defaultChecked: true },
+      { name: "Shuttlecock skirt condition good", defaultChecked: true }
+    ],
+    usageCount: 31,
+    rating: 4.8,
+    reviews: 24
+  },
+  {
+    id: "item-9",
+    title: "Fluke 101 Pocket Digital Multimeter with Gold Leads",
+    category: "Tech & Electronics",
+    ownerId: "u2",
+    hourlyRate: 20,
+    dailyRate: 90,
+    deposit: 800,
+    condition: "Like New",
+    status: "Available",
+    isApproved: true,
+    location: "Block D - Electronics Lab",
+    distance: "230m away",
+    image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80",
+    description: "Industry-grade CAT III 600V safety certified digital multimeter for measuring AC/DC Voltage, Resistance, Capacitance, Frequency, and Continuity with audible beeper.",
+    includedAccessories: ["Fluke TL75 Test Leads", "2x AAA Batteries Installed", "Protective Holster"],
+    borrowingRules: "Always start at highest voltage range when testing unknown circuits.",
+    checklistItems: [
+      { name: "Display turns on with backlight", defaultChecked: true },
+      { name: "Continuity beeper triggers on shorting probes", defaultChecked: true },
+      { name: "Probes insulation in perfect condition", defaultChecked: true }
+    ],
+    usageCount: 17,
+    rating: 4.9,
+    reviews: 13
+  },
+  {
+    id: "item-10",
+    title: "JBL PartyBox 110 Portable 160W High-Bass Bluetooth Speaker",
+    category: "Event & Decor",
+    ownerId: "u2",
+    hourlyRate: 80,
+    dailyRate: 350,
+    deposit: 2000,
+    condition: "Excellent",
+    status: "Available",
+    isApproved: true,
+    location: "Hostel 1 - Common Room",
+    distance: "150m away",
+    image: "https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=600&q=80",
+    description: "160 Watts powerful sound with dynamic light show synced to beat, splash-proof IPX4 design, mic & guitar inputs, and 12 hours battery life. Ideal for hostel fests and club gatherings.",
+    includedAccessories: ["AC Power Cord", "1/4 inch Mic Cable Adapter", "Waterproof Dust Cover"],
+    borrowingRules: "Keep away from direct water immersion. Charge fully before returning.",
+    checklistItems: [
+      { name: "Both woofers & tweeters produce distortion-free sound", defaultChecked: true },
+      { name: "RGB front LED ring lighting functional", defaultChecked: true },
+      { name: "Battery holds charge for 6+ hours", defaultChecked: true }
+    ],
+    usageCount: 23,
+    rating: 4.9,
+    reviews: 18
+  }
+];
+
+export const INITIAL_EXCHANGES = [
+  {
+    id: "EX-8821",
+    itemId: "item-1",
+    itemTitle: "Sony Alpha A7 III 4K Mirrorless Camera",
+    itemImage: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=600&q=80",
+    lenderId: "u2",
+    lenderName: "Priya Nair",
+    lenderAvatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80",
+    borrowerId: "u1",
+    borrowerName: "Rahul Sharma",
+    borrowerAvatar: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=150&q=80",
+    
+    status: "Handover",
+    stageIndex: 3,
+    
+    durationType: "Daily",
+    durationValue: 2,
+    
+    borrowingCharge: 1300,
+    platformFeeRate: 0.05,
+    platformFee: 65,
+    securityDeposit: 3000,
+    totalEscrowAmount: 4365,
+    
+    startDate: "2026-08-27T10:00:00",
+    returnDeadline: "2026-08-29T10:00:00",
+    actualReturnDate: null,
+    
+    pickupLocation: "Media Lab, Block A (2nd Floor)",
+    purpose: "Shooting college annual cultural fest teaser reel & student interviews",
+    
+    preBorrowPhotos: [
+      "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=600&q=80"
+    ],
+    postReturnPhotos: [],
+    preChecklistVerified: true,
+    postChecklistVerified: false,
+    
+    lateHours: 0,
+    lateFee: 0,
+    damageReported: false,
+    damageDescription: "",
+    damageDeduction: 0,
+    damagePhotos: [],
+    disputeRaised: false,
+    disputeStatus: "None",
+    disputeResolutionNote: "",
+    
+    refundToBorrower: 3000,
+    payoutToLender: 1300,
+    settlementCompleted: false,
+    
+    borrowerRating: null,
+    borrowerFeedback: "",
+    lenderRating: null,
+    lenderFeedback: "",
+    
+    timeline: [
+      { stage: "Requested", time: "Aug 27, 09:15 AM", note: "Rahul requested item with ₹4,365 escrow commitment." },
+      { stage: "Accepted", time: "Aug 27, 09:20 AM", note: "Priya accepted request. Pickup set at Media Lab." },
+      { stage: "Handover", time: "Aug 27, 09:45 AM", note: "Pre-borrow condition check photos verified." }
+    ]
+  },
+  {
+    id: "EX-9043",
+    itemId: "item-5",
+    itemTitle: "Casio FX-991CW Scientific Calculator",
+    itemImage: "https://images.unsplash.com/photo-1594980596870-8aa52a78d8cd?auto=format&fit=crop&w=600&q=80",
+    lenderId: "u1",
+    lenderName: "Rahul Sharma",
+    lenderAvatar: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=150&q=80",
+    borrowerId: "u3",
+    borrowerName: "Rohan Mehta",
+    borrowerAvatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80",
+    
+    status: "Return Due",
+    stageIndex: 5,
+    
+    durationType: "Daily",
+    durationValue: 1,
+    
+    borrowingCharge: 60,
+    platformFeeRate: 0.05,
+    platformFee: 3,
+    securityDeposit: 500,
+    totalEscrowAmount: 563,
+    
+    startDate: "2026-08-26T08:00:00",
+    returnDeadline: "2026-08-27T08:00:00",
+    actualReturnDate: null,
+    
+    pickupLocation: "Canteen Area, Main Bldg",
+    purpose: "Engineering Math mid-term exam",
+    
+    preBorrowPhotos: [
+      "https://images.unsplash.com/photo-1594980596870-8aa52a78d8cd?auto=format&fit=crop&w=600&q=80"
+    ],
+    postReturnPhotos: [],
+    preChecklistVerified: true,
+    postChecklistVerified: false,
+    
+    lateHours: 3,
+    lateFee: 50,
+    damageReported: false,
+    damageDescription: "",
+    damageDeduction: 0,
+    damagePhotos: [],
+    disputeRaised: false,
+    disputeStatus: "None",
+    
+    refundToBorrower: 450,
+    payoutToLender: 110,
+    settlementCompleted: false,
+    
+    timeline: [
+      { stage: "Requested", time: "Aug 26, 07:30 AM", note: "Rohan requested for exam." },
+      { stage: "Accepted", time: "Aug 26, 07:45 AM", note: "Rahul approved." },
+      { stage: "Handover", time: "Aug 26, 08:00 AM", note: "Item handed over in Main Canteen." },
+      { stage: "Borrowed", time: "Aug 26, 08:05 AM", note: "Resource active with borrower." },
+      { stage: "Return Due", time: "Aug 27, 08:00 AM", note: "Return due window passed. Overdue timer active." }
+    ]
+  }
+];
+
+export const INITIAL_COMMUNITY_REQUESTS = [
+  {
+    id: "req-1",
+    title: "Urgent: Need 3D Printer PLA Filament (1.75mm Black/White)",
+    category: "Tech & Electronics",
+    requesterId: "u1",
+    requesterName: "Rahul Sharma",
+    requesterAvatar: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=150&q=80",
+    department: "Mechanical Engg, 3rd Yr",
+    neededDate: "Today by 4:00 PM",
+    budget: "₹300 - ₹500",
+    description: "Our Capstone project gearbox casing prototype print ran out of filament halfway. Looking for 300g-500g of 1.75mm PLA filament to finish before guide evaluation.",
+    responses: 2,
+    fulfilled: false
+  },
+  {
+    id: "req-2",
+    title: "TI-84 Plus CE Graphing Calculator for Advanced Calculus",
+    category: "Academic & Calculators",
+    requesterId: "u3",
+    requesterName: "Rohan Mehta",
+    requesterAvatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80",
+    department: "EXTC, 2nd Yr",
+    neededDate: "Tomorrow Morning",
+    budget: "₹100/day",
+    description: "Need graphing calculator with matrix and integral plotting capability for 2 days study camp.",
+    responses: 1,
+    fulfilled: false
+  }
+];
+
+export const INITIAL_PLATFORM_CONFIG = {
+  platformFeePercent: 5,
+  minPlatformFee: 10,
+  lateFeePerHour: 25,
+  maxLateFeePerDay: 200,
+  disputeGracePeriodHours: 24,
+  allowPeerChat: true,
+  autoApproveVerifiedListings: false
+};
