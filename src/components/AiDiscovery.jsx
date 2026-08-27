@@ -3,7 +3,9 @@ import { PRESET_AI_PROMPTS, parseNaturalLanguageQuery } from '../data/aiPrompts'
 import { 
   Zap, 
   ArrowRight, 
-  Bot
+  Bot,
+  Sparkles,
+  CheckCircle2
 } from 'lucide-react';
 
 export default function AiDiscovery({ items, onSelectItem, onSelectBundle }) {
@@ -20,7 +22,7 @@ export default function AiDiscovery({ items, onSelectItem, onSelectBundle }) {
       const result = parseNaturalLanguageQuery(searchQuery, items);
       setAiResult(result);
       setIsAnalyzing(false);
-    }, 600);
+    }, 500);
   };
 
   const handleSelectPreset = (preset) => {
@@ -121,7 +123,7 @@ export default function AiDiscovery({ items, onSelectItem, onSelectBundle }) {
         </span>
         {PRESET_AI_PROMPTS.map((preset) => (
           <button
-            key={preset.id}
+            key={preset.label}
             onClick={() => handleSelectPreset(preset)}
             style={{
               padding: '6px 14px',
@@ -136,7 +138,7 @@ export default function AiDiscovery({ items, onSelectItem, onSelectBundle }) {
               transition: 'all 0.15s ease'
             }}
           >
-            {preset.icon} {preset.label}
+            {preset.label}
           </button>
         ))}
       </div>
@@ -154,19 +156,19 @@ export default function AiDiscovery({ items, onSelectItem, onSelectBundle }) {
         }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
             <div style={{ fontWeight: 800, color: '#1E1E1E', fontSize: '1.05rem', fontFamily: 'var(--font-heading)' }}>
-              🎯 Match Found: <span style={{ color: 'var(--pop-pink)' }}>{aiResult.intentName}</span>
+              🎯 Match Found: <span style={{ color: 'var(--pop-pink)' }}>{aiResult.bundleName || "Smart Recommendation"}</span>
             </div>
             <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#06D6A0' }}>
-              {aiResult.confidenceScore}% Confidence
+              {aiResult.confidence || 95}% Confidence
             </div>
           </div>
 
           <p style={{ fontSize: '0.88rem', color: '#555', marginBottom: '18px', fontWeight: 500 }}>
-            {aiResult.reasoning}
+            {aiResult.explanation}
           </p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '14px', marginBottom: '18px' }}>
-            {aiResult.matchedItems.map(item => (
+            {(aiResult.items || []).map(item => (
               <div 
                 key={item.id}
                 onClick={() => onSelectItem(item)}
@@ -195,7 +197,7 @@ export default function AiDiscovery({ items, onSelectItem, onSelectBundle }) {
             ))}
           </div>
 
-          {aiResult.bundleOption && (
+          {aiResult.discount > 0 && (
             <div style={{
               background: '#B5EAD7',
               border: '2px solid #1E1E1E',
@@ -207,17 +209,17 @@ export default function AiDiscovery({ items, onSelectItem, onSelectBundle }) {
             }}>
               <div>
                 <div style={{ fontSize: '0.92rem', fontWeight: 800, color: '#1E1E1E' }}>
-                  📦 Recommended Bundle Package ({aiResult.bundleOption.discount}% Discount)
+                  📦 Recommended Bundle Package ({aiResult.discount}% Discount)
                 </div>
                 <div style={{ fontSize: '0.8rem', color: '#333', fontWeight: 600 }}>
-                  Total Package: ₹{aiResult.bundleOption.totalPrice}/day (You save ₹{aiResult.bundleOption.savings})
+                  Combined bundle offer for all matched gear
                 </div>
               </div>
               <button 
-                onClick={() => onSelectBundle(aiResult.bundleOption)}
+                onClick={() => onSelectBundle && onSelectBundle(aiResult)}
                 className="btn btn-sm btn-primary"
               >
-                Borrow Bundle
+                Borrow Package
                 <ArrowRight size={14} />
               </button>
             </div>
