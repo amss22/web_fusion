@@ -1,131 +1,91 @@
 import React, { useState } from 'react';
-import { useCampus } from '../context/CampusContext';
-import confetti from 'canvas-confetti';
 import { 
   Star, 
   X, 
-  Award, 
-  Sparkles, 
   CheckCircle2, 
-  HeartHandshake 
+  Heart, 
+  MessageSquare,
+  Award
 } from 'lucide-react';
 
-export default function RatingModal({ exchange, onClose }) {
-  const { submitRating, currentUser } = useCampus();
+export default function RatingModal({ exchange, onClose, onSubmitRating }) {
   const [rating, setRating] = useState(5);
-  const [hoverRating, setHoverRating] = useState(0);
-  const [feedback, setFeedback] = useState('Item was in flawless condition and return was right on time! Highly recommended campus peer.');
-
-  const isLender = currentUser.id === exchange.lenderId;
-  const peerName = isLender ? exchange.borrowerName : exchange.lenderName;
+  const [feedback, setFeedback] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Trigger celebratory confetti
-    try {
-      confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 }
-      });
-    } catch (err) {
-      console.log(err);
-    }
-
-    submitRating(exchange.id, {
-      borrowerRating: isLender ? undefined : rating,
-      borrowerFeedback: isLender ? undefined : feedback,
-      lenderRating: isLender ? rating : undefined,
-      lenderFeedback: isLender ? feedback : undefined
+    onSubmitRating(exchange.id, {
+      borrowerRating: rating,
+      borrowerFeedback: feedback,
+      lenderRating: rating,
+      lenderFeedback: feedback
     });
-
     onClose();
   };
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" style={{ maxWidth: '520px' }} onClick={e => e.stopPropagation()}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '500px' }}>
+        
         <div className="modal-header">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <Award size={20} color="var(--accent-amber)" />
-            <h3 style={{ fontSize: '1.15rem', margin: 0, color: '#fff' }}>
-              Rate Peer & Update Trust Score
-            </h3>
+          <div style={{ fontWeight: 800, fontSize: '0.95rem', color: '#222' }}>
+            ⭐ Submit Peer Trust Feedback
           </div>
-          <button onClick={onClose} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer' }}>✕</button>
+          <button onClick={onClose} style={{ background: '#fff', border: '2px solid #222', borderRadius: '6px', cursor: 'pointer', padding: '4px' }}>
+            <X size={18} color="#222" />
+          </button>
         </div>
 
-        <form onSubmit={handleSubmit}>
-          <div className="modal-body" style={{ textAlign: 'center' }}>
-            
-            <div style={{
-              width: '64px',
-              height: '64px',
-              borderRadius: '50%',
-              background: 'rgba(245, 158, 11, 0.15)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              margin: '0 auto 16px',
-              border: '2px solid var(--accent-amber)'
-            }}>
-              <HeartHandshake size={32} color="var(--accent-amber)" />
+        <form onSubmit={handleSubmit} className="modal-body" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: '0.88rem', fontWeight: 700, color: '#222', marginBottom: '8px' }}>
+              How was your experience sharing <strong style={{ color: '#FF6B9D' }}>{exchange.itemTitle}</strong>?
             </div>
-
-            <h4 style={{ fontSize: '1.1rem', color: '#fff', marginBottom: '6px' }}>
-              How was your exchange with {peerName}?
-            </h4>
-            <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', marginBottom: '20px' }}>
-              Your rating directly updates their campus Trust Score and boosts community reliability.
-            </p>
-
-            {/* Star Rating Interactive Selector */}
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginBottom: '20px' }}>
-              {[1, 2, 3, 4, 5].map(star => (
+            
+            {/* Star selector */}
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', margin: '12px 0' }}>
+              {[1, 2, 3, 4, 5].map((star) => (
                 <button
-                  key={star}
                   type="button"
+                  key={star}
                   onClick={() => setRating(star)}
-                  onMouseEnter={() => setHoverRating(star)}
-                  onMouseLeave={() => setHoverRating(0)}
-                  style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px' }}
+                  style={{
+                    background: star <= rating ? '#FFE66D' : '#fff',
+                    border: '2px solid #222',
+                    borderRadius: '8px',
+                    padding: '8px 12px',
+                    cursor: 'pointer',
+                    fontSize: '1.2rem',
+                    boxShadow: '2px 2px 0px #222'
+                  }}
                 >
-                  <Star 
-                    size={32} 
-                    fill={(hoverRating || rating) >= star ? '#f59e0b' : 'transparent'} 
-                    color={(hoverRating || rating) >= star ? '#f59e0b' : 'var(--text-muted)'} 
-                  />
+                  ★
                 </button>
               ))}
             </div>
-
-            {/* Feedback text area */}
-            <div style={{ textAlign: 'left', marginBottom: '14px' }}>
-              <label style={{ fontSize: '0.8rem', color: '#e2e8f0', display: 'block', marginBottom: '6px' }}>
-                Peer Testimonial / Review:
-              </label>
-              <textarea 
-                className="input-field"
-                rows="3"
-                value={feedback}
-                onChange={e => setFeedback(e.target.value)}
-                placeholder="Share your experience (on-time return, gear condition, friendliness)..."
-                required
-              />
+            <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#FF6B9D' }}>
+              {rating === 5 ? 'Excellent & Punctual! 🌟' : rating >= 4 ? 'Good Peer Experience 👍' : 'Fair Exchange'}
             </div>
-
           </div>
 
-          <div className="modal-footer">
-            <button type="button" onClick={onClose} className="btn btn-secondary btn-sm">
-              Skip
-            </button>
-            <button type="submit" className="btn btn-emerald btn-sm">
-              <Sparkles size={16} />
-              Submit Rating & Close Exchange
-            </button>
+          <div>
+            <label style={{ fontSize: '0.76rem', fontWeight: 700, color: '#222', display: 'block', marginBottom: '4px' }}>
+              Peer Review & Comments:
+            </label>
+            <textarea 
+              className="input-field" 
+              rows="3" 
+              placeholder="e.g. Great communication, item was kept in perfect condition!" 
+              value={feedback} 
+              onChange={(e) => setFeedback(e.target.value)} 
+            />
           </div>
+
+          <button type="submit" className="btn btn-emerald" style={{ width: '100%', padding: '12px' }}>
+            Submit Rating & Update Trust Scores
+          </button>
+
         </form>
 
       </div>

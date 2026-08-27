@@ -14,7 +14,6 @@ import {
   ShieldAlert,
   UserCheck,
   Building2,
-  Sparkle,
   LogOut
 } from 'lucide-react';
 
@@ -22,36 +21,37 @@ export default function Header({ activeTab, setActiveTab, onOpenAddModal, onLogo
   const { 
     users, 
     currentUser, 
+    currentUserId, 
     switchUser, 
     exchanges, 
-    notifications, 
-    platformConfig 
+    communityRequests 
   } = useCampus();
 
   const [showUserDropdown, setShowUserDropdown] = useState(false);
-  const [showNotifications, setShowNotifications] = useState(false);
 
-  // Active pending actions count
-  const activeExchangesCount = exchanges.filter(ex => 
-    ex.status !== 'Rated' && (ex.borrowerId === currentUser.id || ex.lenderId === currentUser.id || currentUser.role === 'admin')
-  ).length;
-
-  const pendingDisputesCount = exchanges.filter(ex => ex.disputeRaised && ex.disputeStatus === 'Under Review').length;
+  // Active counts for badges
+  const activeExchangesCount = exchanges.filter(ex => ex.stageIndex > 0 && ex.stageIndex < 9).length;
+  const activeRequestsCount = communityRequests.filter(r => !r.fulfilled).length;
+  const pendingDisputesCount = exchanges.filter(ex => ex.disputeRaised && ex.disputeStatus !== 'Resolved').length;
 
   return (
     <header style={{
+      background: '#FFF8E7',
+      borderBottom: '3px solid #222',
       position: 'sticky',
       top: 0,
-      zIndex: 500,
-      background: 'rgba(9, 13, 22, 0.88)',
-      backdropFilter: 'blur(20px)',
-      WebkitBackdropFilter: 'blur(20px)',
-      borderBottom: '1px solid var(--border-card)',
-      padding: '12px 0'
+      zIndex: 100,
+      boxShadow: '0 4px 0px #222'
     }}>
-      <div className="container flex-between" style={{ gap: '16px' }}>
+      <div className="container" style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        height: '72px',
+        padding: '0 20px'
+      }}>
         
-        {/* Brand Logo */}
+        {/* Brand Logo & Name */}
         <div 
           onClick={() => setActiveTab('browse')}
           style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer' }}
@@ -59,110 +59,158 @@ export default function Header({ activeTab, setActiveTab, onOpenAddModal, onLogo
           <div style={{
             width: '42px',
             height: '42px',
-            borderRadius: '12px',
-            background: 'linear-gradient(135deg, #06b6d4, #10b981)',
+            borderRadius: '10px',
+            background: '#FFE66D',
+            border: '3px solid #222',
+            boxShadow: '3px 3px 0px #222',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: '0 0 20px rgba(6, 182, 212, 0.4)'
+            justifyContent: 'center'
           }}>
-            <Repeat size={24} color="#fff" />
+            <Repeat size={24} color="#222" />
           </div>
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
               <span style={{ 
                 fontFamily: 'var(--font-heading)', 
-                fontSize: '1.25rem', 
                 fontWeight: 800, 
-                letterSpacing: '-0.02em',
-                background: 'linear-gradient(90deg, #fff, #94a3b8)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent'
+                fontSize: '1.4rem', 
+                color: '#222'
               }}>
-                Campus<span style={{ color: 'var(--accent-cyan)', WebkitTextFillColor: 'var(--accent-cyan)' }}>Circular</span>
+                Campus<span style={{ color: '#FF6B9D' }}>Circular</span>
               </span>
-              <span className="badge badge-emerald" style={{ fontSize: '0.68rem', padding: '2px 6px' }}>
-                LIVE CAMPUS
+              <span className="badge badge-amber" style={{ fontSize: '0.65rem', padding: '2px 6px' }}>
+                90s RETRO
               </span>
             </div>
-            <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)', fontWeight: 500 }}>
-              "Why buy what someone nearby already has?"
+            <div style={{ fontSize: '0.72rem', color: '#555', fontWeight: 600 }}>
+              Trusted Peer Sharing • WebFusion 2.0
             </div>
           </div>
         </div>
 
         {/* Navigation Tabs */}
-        <nav style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <button 
+        <nav style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <button
             onClick={() => setActiveTab('browse')}
-            className={`btn btn-sm ${activeTab === 'browse' ? 'btn-primary' : 'btn-secondary'}`}
+            className="btn btn-sm"
+            style={{
+              background: activeTab === 'browse' ? '#4ECDC4' : '#fff',
+              color: '#222',
+              border: '3px solid #222',
+              boxShadow: activeTab === 'browse' ? '3px 3px 0px #222' : '2px 2px 0px #222',
+              transform: activeTab === 'browse' ? 'translate(-2px, -2px)' : 'none'
+            }}
           >
-            <Sparkles size={16} />
+            <Sparkles size={15} />
             Browse & AI Match
           </button>
 
-          <button 
+          <button
             onClick={() => setActiveTab('exchanges')}
-            className={`btn btn-sm ${activeTab === 'exchanges' ? 'btn-primary' : 'btn-secondary'}`}
-            style={{ position: 'relative' }}
+            className="btn btn-sm"
+            style={{
+              background: activeTab === 'exchanges' ? '#FFE66D' : '#fff',
+              color: '#222',
+              border: '3px solid #222',
+              boxShadow: activeTab === 'exchanges' ? '3px 3px 0px #222' : '2px 2px 0px #222',
+              transform: activeTab === 'exchanges' ? 'translate(-2px, -2px)' : 'none'
+            }}
           >
-            <Repeat size={16} />
-            Active Exchanges
+            <Layers size={15} />
+            My Exchanges
             {activeExchangesCount > 0 && (
               <span style={{
-                background: 'var(--accent-emerald)',
+                background: '#FF6B9D',
                 color: '#fff',
+                fontSize: '0.68rem',
                 borderRadius: '50%',
                 width: '18px',
                 height: '18px',
-                fontSize: '0.7rem',
+                border: '1px solid #222',
                 display: 'inline-flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontWeight: 700,
-                marginLeft: '4px'
+                fontWeight: 800
               }}>
                 {activeExchangesCount}
               </span>
             )}
           </button>
 
-          <button 
+          <button
             onClick={() => setActiveTab('community')}
-            className={`btn btn-sm ${activeTab === 'community' ? 'btn-primary' : 'btn-secondary'}`}
+            className="btn btn-sm"
+            style={{
+              background: activeTab === 'community' ? '#B8B8FF' : '#fff',
+              color: '#222',
+              border: '3px solid #222',
+              boxShadow: activeTab === 'community' ? '3px 3px 0px #222' : '2px 2px 0px #222',
+              transform: activeTab === 'community' ? 'translate(-2px, -2px)' : 'none'
+            }}
           >
-            <Radio size={16} />
-            Community Board
-          </button>
-
-          <button 
-            onClick={() => setActiveTab('impact')}
-            className={`btn btn-sm ${activeTab === 'impact' ? 'btn-primary' : 'btn-secondary'}`}
-          >
-            <BarChart3 size={16} />
-            Impact
-          </button>
-
-          <button 
-            onClick={() => setActiveTab('admin')}
-            className={`btn btn-sm ${activeTab === 'admin' ? 'btn-primary' : 'btn-secondary'}`}
-            style={{ position: 'relative' }}
-          >
-            <ShieldCheck size={16} />
-            Admin Panel
-            {pendingDisputesCount > 0 && (
+            <Radio size={15} />
+            Broadcast Board
+            {activeRequestsCount > 0 && (
               <span style={{
-                background: 'var(--accent-rose)',
-                color: '#fff',
+                background: '#FFE66D',
+                color: '#222',
+                fontSize: '0.68rem',
                 borderRadius: '50%',
                 width: '18px',
                 height: '18px',
-                fontSize: '0.7rem',
+                border: '1px solid #222',
                 display: 'inline-flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontWeight: 700,
-                marginLeft: '4px'
+                fontWeight: 800
+              }}>
+                {activeRequestsCount}
+              </span>
+            )}
+          </button>
+
+          <button
+            onClick={() => setActiveTab('impact')}
+            className="btn btn-sm"
+            style={{
+              background: activeTab === 'impact' ? '#C7F464' : '#fff',
+              color: '#222',
+              border: '3px solid #222',
+              boxShadow: activeTab === 'impact' ? '3px 3px 0px #222' : '2px 2px 0px #222',
+              transform: activeTab === 'impact' ? 'translate(-2px, -2px)' : 'none'
+            }}
+          >
+            <BarChart3 size={15} />
+            Impact
+          </button>
+
+          <button
+            onClick={() => setActiveTab('admin')}
+            className="btn btn-sm"
+            style={{
+              background: activeTab === 'admin' ? '#FF6B9D' : '#fff',
+              color: activeTab === 'admin' ? '#fff' : '#222',
+              border: '3px solid #222',
+              boxShadow: activeTab === 'admin' ? '3px 3px 0px #222' : '2px 2px 0px #222',
+              transform: activeTab === 'admin' ? 'translate(-2px, -2px)' : 'none'
+            }}
+          >
+            <ShieldCheck size={15} />
+            Admin Panel
+            {pendingDisputesCount > 0 && (
+              <span style={{
+                background: '#FF6B6B',
+                color: '#fff',
+                fontSize: '0.68rem',
+                borderRadius: '50%',
+                width: '18px',
+                height: '18px',
+                border: '1px solid #222',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontWeight: 800
               }}>
                 {pendingDisputesCount}
               </span>
@@ -170,10 +218,9 @@ export default function Header({ activeTab, setActiveTab, onOpenAddModal, onLogo
           </button>
         </nav>
 
-        {/* Right Actions & Role Switcher */}
+        {/* Right Actions & Persona Switcher */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           
-          {/* Post Listing CTA */}
           <button 
             onClick={onOpenAddModal}
             className="btn btn-emerald btn-sm"
@@ -182,107 +229,85 @@ export default function Header({ activeTab, setActiveTab, onOpenAddModal, onLogo
             List Item
           </button>
 
-          {/* Interactive Role Switcher Dropdown */}
+          {/* User Profile Selector */}
           <div style={{ position: 'relative' }}>
-            <div 
+            <button
               onClick={() => setShowUserDropdown(!showUserDropdown)}
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '10px',
-                background: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid var(--border-card)',
-                borderRadius: 'var(--radius-md)',
-                padding: '5px 12px 5px 6px',
+                gap: '8px',
+                background: '#fff',
+                border: '3px solid #222',
+                borderRadius: '8px',
+                padding: '4px 10px',
                 cursor: 'pointer',
-                transition: 'all 0.2s ease'
+                boxShadow: '2px 2px 0px #222'
               }}
             >
               <img 
                 src={currentUser.avatar} 
-                alt={currentUser.name} 
-                style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--accent-cyan)' }}
+                alt={currentUser.name}
+                style={{ width: '28px', height: '28px', borderRadius: '50%', border: '1px solid #222' }}
               />
               <div style={{ textAlign: 'left', lineHeight: '1.2' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#fff' }}>
-                    {currentUser.name.split(' ')[0]}
-                  </span>
-                  {currentUser.role === 'admin' ? (
-                    <span className="badge badge-rose" style={{ fontSize: '0.62rem', padding: '1px 5px' }}>ADMIN</span>
-                  ) : (
-                    <span className="badge badge-emerald" style={{ fontSize: '0.62rem', padding: '1px 5px' }}>
-                      {currentUser.trustScore}% TRUST
-                    </span>
-                  )}
+                <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#222' }}>
+                  {currentUser.name}
                 </div>
-                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
-                  {currentUser.role === 'admin' ? 'Campus Moderator' : currentUser.department.split(' ')[0]}
+                <div style={{ fontSize: '0.65rem', color: '#666', fontWeight: 600 }}>
+                  {currentUser.role === 'admin' ? '🛡️ Admin' : '🎓 Student'}
                 </div>
               </div>
-              <ChevronDown size={14} color="var(--text-muted)" />
-            </div>
+              <ChevronDown size={14} color="#222" />
+            </button>
 
-            {/* Switcher Modal / Dropdown */}
             {showUserDropdown && (
-              <div 
-                className="glass-panel"
-                style={{
-                  position: 'absolute',
-                  top: '115%',
-                  right: 0,
-                  width: '320px',
-                  padding: '12px',
-                  zIndex: 1000,
-                  boxShadow: '0 20px 40px rgba(0,0,0,0.8)'
-                }}
-              >
-                <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '8px', textTransform: 'uppercase' }}>
-                  Switch Test Persona (Simulate Roles)
+              <div style={{
+                position: 'absolute',
+                top: '110%',
+                right: 0,
+                width: '260px',
+                background: '#fff',
+                border: '3px solid #222',
+                borderRadius: '12px',
+                boxShadow: '6px 6px 0px #222',
+                padding: '8px',
+                zIndex: 200
+              }}>
+                <div style={{ fontSize: '0.7rem', fontWeight: 800, color: '#888', textTransform: 'uppercase', padding: '6px 8px' }}>
+                  Switch Active Persona
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  {users.map(u => (
-                    <div 
-                      key={u.id}
-                      onClick={() => {
-                        switchUser(u.id);
-                        setShowUserDropdown(false);
-                      }}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px',
-                        padding: '8px 10px',
-                        borderRadius: 'var(--radius-sm)',
-                        background: u.id === currentUser.id ? 'rgba(6, 182, 212, 0.15)' : 'rgba(255, 255, 255, 0.03)',
-                        border: u.id === currentUser.id ? '1px solid var(--accent-cyan)' : '1px solid transparent',
-                        cursor: 'pointer',
-                        transition: 'background 0.15s ease'
-                      }}
-                    >
-                      <img src={u.avatar} alt={u.name} style={{ width: '30px', height: '30px', borderRadius: '50%', objectFit: 'cover' }} />
-                      <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                          <span style={{ fontSize: '0.84rem', fontWeight: 600, color: '#fff' }}>{u.name}</span>
-                          {u.role === 'admin' ? (
-                            <span className="badge badge-rose" style={{ fontSize: '0.6rem' }}>Admin</span>
-                          ) : (
-                            <span className="badge badge-cyan" style={{ fontSize: '0.6rem' }}>{u.trustScore}%</span>
-                          )}
-                        </div>
-                        <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                          {u.department} • {u.year}
-                        </div>
-                      </div>
-                      {u.id === currentUser.id && <CheckCircle2 size={16} color="var(--accent-cyan)" />}
+                {users.map(u => (
+                  <div
+                    key={u.id}
+                    onClick={() => {
+                      switchUser(u.id);
+                      setShowUserDropdown(false);
+                    }}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '10px',
+                      padding: '8px',
+                      borderRadius: '6px',
+                      cursor: 'pointer',
+                      background: u.id === currentUser.id ? '#FFE66D' : 'transparent',
+                      border: u.id === currentUser.id ? '2px solid #222' : 'none',
+                      marginBottom: '4px'
+                    }}
+                  >
+                    <img src={u.avatar} alt={u.name} style={{ width: '28px', height: '28px', borderRadius: '50%', border: '1px solid #222' }} />
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#222' }}>{u.name}</div>
+                      <div style={{ fontSize: '0.68rem', color: '#666' }}>{u.department}</div>
                     </div>
-                  ))}
-                </div>
+                    {u.id === currentUser.id && <CheckCircle2 size={16} color="#222" />}
+                  </div>
+                ))}
               </div>
             )}
           </div>
 
-          {/* Logout Button */}
           <button
             onClick={onLogout}
             className="btn btn-sm btn-secondary"

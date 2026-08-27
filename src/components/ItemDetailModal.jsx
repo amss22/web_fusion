@@ -4,298 +4,277 @@ import {
   X, 
   ShieldCheck, 
   MapPin, 
-  Calendar, 
   Clock, 
   CheckCircle2, 
-  AlertCircle, 
-  HelpCircle, 
+  AlertTriangle, 
   FileText, 
+  Lock, 
+  Info,
+  Calendar,
   Sparkles,
-  Lock,
   ArrowRight
 } from 'lucide-react';
 
-export default function ItemDetailModal({ item, onClose, onBookingSuccess }) {
-  const { users, currentUser, platformConfig, createExchangeRequest } = useCampus();
-
-  const owner = users.find(u => u.id === item.ownerId) || {
-    name: "Campus Peer",
-    trustScore: 92,
-    avatar: item.image,
-    department: "Campus Member",
-    year: "3rd Year",
-    successfulExchanges: 15,
-    disputes: 0
-  };
+export default function ItemDetailModal({ item, onClose, onConfirmRequest }) {
+  const { users, currentUser, platformConfig } = useCampus();
+  const owner = users.find(u => u.id === item.ownerId) || { name: "Campus Peer", avatar: item.image, trustScore: 95 };
 
   const [durationType, setDurationType] = useState('Daily');
   const [durationValue, setDurationValue] = useState(1);
   const [pickupLocation, setPickupLocation] = useState(item.location);
   const [purpose, setPurpose] = useState('');
-  const [agreementConfirmed, setAgreementConfirmed] = useState(false);
+  const [agreeToRules, setAgreeToRules] = useState(false);
 
-  // Financial Calculations
+  // Escrow Calculations
   const rate = durationType === 'Hourly' ? item.hourlyRate : item.dailyRate;
   const borrowingCharge = rate * durationValue;
-  const platformFee = Math.round(borrowingCharge * (platformConfig.platformFeePercent / 100));
+  const platformFee = Math.max(
+    platformConfig.minPlatformFee || 10,
+    Math.round(borrowingCharge * ((platformConfig.platformFeePercent || 5) / 100))
+  );
   const securityDeposit = item.deposit;
-  const totalEscrowAmount = borrowingCharge + platformFee + securityDeposit;
+  const totalEscrow = borrowingCharge + platformFee + securityDeposit;
 
-  const handleConfirmBorrow = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (!agreementConfirmed) return;
+    if (!agreeToRules) return;
 
-    const newExchange = createExchangeRequest({
+    onConfirmRequest({
       item,
       durationType,
       durationValue,
       pickupLocation,
       purpose
     });
-
-    onBookingSuccess(newExchange);
-    onClose();
   };
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div 
-        className="modal-content" 
-        style={{ maxWidth: '840px' }} 
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         
-        {/* Modal Header */}
+        {/* Retro Window Header */}
         <div className="modal-header">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <span className="badge badge-cyan">{item.category}</span>
-            <span className="badge badge-emerald">{item.condition}</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span className="dot dot-red"></span>
+            <span className="dot dot-yellow"></span>
+            <span className="dot dot-green"></span>
+            <span style={{ fontWeight: 800, fontSize: '0.9rem', color: '#222', marginLeft: '6px' }}>
+              Resource Agreement & Escrow Calculator
+            </span>
           </div>
           <button 
             onClick={onClose}
-            style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: '4px' }}
+            style={{ 
+              background: '#fff', 
+              border: '2px solid #222', 
+              borderRadius: '6px', 
+              cursor: 'pointer',
+              padding: '4px',
+              boxShadow: '2px 2px 0px #222'
+            }}
           >
-            <X size={20} />
+            <X size={18} color="#222" />
           </button>
         </div>
 
         {/* Modal Body */}
-        <div className="modal-body" style={{ display: 'grid', gridTemplateColumns: '1fr 1.15fr', gap: '24px' }}>
-          
-          {/* Left Column: Image, Accessories, Owner Profile */}
-          <div>
-            <img 
-              src={item.image} 
-              alt={item.title} 
-              style={{ width: '100%', height: '220px', objectFit: 'cover', borderRadius: 'var(--radius-md)', marginBottom: '16px' }}
-            />
-
-            {/* Owner Trust Box */}
-            <div style={{
-              background: 'rgba(255, 255, 255, 0.03)',
-              border: '1px solid var(--border-card)',
-              borderRadius: 'var(--radius-md)',
-              padding: '14px',
-              marginBottom: '16px'
-            }}>
-              <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '8px', fontWeight: 700 }}>
-                Resource Owner & Trust Metrics
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '10px' }}>
-                <img src={owner.avatar} alt={owner.name} style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--accent-cyan)' }} />
-                <div>
-                  <div style={{ fontWeight: 700, color: '#fff', fontSize: '0.95rem' }}>{owner.name}</div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{owner.department} • {owner.year}</div>
+        <div className="modal-body">
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+            
+            {/* Left: Item Info & Checklist */}
+            <div>
+              <div style={{ position: 'relative', borderRadius: '10px', overflow: 'hidden', border: '3px solid #222', marginBottom: '16px', boxShadow: '3px 3px 0px #222' }}>
+                <img src={item.image} alt={item.title} style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
+                <div style={{ position: 'absolute', top: '10px', left: '10px' }}>
+                  <span className="badge badge-amber">{item.category}</span>
                 </div>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', textAlign: 'center', background: 'rgba(0,0,0,0.2)', padding: '8px', borderRadius: 'var(--radius-sm)' }}>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#222', marginBottom: '8px' }}>
+                {item.title}
+              </h2>
+
+              {/* Owner card */}
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                padding: '10px 12px',
+                background: '#FFF3D6',
+                border: '2px solid #222',
+                borderRadius: '8px',
+                marginBottom: '16px',
+                boxShadow: '2px 2px 0px #222'
+              }}>
+                <img src={owner.avatar} alt={owner.name} style={{ width: '36px', height: '36px', borderRadius: '50%', border: '1px solid #222' }} />
                 <div>
-                  <div style={{ fontSize: '0.95rem', fontWeight: 800, color: 'var(--accent-emerald)', fontFamily: 'var(--font-mono)' }}>
-                    {owner.trustScore}%
+                  <div style={{ fontSize: '0.85rem', fontWeight: 800, color: '#222' }}>{owner.name}</div>
+                  <div style={{ fontSize: '0.72rem', color: '#555' }}>
+                    {owner.department} • <strong style={{ color: '#2ECC71' }}>★ {owner.trustScore}% Trust Score</strong>
                   </div>
-                  <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Trust Score</div>
-                </div>
-                <div>
-                  <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#fff', fontFamily: 'var(--font-mono)' }}>
-                    {owner.successfulExchanges}
-                  </div>
-                  <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Exchanges</div>
-                </div>
-                <div>
-                  <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#38bdf8', fontFamily: 'var(--font-mono)' }}>
-                    {owner.disputes === 0 ? '0' : owner.disputes}
-                  </div>
-                  <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Disputes</div>
                 </div>
               </div>
-            </div>
 
-            {/* Included Accessories */}
-            {item.includedAccessories && (
-              <div style={{ marginBottom: '14px' }}>
-                <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#e2e8f0', marginBottom: '6px' }}>
-                  Included Accessories:
+              <p style={{ fontSize: '0.84rem', color: '#444', lineHeight: '1.5', marginBottom: '16px' }}>
+                {item.description}
+              </p>
+
+              {/* Checklist */}
+              <div style={{ marginBottom: '16px' }}>
+                <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#222', textTransform: 'uppercase', marginBottom: '8px' }}>
+                  📋 Inspection Checklist Items:
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  {item.includedAccessories.map((acc, i) => (
-                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
-                      <CheckCircle2 size={13} color="var(--accent-emerald)" />
-                      <span>{acc}</span>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  {item.checklistItems?.map((check, i) => (
+                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.78rem', color: '#333', background: '#fff', padding: '6px 10px', border: '1.5px solid #222', borderRadius: '6px' }}>
+                      <CheckCircle2 size={14} color="#2ECC71" />
+                      {check.name}
                     </div>
                   ))}
                 </div>
               </div>
-            )}
-          </div>
+            </div>
 
-          {/* Right Column: Configuration, Escrow Math & Agreement */}
-          <div>
-            <h2 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#fff', marginBottom: '8px' }}>
-              {item.title}
-            </h2>
-            <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '16px', lineHeight: '1.4' }}>
-              {item.description}
-            </p>
-
-            <form onSubmit={handleConfirmBorrow}>
-              {/* Duration Type Selector */}
-              <div style={{ marginBottom: '14px' }}>
-                <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0', display: 'block', marginBottom: '6px' }}>
-                  Select Borrowing Duration:
-                </label>
-                <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
-                  <button
-                    type="button"
-                    onClick={() => setDurationType('Hourly')}
-                    className={`btn btn-sm ${durationType === 'Hourly' ? 'btn-primary' : 'btn-secondary'}`}
-                    style={{ flex: 1 }}
-                  >
-                    <Clock size={14} />
-                    Hourly (₹{item.hourlyRate}/hr)
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setDurationType('Daily')}
-                    className={`btn btn-sm ${durationType === 'Daily' ? 'btn-primary' : 'btn-secondary'}`}
-                    style={{ flex: 1 }}
-                  >
-                    <Calendar size={14} />
-                    Daily (₹{item.dailyRate}/day)
-                  </button>
-                </div>
-
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <input 
-                    type="range" 
-                    min="1" 
-                    max={durationType === 'Hourly' ? 12 : 7}
-                    value={durationValue}
-                    onChange={(e) => setDurationValue(Number(e.target.value))}
-                    style={{ flex: 1, accentColor: 'var(--accent-cyan)' }}
-                  />
-                  <span style={{ fontSize: '0.9rem', fontWeight: 700, fontFamily: 'var(--font-mono)', minWidth: '65px', textAlign: 'right' }}>
-                    {durationValue} {durationType === 'Hourly' ? (durationValue === 1 ? 'hour' : 'hours') : (durationValue === 1 ? 'day' : 'days')}
-                  </span>
-                </div>
-              </div>
-
-              {/* Purpose / Project Note */}
-              <div style={{ marginBottom: '14px' }}>
-                <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#e2e8f0', display: 'block', marginBottom: '4px' }}>
-                  Intended Campus Purpose:
-                </label>
-                <input 
-                  type="text"
-                  className="input-field"
-                  placeholder="e.g. Media club video shoot / Math exam prep"
-                  value={purpose}
-                  onChange={(e) => setPurpose(e.target.value)}
-                  style={{ padding: '8px 12px', fontSize: '0.86rem' }}
-                />
-              </div>
-
-              {/* Mandatory Transparent Escrow Breakdown Formula */}
-              <div style={{
-                background: 'rgba(6, 182, 212, 0.06)',
-                border: '1px solid rgba(6, 182, 212, 0.25)',
-                borderRadius: 'var(--radius-md)',
-                padding: '14px',
-                marginBottom: '16px'
-              }}>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                  <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--accent-cyan)', textTransform: 'uppercase' }}>
-                    Transparent Escrow Breakdown
-                  </span>
-                  <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
-                    Reflects in Admin Ledger
-                  </span>
-                </div>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '0.82rem' }}>
-                  <div className="flex-between">
-                    <span style={{ color: 'var(--text-secondary)' }}>Borrowing Charge ({durationValue} {durationType.toLowerCase()}):</span>
-                    <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 600 }}>₹{borrowingCharge}</span>
+            {/* Right: Escrow Calculator & Booking Form */}
+            <div>
+              <form onSubmit={handleSubmit}>
+                
+                <div style={{ background: '#FFE66D', border: '3px solid #222', borderRadius: '12px', padding: '16px', marginBottom: '16px', boxShadow: '3px 3px 0px #222' }}>
+                  <div style={{ fontWeight: 800, color: '#222', fontSize: '0.9rem', marginBottom: '12px', textTransform: 'uppercase' }}>
+                    ⏱️ Select Duration:
                   </div>
 
-                  <div className="flex-between">
-                    <span style={{ color: 'var(--text-secondary)' }}>Platform Maintenance Fee ({platformConfig.platformFeePercent}%):</span>
-                    <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 600 }}>₹{platformFee}</span>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '12px' }}>
+                    <button
+                      type="button"
+                      onClick={() => setDurationType('Daily')}
+                      style={{
+                        padding: '8px',
+                        border: '2px solid #222',
+                        borderRadius: '6px',
+                        background: durationType === 'Daily' ? '#4ECDC4' : '#fff',
+                        fontWeight: 700,
+                        fontSize: '0.82rem',
+                        cursor: 'pointer',
+                        boxShadow: '2px 2px 0px #222'
+                      }}
+                    >
+                      Daily Rate (₹{item.dailyRate}/day)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setDurationType('Hourly')}
+                      style={{
+                        padding: '8px',
+                        border: '2px solid #222',
+                        borderRadius: '6px',
+                        background: durationType === 'Hourly' ? '#4ECDC4' : '#fff',
+                        fontWeight: 700,
+                        fontSize: '0.82rem',
+                        cursor: 'pointer',
+                        boxShadow: '2px 2px 0px #222'
+                      }}
+                    >
+                      Hourly Rate (₹{item.hourlyRate}/hr)
+                    </button>
                   </div>
 
-                  <div className="flex-between">
-                    <span style={{ color: 'var(--text-secondary)' }}>Refundable Security Deposit (100% Refundable):</span>
-                    <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 600, color: 'var(--accent-emerald)' }}>₹{securityDeposit}</span>
+                  <div>
+                    <label style={{ fontSize: '0.76rem', fontWeight: 700, color: '#222', display: 'block', marginBottom: '4px' }}>
+                      Duration ({durationType === 'Daily' ? 'Days' : 'Hours'}):
+                    </label>
+                    <input 
+                      type="number"
+                      min="1"
+                      max="14"
+                      className="input-field"
+                      value={durationValue}
+                      onChange={(e) => setDurationValue(Math.max(1, parseInt(e.target.value) || 1))}
+                      style={{ background: '#fff' }}
+                    />
+                  </div>
+                </div>
+
+                {/* Escrow Breakdown Box */}
+                <div style={{
+                  background: '#fff',
+                  border: '3px solid #222',
+                  borderRadius: '12px',
+                  padding: '16px',
+                  marginBottom: '16px',
+                  boxShadow: '3px 3px 0px #222'
+                }}>
+                  <div style={{ fontWeight: 800, color: '#222', fontSize: '0.9rem', marginBottom: '12px', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <Lock size={15} color="#FF6B9D" />
+                    Escrow Breakdown:
                   </div>
 
-                  <div style={{ borderTop: '1px dashed rgba(255,255,255,0.15)', marginTop: '4px', paddingTop: '6px' }} className="flex-between">
-                    <span style={{ fontWeight: 700, color: '#fff' }}>Total Escrow Amount:</span>
-                    <span style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--accent-cyan)', fontFamily: 'var(--font-mono)' }}>
-                      ₹{totalEscrowAmount}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.84rem', color: '#444', marginBottom: '12px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span>Borrowing Fee ({durationValue} {durationType.toLowerCase()}):</span>
+                      <strong style={{ color: '#222', fontFamily: 'var(--font-mono)' }}>₹{borrowingCharge}</strong>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span>Platform Service Fee ({platformConfig.platformFeePercent}%):</span>
+                      <strong style={{ color: '#222', fontFamily: 'var(--font-mono)' }}>₹{platformFee}</strong>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span>Refundable Security Deposit:</span>
+                      <strong style={{ color: '#2ECC71', fontFamily: 'var(--font-mono)' }}>₹{securityDeposit}</strong>
+                    </div>
+                  </div>
+
+                  <div style={{
+                    paddingTop: '10px',
+                    borderTop: '2px dashed #222',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    fontSize: '1rem',
+                    fontWeight: 900,
+                    color: '#222'
+                  }}>
+                    <span>Total Escrow Lock:</span>
+                    <span style={{ fontSize: '1.25rem', color: '#FF6B9D', fontFamily: 'var(--font-mono)' }}>
+                      ₹{totalEscrow}
                     </span>
                   </div>
                 </div>
-              </div>
 
-              {/* Digital Borrowing Agreement Checkbox */}
-              <div style={{
-                background: 'rgba(255, 255, 255, 0.02)',
-                border: '1px solid var(--border-subtle)',
-                borderRadius: 'var(--radius-sm)',
-                padding: '10px 12px',
-                marginBottom: '16px'
-              }}>
-                <label style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', cursor: 'pointer', fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
+                {/* Agreement Checkbox */}
+                <div style={{ marginBottom: '16px', display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
                   <input 
-                    type="checkbox" 
-                    checked={agreementConfirmed}
-                    onChange={(e) => setAgreementConfirmed(e.target.checked)}
-                    style={{ marginTop: '2px', accentColor: 'var(--accent-cyan)' }}
+                    type="checkbox"
+                    id="rulesAgree"
+                    checked={agreeToRules}
+                    onChange={(e) => setAgreeToRules(e.target.checked)}
+                    style={{ width: '18px', height: '18px', cursor: 'pointer', marginTop: '2px' }}
                   />
-                  <span>
-                    I accept the <strong style={{ color: '#fff' }}>Digital Borrowing Agreement</strong>. I pledge to follow the owner's usage rules, participate in Before/After condition photos, and return the item on time to avoid late fees (₹{platformConfig.lateFeePerHour}/hr).
-                  </span>
-                </label>
-              </div>
+                  <label htmlFor="rulesAgree" style={{ fontSize: '0.78rem', color: '#333', cursor: 'pointer', lineHeight: '1.4', fontWeight: 600 }}>
+                    I agree to follow the borrowing guidelines, return by deadline, and inspect item condition prior to handover.
+                  </label>
+                </div>
 
-              {/* Action Buttons */}
-              <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
-                <button type="button" onClick={onClose} className="btn btn-secondary btn-sm">
-                  Cancel
-                </button>
-                <button 
-                  type="submit" 
-                  disabled={!agreementConfirmed}
-                  className="btn btn-emerald btn-sm"
-                  style={{ opacity: agreementConfirmed ? 1 : 0.5 }}
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  disabled={!agreeToRules}
+                  className="btn btn-emerald"
+                  style={{
+                    width: '100%',
+                    padding: '14px',
+                    fontSize: '1rem',
+                    opacity: agreeToRules ? 1 : 0.6
+                  }}
                 >
-                  <Lock size={15} />
-                  Lock Escrow & Confirm (₹{totalEscrowAmount})
+                  Confirm Request & Lock Escrow (₹{totalEscrow})
+                  <ArrowRight size={16} />
                 </button>
-              </div>
-            </form>
-          </div>
 
+              </form>
+            </div>
+
+          </div>
         </div>
 
       </div>

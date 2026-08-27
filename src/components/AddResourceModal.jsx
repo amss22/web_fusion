@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 import { useCampus } from '../context/CampusContext';
 import { 
   X, 
-  UploadCloud, 
+  PlusCircle, 
+  Image, 
   Tag, 
   DollarSign, 
-  ShieldAlert, 
   MapPin, 
-  CheckCircle, 
-  Plus 
+  FileText, 
+  ShieldCheck, 
+  ListChecks, 
+  Check,
+  PackagePlus
 } from 'lucide-react';
 
 export default function AddResourceModal({ onClose }) {
@@ -16,255 +19,149 @@ export default function AddResourceModal({ onClose }) {
 
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('Cameras & Audio');
-  const [condition, setCondition] = useState('Like New');
   const [hourlyRate, setHourlyRate] = useState(50);
-  const [dailyRate, setDailyRate] = useState(200);
+  const [dailyRate, setDailyRate] = useState(250);
   const [deposit, setDeposit] = useState(1000);
+  const [condition, setCondition] = useState('Like New');
   const [location, setLocation] = useState('Block A - Media Lab');
   const [image, setImage] = useState('https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=600&q=80');
   const [description, setDescription] = useState('');
+  const [borrowingRules, setBorrowingRules] = useState('');
   const [accessoryInput, setAccessoryInput] = useState('');
-  const [accessories, setAccessories] = useState(['Protective Carry Case', 'Original Charger']);
-  const [rules, setRules] = useState('Handle carefully. Return fully charged.');
+  const [includedAccessories, setIncludedAccessories] = useState(['Original Carry Bag', "Charging Cable & Power Adapter"]);
 
   const sampleImages = [
-    { label: "Camera Gear", url: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=600&q=80" },
-    { label: "Calculator", url: "https://images.unsplash.com/photo-1594980596870-8aa52a78d8cd?auto=format&fit=crop&w=600&q=80" },
-    { label: "Electronics", url: "https://images.unsplash.com/photo-1553406830-ef2513450d76?auto=format&fit=crop&w=600&q=80" },
-    { label: "Sports Racket", url: "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?auto=format&fit=crop&w=600&q=80" },
-    { label: "Speaker", url: "https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=600&q=80" }
+    { label: 'Camera / Audio', url: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=600&q=80' },
+    { label: 'Calculator', url: 'https://images.unsplash.com/photo-1594980596870-8aa52a78d8cd?auto=format&fit=crop&w=600&q=80' },
+    { label: 'Robotics / Arduino', url: 'https://images.unsplash.com/photo-1553406830-ef2513450d76?auto=format&fit=crop&w=600&q=80' },
+    { label: 'Sports Racket', url: 'https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?auto=format&fit=crop&w=600&q=80' }
   ];
 
   const handleAddAccessory = () => {
     if (accessoryInput.trim()) {
-      setAccessories(prev => [...prev, accessoryInput.trim()]);
+      setIncludedAccessories(prev => [...prev, accessoryInput.trim()]);
       setAccessoryInput('');
     }
   };
 
-  const handleRemoveAccessory = (index) => {
-    setAccessories(prev => prev.filter((_, i) => i !== index));
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!title.trim() || !description.trim()) return;
+
     addResource({
       title,
       category,
-      condition,
       hourlyRate: Number(hourlyRate),
       dailyRate: Number(dailyRate),
       deposit: Number(deposit),
+      condition,
       location,
       image,
       description,
-      includedAccessories: accessories,
-      borrowingRules: rules,
+      borrowingRules,
+      includedAccessories,
       checklistItems: [
         { name: "Item exterior in stated condition", defaultChecked: true },
         { name: "All listed accessories present", defaultChecked: true }
       ]
     });
+
     onClose();
   };
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" style={{ maxWidth: '680px' }} onClick={e => e.stopPropagation()}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        
+        {/* Modal Header */}
         <div className="modal-header">
-          <h3 style={{ fontSize: '1.2rem', margin: 0, color: '#fff' }}>
-            List Your Resource on Campus Circular
-          </h3>
-          <button onClick={onClose} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}>
-            <X size={20} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span className="dot dot-red"></span>
+            <span className="dot dot-yellow"></span>
+            <span className="dot dot-green"></span>
+            <span style={{ fontWeight: 800, fontSize: '0.95rem', color: '#222', marginLeft: '6px' }}>
+              List New Campus Resource
+            </span>
+          </div>
+          <button onClick={onClose} style={{ background: '#fff', border: '2px solid #222', borderRadius: '6px', cursor: 'pointer', padding: '4px', boxShadow: '2px 2px 0px #222' }}>
+            <X size={18} color="#222" />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit}>
-          <div className="modal-body">
-            
-            {/* Title */}
-            <div style={{ marginBottom: '14px' }}>
-              <label style={{ fontSize: '0.8rem', color: '#e2e8f0', display: 'block', marginBottom: '4px' }}>
-                Resource Title & Model:
-              </label>
-              <input 
-                type="text" 
-                className="input-field"
-                required
-                placeholder="e.g. Canon EOS 200D DSLR or TI-84 Plus Graphing Calculator"
-                value={title}
-                onChange={e => setTitle(e.target.value)}
-              />
+        {/* Form Body */}
+        <form onSubmit={handleSubmit} className="modal-body" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          
+          <div>
+            <label style={{ fontSize: '0.78rem', fontWeight: 700, color: '#222', display: 'block', marginBottom: '4px' }}>Resource Title:</label>
+            <input type="text" className="input-field" required placeholder="e.g. Sony Alpha A7 III Mirrorless Camera" value={title} onChange={(e) => setTitle(e.target.value)} />
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+            <div>
+              <label style={{ fontSize: '0.78rem', fontWeight: 700, color: '#222', display: 'block', marginBottom: '4px' }}>Category:</label>
+              <select className="input-field" value={category} onChange={(e) => setCategory(e.target.value)}>
+                <option>Cameras & Audio</option>
+                <option>Academic & Calculators</option>
+                <option>Tech & Electronics</option>
+                <option>Sports & Fitness</option>
+                <option>Event & Decor</option>
+              </select>
             </div>
 
-            {/* Category & Condition */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '14px' }}>
-              <div>
-                <label style={{ fontSize: '0.8rem', color: '#e2e8f0', display: 'block', marginBottom: '4px' }}>
-                  Category:
-                </label>
-                <select className="input-field" value={category} onChange={e => setCategory(e.target.value)}>
-                  <option value="Cameras & Audio">Cameras & Audio</option>
-                  <option value="Academic & Calculators">Academic & Calculators</option>
-                  <option value="Tech & Electronics">Tech & Electronics</option>
-                  <option value="Sports & Fitness">Sports & Fitness</option>
-                  <option value="Event & Decor">Event & Decor</option>
-                </select>
-              </div>
-
-              <div>
-                <label style={{ fontSize: '0.8rem', color: '#e2e8f0', display: 'block', marginBottom: '4px' }}>
-                  Condition:
-                </label>
-                <select className="input-field" value={condition} onChange={e => setCondition(e.target.value)}>
-                  <option value="Like New">Like New (Flawless)</option>
-                  <option value="Excellent">Excellent (Minor cosmetic)</option>
-                  <option value="Good">Good (Fully functional)</option>
-                </select>
-              </div>
+            <div>
+              <label style={{ fontSize: '0.78rem', fontWeight: 700, color: '#222', display: 'block', marginBottom: '4px' }}>Condition:</label>
+              <select className="input-field" value={condition} onChange={(e) => setCondition(e.target.value)}>
+                <option>Like New</option>
+                <option>Excellent</option>
+                <option>Good</option>
+                <option>Fair</option>
+              </select>
             </div>
+          </div>
 
-            {/* Rates & Security Deposit */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', marginBottom: '14px' }}>
-              <div>
-                <label style={{ fontSize: '0.8rem', color: '#e2e8f0', display: 'block', marginBottom: '4px' }}>
-                  Hourly Rate (₹):
-                </label>
-                <input 
-                  type="number"
-                  className="input-field"
-                  required
-                  min="0"
-                  value={hourlyRate}
-                  onChange={e => setHourlyRate(e.target.value)}
-                />
-              </div>
-
-              <div>
-                <label style={{ fontSize: '0.8rem', color: '#e2e8f0', display: 'block', marginBottom: '4px' }}>
-                  Daily Rate (₹):
-                </label>
-                <input 
-                  type="number"
-                  className="input-field"
-                  required
-                  min="0"
-                  value={dailyRate}
-                  onChange={e => setDailyRate(e.target.value)}
-                />
-              </div>
-
-              <div>
-                <label style={{ fontSize: '0.8rem', color: '#e2e8f0', display: 'block', marginBottom: '4px' }}>
-                  Refundable Deposit (₹):
-                </label>
-                <input 
-                  type="number"
-                  className="input-field"
-                  required
-                  min="0"
-                  value={deposit}
-                  onChange={e => setDeposit(e.target.value)}
-                />
-              </div>
+          {/* Pricing Grid */}
+          <div style={{ background: '#FFE66D', border: '2.5px solid #222', borderRadius: '10px', padding: '14px', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px' }}>
+            <div>
+              <label style={{ fontSize: '0.74rem', fontWeight: 800, color: '#222' }}>Hourly Rate (₹):</label>
+              <input type="number" className="input-field" required value={hourlyRate} onChange={(e) => setHourlyRate(e.target.value)} />
             </div>
-
-            {/* Campus Location */}
-            <div style={{ marginBottom: '14px' }}>
-              <label style={{ fontSize: '0.8rem', color: '#e2e8f0', display: 'block', marginBottom: '4px' }}>
-                Pickup Campus Location / Block:
-              </label>
-              <input 
-                type="text" 
-                className="input-field"
-                required
-                placeholder="e.g. Block A Media Lab / Hostel 2 Room 104"
-                value={location}
-                onChange={e => setLocation(e.target.value)}
-              />
+            <div>
+              <label style={{ fontSize: '0.74rem', fontWeight: 800, color: '#222' }}>Daily Rate (₹):</label>
+              <input type="number" className="input-field" required value={dailyRate} onChange={(e) => setDailyRate(e.target.value)} />
             </div>
-
-            {/* Image Preview & Quick Presets */}
-            <div style={{ marginBottom: '14px' }}>
-              <label style={{ fontSize: '0.8rem', color: '#e2e8f0', display: 'block', marginBottom: '4px' }}>
-                Resource Photo URL:
-              </label>
-              <input 
-                type="url" 
-                className="input-field"
-                value={image}
-                onChange={e => setImage(e.target.value)}
-                style={{ marginBottom: '6px' }}
-              />
-              <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-                <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Quick Presets:</span>
-                {sampleImages.map((s, i) => (
-                  <button 
-                    key={i} 
-                    type="button"
-                    onClick={() => setImage(s.url)}
-                    style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid var(--border-subtle)', borderRadius: '4px', padding: '2px 6px', fontSize: '0.72rem', color: 'var(--text-secondary)', cursor: 'pointer' }}
-                  >
-                    {s.label}
-                  </button>
-                ))}
-              </div>
+            <div>
+              <label style={{ fontSize: '0.74rem', fontWeight: 800, color: '#222' }}>Security Deposit (₹):</label>
+              <input type="number" className="input-field" required value={deposit} onChange={(e) => setDeposit(e.target.value)} />
             </div>
+          </div>
 
-            {/* Included Accessories Tag Builder */}
-            <div style={{ marginBottom: '14px' }}>
-              <label style={{ fontSize: '0.8rem', color: '#e2e8f0', display: 'block', marginBottom: '4px' }}>
-                Included Accessories:
-              </label>
-              <div style={{ display: 'flex', gap: '8px', marginBottom: '6px' }}>
-                <input 
-                  type="text"
-                  className="input-field"
-                  placeholder="Add accessory (e.g. Lens hood, USB cable)"
-                  value={accessoryInput}
-                  onChange={e => setAccessoryInput(e.target.value)}
-                  onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), handleAddAccessory())}
-                  style={{ padding: '8px 12px', fontSize: '0.85rem' }}
-                />
-                <button type="button" onClick={handleAddAccessory} className="btn btn-secondary btn-sm">
-                  Add
+          <div>
+            <label style={{ fontSize: '0.78rem', fontWeight: 700, color: '#222', display: 'block', marginBottom: '4px' }}>Pickup Campus Location:</label>
+            <input type="text" className="input-field" required placeholder="e.g. Block A - Media Lab / Hostel 1" value={location} onChange={(e) => setLocation(e.target.value)} />
+          </div>
+
+          <div>
+            <label style={{ fontSize: '0.78rem', fontWeight: 700, color: '#222', display: 'block', marginBottom: '4px' }}>Detailed Description:</label>
+            <textarea className="input-field" rows="3" required placeholder="Describe specifications, contents, and usage guidance..." value={description} onChange={(e) => setDescription(e.target.value)} />
+          </div>
+
+          <div>
+            <label style={{ fontSize: '0.78rem', fontWeight: 700, color: '#222', display: 'block', marginBottom: '4px' }}>Image URL (or select sample):</label>
+            <input type="text" className="input-field" value={image} onChange={(e) => setImage(e.target.value)} style={{ marginBottom: '8px' }} />
+            <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+              {sampleImages.map((s, i) => (
+                <button type="button" key={i} onClick={() => setImage(s.url)} className="btn btn-sm btn-secondary" style={{ fontSize: '0.7rem', padding: '4px 8px' }}>
+                  {s.label}
                 </button>
-              </div>
-              <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-                {accessories.map((acc, i) => (
-                  <span key={i} className="badge badge-cyan" style={{ cursor: 'pointer' }} onClick={() => handleRemoveAccessory(i)}>
-                    {acc} ✕
-                  </span>
-                ))}
-              </div>
+              ))}
             </div>
-
-            {/* Description */}
-            <div style={{ marginBottom: '14px' }}>
-              <label style={{ fontSize: '0.8rem', color: '#e2e8f0', display: 'block', marginBottom: '4px' }}>
-                Description & Highlights:
-              </label>
-              <textarea 
-                className="input-field"
-                rows="2"
-                required
-                placeholder="Give specifications, compatibility notes, and instructions..."
-                value={description}
-                onChange={e => setDescription(e.target.value)}
-              />
-            </div>
-
           </div>
 
-          <div className="modal-footer">
-            <button type="button" onClick={onClose} className="btn btn-secondary btn-sm">
-              Cancel
-            </button>
-            <button type="submit" className="btn btn-emerald btn-sm">
-              Publish Listing to Campus
-            </button>
+          <div className="modal-footer" style={{ margin: '0 -24px -24px', padding: '16px 24px' }}>
+            <button type="button" onClick={onClose} className="btn btn-secondary btn-sm">Cancel</button>
+            <button type="submit" className="btn btn-emerald btn-sm">Publish Listing to Campus</button>
           </div>
+
         </form>
 
       </div>

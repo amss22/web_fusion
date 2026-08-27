@@ -20,22 +20,25 @@ import {
   CheckCircle2, 
   AlertCircle,
   HelpCircle,
-  PackageSearch
+  PackageSearch,
+  Tag
 } from 'lucide-react';
 
 function CampusApp({ onLogout }) {
   const { 
     items, 
     currentUser, 
+    users,
+    exchanges,
+    createExchangeRequest,
     toastMessage 
   } = useCampus();
 
-  const [activeTab, setActiveTab] = useState('browse'); // browse, exchanges, community, impact, admin
+  const [activeTab, setActiveTab] = useState('browse');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchFilter, setSearchFilter] = useState('');
-  const [sortBy, setSortBy] = useState('trust'); // trust, priceAsc, priceDesc, rating
+  const [sortBy, setSortBy] = useState('trust');
 
-  // Modals state
   const [selectedItem, setSelectedItem] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
   const [ratingExchange, setRatingExchange] = useState(null);
@@ -49,7 +52,6 @@ function CampusApp({ onLogout }) {
     'Event & Decor'
   ];
 
-  // Filtering & Sorting Items
   const filteredItems = items.filter(item => {
     const matchesCategory = selectedCategory === 'All' || item.category === selectedCategory;
     const matchesSearch = item.title.toLowerCase().includes(searchFilter.toLowerCase()) ||
@@ -59,18 +61,27 @@ function CampusApp({ onLogout }) {
   }).sort((a, b) => {
     if (sortBy === 'priceAsc') return a.dailyRate - b.dailyRate;
     if (sortBy === 'priceDesc') return b.dailyRate - a.dailyRate;
-    if (sortBy === 'rating') return b.rating - a.rating;
-    return (b.rating || 5) - (a.rating || 5);
+    return b.rating - a.rating;
   });
 
+  const getItemOwner = (ownerId) => {
+    return users.find(u => u.id === ownerId) || { name: "Campus Member", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80", trustScore: 95 };
+  };
+
+  const handleConfirmBorrow = async (requestData) => {
+    await createExchangeRequest(requestData);
+    setSelectedItem(null);
+    setActiveTab('exchanges');
+  };
+
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: 'var(--bg-primary)' }}>
       
-      {/* Top Header & Role Switcher */}
+      {/* Retro Top Header */}
       <Header 
         activeTab={activeTab} 
         setActiveTab={setActiveTab} 
-        onOpenAddModal={() => setShowAddModal(true)}
+        onOpenAddModal={() => setShowAddModal(true)} 
         onLogout={onLogout}
       />
 
@@ -81,185 +92,226 @@ function CampusApp({ onLogout }) {
           {/* TAB 1: BROWSE & AI DISCOVERY */}
           {activeTab === 'browse' && (
             <div>
-              {/* Hero AI Discovery Banner */}
+              
+              {/* AI Discovery Header Box */}
               <AiDiscovery 
                 items={items}
                 onSelectItem={(item) => setSelectedItem(item)}
                 onSelectBundle={(bundle) => {
-                  if (bundle.items && bundle.items.length > 0) {
-                    setSelectedItem(bundle.items[0]);
-                  }
+                  if (items.length > 0) setSelectedItem(items[0]);
                 }}
               />
 
-              {/* Filter & Category Controls Bar */}
+              {/* Catalog Controls Header */}
               <div style={{
+                background: '#fff',
+                border: '3px solid #222',
+                borderRadius: '12px',
+                padding: '16px',
+                marginBottom: '24px',
+                boxShadow: '4px 4px 0px #222',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 flexWrap: 'wrap',
-                gap: '16px',
-                marginBottom: '24px'
+                gap: '12px'
               }}>
                 
-                {/* Category Pills */}
-                <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', paddingBottom: '4px', maxWidth: '100%' }}>
-                  {categories.map(cat => (
-                    <button
-                      key={cat}
-                      onClick={() => setSelectedCategory(cat)}
-                      style={{
-                        padding: '6px 14px',
-                        borderRadius: 'var(--radius-full)',
-                        fontSize: '0.82rem',
-                        fontWeight: 600,
-                        border: selectedCategory === cat ? '1px solid var(--accent-cyan)' : '1px solid var(--border-subtle)',
-                        background: selectedCategory === cat ? 'rgba(6, 182, 212, 0.15)' : 'rgba(255, 255, 255, 0.03)',
-                        color: selectedCategory === cat ? '#fff' : 'var(--text-secondary)',
-                        cursor: 'pointer',
-                        whiteSpace: 'nowrap',
-                        transition: 'all 0.2s ease'
-                      }}
-                    >
-                      {cat}
-                    </button>
-                  ))}
+                {/* Search input */}
+                <div style={{ position: 'relative', flex: '1', minWidth: '260px' }}>
+                  <Search size={18} color="#222" style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)' }} />
+                  <input 
+                    type="text" 
+                    className="input-field" 
+                    placeholder="Search gear, calculators, location..." 
+                    value={searchFilter}
+                    onChange={(e) => setSearchFilter(e.target.value)}
+                    style={{ paddingLeft: '40px', background: '#fff' }}
+                  />
                 </div>
 
-                {/* Search & Sort dropdown */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <div style={{ position: 'relative' }}>
-                    <Search size={16} color="var(--text-muted)" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
-                    <input 
-                      type="text"
-                      className="input-field"
-                      placeholder="Filter gear / block..."
-                      value={searchFilter}
-                      onChange={e => setSearchFilter(e.target.value)}
-                      style={{ paddingLeft: '34px', paddingRight: '12px', paddingTop: '6px', paddingBottom: '6px', fontSize: '0.85rem', width: '180px' }}
-                    />
-                  </div>
-
+                {/* Sort Dropdown */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <label style={{ fontSize: '0.78rem', fontWeight: 800, color: '#222', textTransform: 'uppercase' }}>
+                    Sort By:
+                  </label>
                   <select 
                     className="input-field"
                     value={sortBy}
-                    onChange={e => setSortBy(e.target.value)}
-                    style={{ paddingTop: '6px', paddingBottom: '6px', fontSize: '0.85rem', width: '150px' }}
+                    onChange={(e) => setSortBy(e.target.value)}
+                    style={{ width: '180px', padding: '10px 14px', background: '#fff' }}
                   >
-                    <option value="trust">Sort: Highest Trust</option>
-                    <option value="rating">Sort: Top Rating</option>
-                    <option value="priceAsc">Price: Low to High</option>
-                    <option value="priceDesc">Price: High to Low</option>
+                    <option value="trust">⭐ Trust Rating</option>
+                    <option value="priceAsc">💰 Price: Low to High</option>
+                    <option value="priceDesc">💎 Price: High to Low</option>
                   </select>
                 </div>
 
               </div>
 
+              {/* Category Pills Bar */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap', marginBottom: '28px' }}>
+                {categories.map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => setSelectedCategory(cat)}
+                    className="btn btn-sm"
+                    style={{
+                      background: selectedCategory === cat ? '#FF6B9D' : '#fff',
+                      color: selectedCategory === cat ? '#fff' : '#222',
+                      border: '3px solid #222',
+                      boxShadow: selectedCategory === cat ? '3px 3px 0px #222' : '2px 2px 0px #222',
+                      transform: selectedCategory === cat ? 'translate(-2px, -2px)' : 'none'
+                    }}
+                  >
+                    <Tag size={13} />
+                    {cat}
+                  </button>
+                ))}
+              </div>
+
               {/* Items Grid */}
-              {filteredItems.length > 0 ? (
+              {filteredItems.length === 0 ? (
+                <div style={{
+                  background: '#fff',
+                  border: '3px solid #222',
+                  borderRadius: '16px',
+                  padding: '48px 20px',
+                  textAlign: 'center',
+                  boxShadow: '6px 6px 0px #222'
+                }}>
+                  <PackageSearch size={48} color="#FF6B9D" style={{ marginBottom: '12px' }} />
+                  <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#222', marginBottom: '6px' }}>
+                    No items match your filter
+                  </h3>
+                  <p style={{ fontSize: '0.86rem', color: '#666', marginBottom: '16px' }}>
+                    Try searching for another resource or click "+ List Item" to share your own equipment!
+                  </p>
+                  <button onClick={() => setShowAddModal(true)} className="btn btn-emerald btn-sm">
+                    <PlusCircle size={16} /> List Resource Item
+                  </button>
+                </div>
+              ) : (
                 <div style={{
                   display: 'grid',
                   gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-                  gap: '20px'
+                  gap: '24px'
                 }}>
-                  {filteredItems.map(item => (
+                  {filteredItems.map((item) => (
                     <ItemCard 
                       key={item.id} 
                       item={item} 
-                      onSelect={(selected) => setSelectedItem(selected)} 
+                      owner={getItemOwner(item.ownerId)} 
+                      onSelectItem={(i) => setSelectedItem(i)}
                     />
                   ))}
-                </div>
-              ) : (
-                /* Fallback & Smart Alternative Suggestion */
-                <div className="glass-panel" style={{ padding: '40px', textAlign: 'center' }}>
-                  <PackageSearch size={40} color="var(--accent-cyan)" style={{ margin: '0 auto 12px' }} />
-                  <h3 style={{ fontSize: '1.2rem', color: '#fff', marginBottom: '6px' }}>
-                    No exact items found in this filter
-                  </h3>
-                  <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '20px' }}>
-                    Would you like to broadcast a request to the student body or check alternative items?
-                  </p>
-                  <button 
-                    onClick={() => setActiveTab('community')} 
-                    className="btn btn-primary btn-sm"
-                  >
-                    Post Request on Campus Board
-                  </button>
                 </div>
               )}
 
             </div>
           )}
 
-          {/* TAB 2: ACTIVE EXCHANGES & 10-STAGE LIFECYCLE TRACKER */}
+          {/* TAB 2: ACTIVE & COMPLETED EXCHANGES */}
           {activeTab === 'exchanges' && (
-            <LifecycleTracker onOpenRatingModal={(exchange) => setRatingExchange(exchange)} />
+            <div>
+              <div style={{
+                background: '#FFE66D',
+                border: '3px solid #222',
+                borderRadius: '16px',
+                padding: '24px',
+                marginBottom: '24px',
+                boxShadow: '6px 6px 0px #222'
+              }}>
+                <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#222', marginBottom: '4px' }}>
+                  My Active & Past Resource Exchanges 🔄
+                </h1>
+                <p style={{ fontSize: '0.86rem', color: '#333', fontWeight: 600 }}>
+                  Track 10-stage borrowing status, handover checklists, return due timers, and dispute logs.
+                </p>
+              </div>
+
+              {exchanges.length === 0 ? (
+                <div style={{ background: '#fff', border: '3px solid #222', borderRadius: '16px', padding: '48px', textAlign: 'center', boxShadow: '6px 6px 0px #222' }}>
+                  <HelpCircle size={48} color="#4ECDC4" style={{ marginBottom: '12px' }} />
+                  <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#222' }}>No active exchanges yet</h3>
+                  <p style={{ fontSize: '0.86rem', color: '#666' }}>Browse campus listings to borrow gear!</p>
+                </div>
+              ) : (
+                exchanges.map((ex) => (
+                  <LifecycleTracker 
+                    key={ex.id} 
+                    exchange={ex} 
+                    onRaiseDispute={() => {}} 
+                    onResolveDispute={() => {}} 
+                    onOpenRating={(exData) => setRatingExchange(exData)} 
+                  />
+                ))
+              )}
+            </div>
           )}
 
-          {/* TAB 3: COMMUNITY BROADCAST BOARD */}
-          {activeTab === 'community' && (
-            <CommunityRequests />
-          )}
+          {/* TAB 3: BROADCAST BOARD */}
+          {activeTab === 'community' && <CommunityRequests />}
 
-          {/* TAB 4: CAMPUS IMPACT DASHBOARD */}
-          {activeTab === 'impact' && (
-            <ImpactDashboard />
-          )}
+          {/* TAB 4: IMPACT DASHBOARD */}
+          {activeTab === 'impact' && <ImpactDashboard />}
 
-          {/* TAB 5: ADMIN & MODERATION PANEL */}
-          {activeTab === 'admin' && (
-            <AdminPanel />
-          )}
+          {/* TAB 5: ADMIN PANEL */}
+          {activeTab === 'admin' && <AdminPanel />}
 
         </div>
       </main>
 
-      {/* Global Modals */}
+      {/* Item Detail Modal */}
       {selectedItem && (
         <ItemDetailModal 
           item={selectedItem} 
           onClose={() => setSelectedItem(null)} 
-          onBookingSuccess={() => setActiveTab('exchanges')}
+          onConfirmRequest={handleConfirmBorrow}
         />
       )}
 
+      {/* Add Resource Modal */}
       {showAddModal && (
         <AddResourceModal onClose={() => setShowAddModal(false)} />
       )}
 
+      {/* Rating Modal */}
       {ratingExchange && (
         <RatingModal 
           exchange={ratingExchange} 
           onClose={() => setRatingExchange(null)} 
+          onSubmitRating={() => setRatingExchange(null)}
         />
       )}
 
-      {/* Global Floating Toast Notifications */}
+      {/* Global Toast Alerts */}
       {toastMessage && (
         <div className="toast-container">
           <div className={`toast toast-${toastMessage.type}`}>
             <CheckCircle2 size={18} />
-            <span>{toastMessage.message}</span>
+            {toastMessage.message}
           </div>
         </div>
       )}
 
-      {/* Footer */}
+      {/* Retro Footer */}
       <footer style={{
-        borderTop: '1px solid var(--border-subtle)',
+        background: '#FFF8E7',
+        borderTop: '3px solid #222',
         padding: '24px 0',
-        background: 'rgba(9, 13, 22, 0.95)',
+        marginTop: 'auto',
+        fontSize: '0.82rem',
+        color: '#555',
         textAlign: 'center',
-        fontSize: '0.8rem',
-        color: 'var(--text-muted)'
+        fontWeight: 600
       }}>
         <div className="container">
-          <div style={{ fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '4px' }}>
-            Campus Circular • WebFusion 2.0 Inter-College Competition
+          <div style={{ fontWeight: 800, color: '#222', marginBottom: '4px' }}>
+            Campus Circular • 90s Retro & Neo-Brutalist Interface
           </div>
           <div>
-            Built with React, LocalStorage Simulation & AI Need-Based Discovery • Empowering Sustainable Peer Sharing
+            Built with React, Express REST API, SQLite Local Database & AI Need-Based Discovery
           </div>
         </div>
       </footer>
@@ -274,9 +326,10 @@ function AppWithAuth() {
     return localStorage.getItem('cc_logged_in') === 'true';
   });
 
-  const handleLogin = (role) => {
-    // Switch to the appropriate user based on role
-    if (role === 'admin') {
+  const handleLogin = (role, userId) => {
+    if (userId) {
+      switchUser(userId);
+    } else if (role === 'admin') {
       switchUser('admin1');
     } else {
       switchUser('u1');

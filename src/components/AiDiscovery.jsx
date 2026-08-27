@@ -24,12 +24,11 @@ export default function AiDiscovery({ items, onSelectItem, onSelectBundle }) {
     setIsAnalyzing(true);
     setAiResult(null);
 
-    // Simulate realistic AI thought stream
     setTimeout(() => {
       const result = parseNaturalLanguageQuery(searchQuery, items);
       setAiResult(result);
       setIsAnalyzing(false);
-    }, 700);
+    }, 600);
   };
 
   const handleSelectPreset = (preset) => {
@@ -38,236 +37,199 @@ export default function AiDiscovery({ items, onSelectItem, onSelectBundle }) {
   };
 
   return (
-    <div className="glass-panel" style={{ padding: '24px', marginBottom: '32px', position: 'relative', overflow: 'hidden' }}>
+    <div style={{
+      background: '#FFE66D',
+      border: '3px solid #222',
+      borderRadius: '16px',
+      padding: '24px',
+      marginBottom: '32px',
+      boxShadow: '6px 6px 0px #222',
+      position: 'relative'
+    }}>
       
-      {/* Background ambient light */}
-      <div style={{
-        position: 'absolute',
-        top: '-40px',
-        right: '-40px',
-        width: '180px',
-        height: '180px',
-        background: 'radial-gradient(circle, rgba(99,102,241,0.25) 0%, transparent 70%)',
-        pointerEvents: 'none'
-      }} />
-
-      {/* Title & AI Badge */}
+      {/* Title & Badge */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <div style={{
-            width: '32px',
-            height: '32px',
+            width: '38px',
+            height: '38px',
             borderRadius: '8px',
-            background: 'linear-gradient(135deg, #6366f1, #06b6d4)',
+            background: '#FF6B9D',
+            border: '2px solid #222',
+            boxShadow: '2px 2px 0px #222',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center'
           }}>
-            <Bot size={18} color="#fff" />
+            <Bot size={22} color="#fff" />
           </div>
           <div>
-            <h2 style={{ fontSize: '1.2rem', fontWeight: 700, margin: 0 }}>
-              AI-Assisted Need-Based Discovery
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#222', margin: 0 }}>
+              AI Need-Based Discovery Engine 🤖
             </h2>
-            <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', margin: 0 }}>
-              Describe your assignment, shoot, or project in natural language. We'll find or bundle the exact gear you need.
-            </p>
+            <div style={{ fontSize: '0.78rem', color: '#555', fontWeight: 600 }}>
+              Type your project need or select a preset prompt to get automatic gear bundles!
+            </div>
           </div>
         </div>
 
-        <span className="badge badge-purple">
-          <Sparkles size={12} />
-          NLP Powered
+        <span className="badge badge-purple" style={{ fontSize: '0.7rem' }}>
+          ✨ Smart NLP Parser
         </span>
       </div>
 
-      {/* Input bar */}
-      <div style={{ position: 'relative', display: 'flex', gap: '10px', marginBottom: '14px' }}>
-        <div style={{ position: 'relative', flex: 1 }}>
-          <Search 
-            size={18} 
-            color="var(--text-muted)" 
-            style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)' }} 
-          />
-          <input 
-            type="text" 
-            className="input-field" 
-            placeholder="e.g. 'I need to shoot a reel for our club fest tomorrow' or 'Exam prep for Machine Drawing tonight'"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && handleRunAI(query)}
-            style={{ paddingLeft: '44px', fontSize: '0.95rem' }}
-          />
-        </div>
-
-        <button 
-          onClick={() => handleRunAI(query)} 
-          disabled={!query.trim() || isAnalyzing}
-          className="btn btn-primary"
+      {/* Natural Language Input Bar */}
+      <div style={{ position: 'relative', marginBottom: '16px' }}>
+        <input 
+          type="text"
+          className="input-field"
+          placeholder="e.g. 'I need to shoot a 4K promo video reel for college fest with sound'"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && handleRunAI(query)}
+          style={{
+            paddingRight: '130px',
+            background: '#fff',
+            fontSize: '0.95rem',
+            fontWeight: 600,
+            border: '3px solid #222',
+            boxShadow: '3px 3px 0px #222'
+          }}
+        />
+        <button
+          onClick={() => handleRunAI(query)}
+          disabled={isAnalyzing || !query.trim()}
+          className="btn btn-emerald"
+          style={{
+            position: 'absolute',
+            right: '6px',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            padding: '8px 16px',
+            fontSize: '0.82rem',
+            boxShadow: '2px 2px 0px #222'
+          }}
         >
           {isAnalyzing ? (
-            <>
-              <div style={{
-                width: '16px',
-                height: '16px',
-                border: '2px solid rgba(255,255,255,0.3)',
-                borderTopColor: '#fff',
-                borderRadius: '50%',
-                animation: 'spin 0.8s linear infinite'
-              }} />
-              Analyzing...
-            </>
+            'Parsing...'
           ) : (
             <>
-              <Sparkles size={16} />
-              Find Best Fit
+              <Zap size={14} />
+              Match Gear
             </>
           )}
         </button>
       </div>
 
-      {/* Sample Prompt Chips */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-        <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 600 }}>Try asking:</span>
-        {PRESET_AI_PROMPTS.map((preset, idx) => (
+      {/* Preset Prompts Chips */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '16px' }}>
+        <span style={{ fontSize: '0.76rem', fontWeight: 800, color: '#222', textTransform: 'uppercase' }}>
+          💡 Try Preset Prompts:
+        </span>
+        {PRESET_AI_PROMPTS.map((preset) => (
           <button
-            key={idx}
+            key={preset.id}
             onClick={() => handleSelectPreset(preset)}
             style={{
-              background: 'rgba(255, 255, 255, 0.04)',
-              border: '1px solid rgba(255, 255, 255, 0.08)',
-              borderRadius: 'var(--radius-full)',
-              padding: '4px 12px',
-              color: 'var(--text-secondary)',
-              fontSize: '0.78rem',
+              padding: '6px 12px',
+              borderRadius: '20px',
+              background: '#fff',
+              border: '2px solid #222',
+              fontSize: '0.76rem',
+              fontWeight: 700,
+              color: '#222',
               cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              transition: 'all 0.2s ease'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = 'var(--accent-cyan)';
-              e.currentTarget.style.color = '#fff';
-              e.currentTarget.style.background = 'rgba(6, 182, 212, 0.1)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
-              e.currentTarget.style.color = 'var(--text-secondary)';
-              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.04)';
+              boxShadow: '2px 2px 0px #222',
+              transition: 'all 0.12s ease'
             }}
           >
-            {preset.label}
+            {preset.icon} {preset.label}
           </button>
         ))}
       </div>
 
-      {/* AI Results Output Container */}
+      {/* AI Search Results Box */}
       {aiResult && (
         <div style={{
-          marginTop: '20px',
-          padding: '18px',
-          borderRadius: 'var(--radius-md)',
-          background: 'rgba(15, 23, 42, 0.95)',
-          border: '1px solid rgba(99, 102, 241, 0.3)',
-          animation: 'fadeIn 0.3s ease'
+          background: '#fff',
+          border: '3px solid #222',
+          borderRadius: '12px',
+          padding: '20px',
+          boxShadow: '4px 4px 0px #222',
+          marginTop: '16px'
         }}>
-          
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span className="badge badge-cyan" style={{ fontSize: '0.72rem' }}>
-                Match Confidence: {aiResult.confidence}%
-              </span>
-              {aiResult.discount > 0 && (
-                <span className="badge badge-emerald" style={{ fontSize: '0.72rem' }}>
-                  {aiResult.discount}% Bundle Savings
-                </span>
-              )}
+            <div style={{ fontWeight: 800, color: '#222', fontSize: '1rem' }}>
+              🎯 AI Match Summary: <span style={{ color: '#FF6B9D' }}>{aiResult.intentName}</span>
             </div>
-
-            <button 
-              onClick={() => setAiResult(null)}
-              style={{ background: 'none', border: 'none', color: 'var(--text-muted)', fontSize: '0.8rem', cursor: 'pointer' }}
-            >
-              Clear
-            </button>
+            <div style={{ fontSize: '0.8rem', fontWeight: 800, color: '#2ECC71', fontFamily: 'var(--font-mono)' }}>
+              Confidence Score: {aiResult.confidenceScore}%
+            </div>
           </div>
 
-          <h3 style={{ fontSize: '1.05rem', color: '#fff', marginBottom: '6px' }}>
-            {aiResult.bundleName}
-          </h3>
-          <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '14px' }}>
-            {aiResult.explanation}
+          <p style={{ fontSize: '0.86rem', color: '#555', marginBottom: '16px', fontWeight: 500 }}>
+            {aiResult.reasoning}
           </p>
 
-          {/* Matched Items Cards Grid */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
-            gap: '12px',
-            marginBottom: '16px'
-          }}>
-            {aiResult.items.map(item => (
+          {/* Matched Items */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '12px', marginBottom: '16px' }}>
+            {aiResult.matchedItems.map(item => (
               <div 
                 key={item.id}
                 onClick={() => onSelectItem(item)}
                 style={{
-                  background: 'rgba(255, 255, 255, 0.03)',
-                  border: '1px solid var(--border-card)',
-                  borderRadius: 'var(--radius-md)',
+                  background: '#FFF3D6',
+                  border: '2px solid #222',
+                  borderRadius: '8px',
                   padding: '10px',
                   cursor: 'pointer',
+                  boxShadow: '2px 2px 0px #222',
                   display: 'flex',
-                  gap: '10px',
                   alignItems: 'center',
-                  transition: 'transform 0.2s ease, border-color 0.2s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.borderColor = 'var(--accent-cyan)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'none';
-                  e.currentTarget.style.borderColor = 'var(--border-card)';
+                  gap: '10px'
                 }}
               >
-                <img 
-                  src={item.image} 
-                  alt={item.title} 
-                  style={{ width: '50px', height: '50px', borderRadius: '8px', objectFit: 'cover' }} 
-                />
-                <div style={{ minWidth: 0, flex: 1 }}>
-                  <div style={{ fontSize: '0.82rem', fontWeight: 600, color: '#fff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                <img src={item.image} alt={item.title} style={{ width: '40px', height: '40px', borderRadius: '6px', objectFit: 'cover', border: '1px solid #222' }} />
+                <div style={{ flex: 1, overflow: 'hidden' }}>
+                  <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#222', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden' }}>
                     {item.title}
                   </div>
-                  <div style={{ fontSize: '0.74rem', color: 'var(--accent-emerald)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>
-                    ₹{item.dailyRate}/day • {item.distance}
-                  </div>
-                  <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>
-                    ⭐ {item.rating} • {item.condition}
+                  <div style={{ fontSize: '0.72rem', color: '#2ECC71', fontWeight: 800, fontFamily: 'var(--font-mono)' }}>
+                    ₹{item.dailyRate}/day
                   </div>
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Action CTA */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '10px' }}>
-            <button 
-              onClick={() => onSelectItem(aiResult.items[0])}
-              className="btn btn-secondary btn-sm"
-            >
-              View Primary Item
-            </button>
-            <button 
-              onClick={() => onSelectBundle(aiResult)}
-              className="btn btn-emerald btn-sm"
-            >
-              <PackageCheck size={16} />
-              Borrow Recommended Bundle (1-Click)
-            </button>
-          </div>
-
+          {/* Bundle CTA */}
+          {aiResult.bundleOption && (
+            <div style={{
+              background: '#C7F464',
+              border: '2px solid #222',
+              borderRadius: '8px',
+              padding: '12px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between'
+            }}>
+              <div>
+                <div style={{ fontSize: '0.88rem', fontWeight: 800, color: '#222' }}>
+                  📦 Recommended Bundle Offer ({aiResult.bundleOption.discount}% OFF)
+                </div>
+                <div style={{ fontSize: '0.76rem', color: '#333' }}>
+                  Total Package: ₹{aiResult.bundleOption.totalPrice}/day (Saved ₹{aiResult.bundleOption.savings})
+                </div>
+              </div>
+              <button 
+                onClick={() => onSelectBundle(aiResult.bundleOption)}
+                className="btn btn-sm btn-primary"
+              >
+                Borrow Bundle
+                <ArrowRight size={14} />
+              </button>
+            </div>
+          )}
         </div>
       )}
 

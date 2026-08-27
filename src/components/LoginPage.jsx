@@ -3,7 +3,6 @@ import { useCampus } from '../context/CampusContext';
 import { 
   Repeat, 
   ShieldCheck, 
-  User, 
   ArrowRight, 
   Sparkles, 
   Lock, 
@@ -11,7 +10,6 @@ import {
   Eye, 
   EyeOff,
   GraduationCap,
-  Building2,
   CheckCircle2,
   Leaf,
   Users,
@@ -22,16 +20,14 @@ import {
 
 export default function LoginPage({ onLogin }) {
   const { users, registerUser } = useCampus();
-  const [authMode, setAuthMode] = useState('login'); // 'login' or 'register'
-  const [selectedRole, setSelectedRole] = useState('student'); // 'student' or 'admin'
+  const [authMode, setAuthMode] = useState('login');
+  const [selectedRole, setSelectedRole] = useState('student');
   
-  // Login fields
-  const [email, setEmail] = useState('student@tsec.edu');
+  const [email, setEmail] = useState('rahul.sharma@tsec.edu');
   const [password, setPassword] = useState('campus2026');
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Registration fields
   const [regName, setRegName] = useState('');
   const [regEmail, setRegEmail] = useState('');
   const [regPassword, setRegPassword] = useState('');
@@ -45,7 +41,7 @@ export default function LoginPage({ onLogin }) {
         setEmail('admin@tsec.edu');
         setPassword('admin2026');
       } else {
-        setEmail('student@tsec.edu');
+        setEmail('rahul.sharma@tsec.edu');
         setPassword('campus2026');
       }
     }
@@ -64,13 +60,9 @@ export default function LoginPage({ onLogin }) {
         department: regDept,
         year: regYear
       });
-
       setIsSubmitting(false);
-      if (newUser) {
-        onLogin(newUser.role, newUser.id);
-      }
+      if (newUser) onLogin(newUser.role, newUser.id);
     } else {
-      // Simulate auth check
       setTimeout(() => {
         setIsSubmitting(false);
         onLogin(selectedRole);
@@ -79,10 +71,10 @@ export default function LoginPage({ onLogin }) {
   };
 
   const impactStats = [
-    { label: "Active Members", value: `${users.length} Users`, icon: Users },
-    { label: "Sharing System", value: "Live DB", icon: Repeat },
-    { label: "Safety Rating", value: "100%", icon: TrendingUp },
-    { label: "CO₂ Impact", value: "Clean", icon: Leaf }
+    { label: "Active Members", value: `${users.length}`, icon: Users, color: '#4ECDC4' },
+    { label: "Sharing System", value: "LIVE", icon: Repeat, color: '#FF6B9D' },
+    { label: "Safety", value: "100%", icon: TrendingUp, color: '#C7F464' },
+    { label: "Eco Impact", value: "✓", icon: Leaf, color: '#FFE66D' }
   ];
 
   return (
@@ -92,138 +84,116 @@ export default function LoginPage({ onLogin }) {
       alignItems: 'center',
       justifyContent: 'center',
       padding: '20px',
-      position: 'relative',
-      overflow: 'hidden'
+      position: 'relative'
     }}>
 
-      {/* Animated Background Orbs */}
-      <div style={{
-        position: 'absolute',
-        top: '-15%',
-        left: '-10%',
-        width: '500px',
-        height: '500px',
-        borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, transparent 70%)',
-        animation: 'floatOrb1 8s ease-in-out infinite',
-        pointerEvents: 'none'
-      }} />
-      <div style={{
-        position: 'absolute',
-        bottom: '-10%',
-        right: '-10%',
-        width: '600px',
-        height: '600px',
-        borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, transparent 70%)',
-        animation: 'floatOrb2 10s ease-in-out infinite',
-        pointerEvents: 'none'
-      }} />
-
-      {/* Main Container */}
+      {/* Main Container - Retro Window */}
       <div style={{
         display: 'grid',
         gridTemplateColumns: '1fr 1fr',
         width: '100%',
-        maxWidth: '1020px',
-        minHeight: '620px',
-        borderRadius: 'var(--radius-xl)',
+        maxWidth: '1000px',
+        minHeight: '580px',
+        border: '3px solid #222',
+        borderRadius: '16px',
         overflow: 'hidden',
-        border: '1px solid rgba(255, 255, 255, 0.1)',
-        boxShadow: '0 30px 80px -20px rgba(0, 0, 0, 0.7), 0 0 40px rgba(6, 182, 212, 0.1)',
-        animation: 'scaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
+        boxShadow: '8px 8px 0px #222',
+        animation: 'popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)'
       }}>
 
-        {/* LEFT PANEL: Branding & Info */}
+        {/* LEFT PANEL: Branding */}
         <div style={{
-          background: 'linear-gradient(160deg, rgba(6, 182, 212, 0.15) 0%, rgba(15, 23, 42, 0.95) 40%, rgba(99, 102, 241, 0.1) 100%)',
-          backdropFilter: 'blur(20px)',
-          padding: '44px 38px',
+          background: '#4ECDC4',
+          padding: '40px 36px',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          borderRight: '1px solid rgba(255, 255, 255, 0.06)'
+          borderRight: '3px solid #222',
+          position: 'relative',
+          overflow: 'hidden'
         }}>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '24px' }}>
+          {/* Decorative circles */}
+          <div style={{ position: 'absolute', top: '-30px', right: '-30px', width: '120px', height: '120px', borderRadius: '50%', background: '#FFE66D', border: '3px solid #222', opacity: 0.6 }} />
+          <div style={{ position: 'absolute', bottom: '-20px', left: '-20px', width: '80px', height: '80px', borderRadius: '50%', background: '#FF6B9D', border: '3px solid #222', opacity: 0.5 }} />
+
+          <div style={{ position: 'relative', zIndex: 1 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
               <div style={{
                 width: '52px',
                 height: '52px',
-                borderRadius: '16px',
-                background: 'linear-gradient(135deg, #06b6d4, #10b981)',
+                borderRadius: '12px',
+                background: '#FFE66D',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                boxShadow: '0 0 30px rgba(6, 182, 212, 0.5)'
+                border: '3px solid #222',
+                boxShadow: '3px 3px 0px #222'
               }}>
-                <Repeat size={28} color="#fff" />
+                <Repeat size={26} color="#222" />
               </div>
               <div>
-                <h1 style={{ 
-                  fontSize: '1.75rem', 
-                  fontWeight: 800, 
-                  margin: 0,
-                  background: 'linear-gradient(90deg, #fff, #94a3b8)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent'
-                }}>
-                  Campus<span style={{ WebkitTextFillColor: 'var(--accent-cyan)' }}>Circular</span>
+                <h1 style={{ fontSize: '1.8rem', fontWeight: 700, margin: 0, color: '#222' }}>
+                  Campus<span style={{ color: '#fff' }}>Circular</span>
                 </h1>
-                <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 500 }}>
+                <div style={{ fontSize: '0.78rem', color: '#1a6b65', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                   WebFusion 2.0 • CodeCrafters
                 </div>
               </div>
             </div>
 
-            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, lineHeight: '1.35', marginBottom: '12px', color: '#f1f5f9' }}>
-              Create Your Own<br />
-              <span style={{ color: 'var(--accent-cyan)' }}>Campus Profile & Gear List.</span>
+            <h2 style={{ fontSize: '1.6rem', fontWeight: 700, lineHeight: '1.3', marginBottom: '12px', color: '#222' }}>
+              From Ownership<br />
+              <span style={{ 
+                background: '#FFE66D', 
+                padding: '2px 8px', 
+                border: '2px solid #222',
+                display: 'inline-block',
+                transform: 'rotate(-1deg)'
+              }}>to Access.</span>
             </h2>
 
-            <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '24px' }}>
-              All default items have been cleared. Sign in or register your custom user profile to list and borrow your own resources.
+            <p style={{ fontSize: '0.9rem', color: '#1a5c57', lineHeight: '1.6', marginBottom: '20px', fontWeight: 500 }}>
+              A trusted peer-to-peer platform for college students to discover, share, lend, borrow & settle campus resources — safely & transparently.
             </p>
 
+            {/* Quote Box */}
             <div style={{
-              background: 'rgba(6, 182, 212, 0.08)',
-              border: '1px solid rgba(6, 182, 212, 0.2)',
-              borderRadius: 'var(--radius-md)',
+              background: '#fff',
+              border: '3px solid #222',
+              borderRadius: '8px',
               padding: '12px 16px',
+              boxShadow: '3px 3px 0px #222',
               display: 'flex',
               alignItems: 'center',
-              gap: '10px',
-              marginBottom: '24px'
+              gap: '10px'
             }}>
-              <Sparkles size={18} color="var(--accent-cyan)" />
-              <span style={{ fontSize: '0.82rem', color: '#e2e8f0', fontStyle: 'italic' }}>
-                "Why buy what someone nearby already has?"
+              <Sparkles size={18} color="#FF6B9D" />
+              <span style={{ fontSize: '0.84rem', color: '#222', fontWeight: 600, fontStyle: 'italic' }}>
+                "Why buy what someone nearby already has?" 🤔
               </span>
             </div>
           </div>
 
-          <div>
-            <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase', marginBottom: '10px' }}>
-              Campus System Metrics
+          {/* Bottom: Impact Stats */}
+          <div style={{ position: 'relative', zIndex: 1 }}>
+            <div style={{ fontSize: '0.72rem', color: '#1a5c57', fontWeight: 700, textTransform: 'uppercase', marginBottom: '8px', letterSpacing: '0.06em' }}>
+              ⚡ Campus Stats
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '6px' }}>
               {impactStats.map((stat, i) => (
                 <div key={i} style={{
-                  background: 'rgba(255, 255, 255, 0.03)',
-                  border: '1px solid var(--border-subtle)',
-                  borderRadius: 'var(--radius-sm)',
-                  padding: '8px 10px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px'
+                  background: '#fff',
+                  border: '2px solid #222',
+                  borderRadius: '8px',
+                  padding: '8px 6px',
+                  textAlign: 'center',
+                  boxShadow: '2px 2px 0px #222'
                 }}>
-                  <stat.icon size={15} color="var(--accent-emerald)" />
-                  <div>
-                    <div style={{ fontSize: '0.9rem', fontWeight: 800, color: '#fff', fontFamily: 'var(--font-mono)' }}>
-                      {stat.value}
-                    </div>
-                    <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>
-                      {stat.label}
-                    </div>
+                  <div style={{ fontSize: '1.1rem', fontWeight: 700, color: '#222', fontFamily: 'var(--font-mono)' }}>
+                    {stat.value}
+                  </div>
+                  <div style={{ fontSize: '0.6rem', color: '#666', fontWeight: 600, textTransform: 'uppercase' }}>
+                    {stat.label}
                   </div>
                 </div>
               ))}
@@ -231,11 +201,10 @@ export default function LoginPage({ onLogin }) {
           </div>
         </div>
 
-        {/* RIGHT PANEL: Auth Tabs & Form */}
+        {/* RIGHT PANEL: Auth Form */}
         <div style={{
-          background: 'rgba(15, 23, 42, 0.94)',
-          backdropFilter: 'blur(20px)',
-          padding: '40px 36px',
+          background: '#FFF8E7',
+          padding: '36px 32px',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center'
@@ -244,26 +213,28 @@ export default function LoginPage({ onLogin }) {
           {/* Mode Switcher Tabs */}
           <div style={{
             display: 'flex',
-            background: 'rgba(255, 255, 255, 0.04)',
-            padding: '4px',
-            borderRadius: 'var(--radius-md)',
-            marginBottom: '20px',
-            border: '1px solid var(--border-subtle)'
+            background: '#fff',
+            border: '3px solid #222',
+            borderRadius: '8px',
+            marginBottom: '18px',
+            overflow: 'hidden',
+            boxShadow: '3px 3px 0px #222'
           }}>
             <button
               type="button"
               onClick={() => setAuthMode('login')}
               style={{
                 flex: 1,
-                padding: '8px',
-                borderRadius: 'var(--radius-sm)',
+                padding: '10px',
                 border: 'none',
-                background: authMode === 'login' ? 'var(--accent-cyan)' : 'transparent',
-                color: authMode === 'login' ? '#fff' : 'var(--text-muted)',
+                borderRight: '2px solid #222',
+                background: authMode === 'login' ? '#FFE66D' : '#fff',
+                color: '#222',
                 fontWeight: 700,
                 fontSize: '0.85rem',
                 cursor: 'pointer',
-                transition: 'all 0.2s ease',
+                textTransform: 'uppercase',
+                letterSpacing: '0.04em',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -278,15 +249,15 @@ export default function LoginPage({ onLogin }) {
               onClick={() => setAuthMode('register')}
               style={{
                 flex: 1,
-                padding: '8px',
-                borderRadius: 'var(--radius-sm)',
+                padding: '10px',
                 border: 'none',
-                background: authMode === 'register' ? 'var(--accent-emerald)' : 'transparent',
-                color: authMode === 'register' ? '#fff' : 'var(--text-muted)',
+                background: authMode === 'register' ? '#C7F464' : '#fff',
+                color: '#222',
                 fontWeight: 700,
                 fontSize: '0.85rem',
                 cursor: 'pointer',
-                transition: 'all 0.2s ease',
+                textTransform: 'uppercase',
+                letterSpacing: '0.04em',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -294,55 +265,63 @@ export default function LoginPage({ onLogin }) {
               }}
             >
               <UserPlus size={15} />
-              Register New Profile
+              Register
             </button>
           </div>
 
           {/* Role Selection */}
-          <div style={{ marginBottom: '16px' }}>
-            <label style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>
-              Select Role Type
+          <div style={{ marginBottom: '14px' }}>
+            <label style={{ fontSize: '0.76rem', fontWeight: 700, color: '#222', textTransform: 'uppercase', display: 'block', marginBottom: '6px', letterSpacing: '0.05em' }}>
+              👤 Select Role
             </label>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
               
               <div 
                 onClick={() => handleSelectRole('student')}
                 style={{
-                  padding: '12px 10px',
-                  borderRadius: 'var(--radius-md)',
-                  background: selectedRole === 'student' ? 'rgba(6, 182, 212, 0.15)' : 'rgba(255, 255, 255, 0.03)',
-                  border: selectedRole === 'student' ? '1px solid var(--accent-cyan)' : '1px solid var(--border-subtle)',
+                  padding: '12px',
+                  borderRadius: '8px',
+                  background: selectedRole === 'student' ? '#4ECDC4' : '#fff',
+                  border: '3px solid #222',
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '8px'
+                  gap: '8px',
+                  boxShadow: selectedRole === 'student' ? '4px 4px 0px #222' : '2px 2px 0px #222',
+                  transform: selectedRole === 'student' ? 'translate(-2px, -2px)' : 'none',
+                  transition: 'all 0.15s ease'
                 }}
               >
-                <GraduationCap size={18} color="var(--accent-cyan)" />
+                <GraduationCap size={20} color="#222" />
                 <div>
-                  <div style={{ fontSize: '0.86rem', fontWeight: 700, color: '#fff' }}>Student</div>
-                  <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>Borrow & Lend</div>
+                  <div style={{ fontSize: '0.88rem', fontWeight: 700, color: '#222' }}>Student</div>
+                  <div style={{ fontSize: '0.66rem', color: selectedRole === 'student' ? '#1a5c57' : '#888' }}>Borrow & Lend</div>
                 </div>
+                {selectedRole === 'student' && <CheckCircle2 size={16} color="#222" style={{ marginLeft: 'auto' }} />}
               </div>
 
               <div 
                 onClick={() => handleSelectRole('admin')}
                 style={{
-                  padding: '12px 10px',
-                  borderRadius: 'var(--radius-md)',
-                  background: selectedRole === 'admin' ? 'rgba(244, 63, 94, 0.15)' : 'rgba(255, 255, 255, 0.03)',
-                  border: selectedRole === 'admin' ? '1px solid var(--accent-rose)' : '1px solid var(--border-subtle)',
+                  padding: '12px',
+                  borderRadius: '8px',
+                  background: selectedRole === 'admin' ? '#FF6B9D' : '#fff',
+                  border: '3px solid #222',
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '8px'
+                  gap: '8px',
+                  boxShadow: selectedRole === 'admin' ? '4px 4px 0px #222' : '2px 2px 0px #222',
+                  transform: selectedRole === 'admin' ? 'translate(-2px, -2px)' : 'none',
+                  transition: 'all 0.15s ease'
                 }}
               >
-                <ShieldCheck size={18} color="var(--accent-rose)" />
+                <ShieldCheck size={20} color="#222" />
                 <div>
-                  <div style={{ fontSize: '0.86rem', fontWeight: 700, color: '#fff' }}>Campus Admin</div>
-                  <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>Moderator</div>
+                  <div style={{ fontSize: '0.88rem', fontWeight: 700, color: '#222' }}>Admin</div>
+                  <div style={{ fontSize: '0.66rem', color: selectedRole === 'admin' ? '#7a2a42' : '#888' }}>Moderator</div>
                 </div>
+                {selectedRole === 'admin' && <CheckCircle2 size={16} color="#222" style={{ marginLeft: 'auto' }} />}
               </div>
 
             </div>
@@ -351,120 +330,92 @@ export default function LoginPage({ onLogin }) {
           {/* Form */}
           <form onSubmit={handleFormSubmit}>
             
-            {/* Registration specific fields */}
             {authMode === 'register' && (
               <>
-                <div style={{ marginBottom: '12px' }}>
-                  <label style={{ fontSize: '0.78rem', color: '#e2e8f0', display: 'block', marginBottom: '4px' }}>
-                    Full Name:
-                  </label>
-                  <input 
-                    type="text"
-                    className="input-field"
-                    required
-                    placeholder="e.g. Ananya Patel"
-                    value={regName}
-                    onChange={(e) => setRegName(e.target.value)}
-                    style={{ padding: '8px 12px', fontSize: '0.85rem' }}
-                  />
+                <div style={{ marginBottom: '10px' }}>
+                  <label style={{ fontSize: '0.76rem', fontWeight: 700, color: '#222', display: 'block', marginBottom: '4px' }}>Full Name:</label>
+                  <input type="text" className="input-field" required placeholder="e.g. Ananya Patel" value={regName} onChange={(e) => setRegName(e.target.value)} />
                 </div>
-
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '12px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '10px' }}>
                   <div>
-                    <label style={{ fontSize: '0.78rem', color: '#e2e8f0', display: 'block', marginBottom: '4px' }}>
-                      Department:
-                    </label>
-                    <input 
-                      type="text"
-                      className="input-field"
-                      placeholder="e.g. IT / CS / Mech"
-                      value={regDept}
-                      onChange={(e) => setRegDept(e.target.value)}
-                      style={{ padding: '8px 12px', fontSize: '0.85rem' }}
-                    />
+                    <label style={{ fontSize: '0.76rem', fontWeight: 700, color: '#222', display: 'block', marginBottom: '4px' }}>Dept:</label>
+                    <input type="text" className="input-field" placeholder="IT / CS / Mech" value={regDept} onChange={(e) => setRegDept(e.target.value)} />
                   </div>
-
                   <div>
-                    <label style={{ fontSize: '0.78rem', color: '#e2e8f0', display: 'block', marginBottom: '4px' }}>
-                      Year:
-                    </label>
-                    <input 
-                      type="text"
-                      className="input-field"
-                      placeholder="e.g. 3rd Year"
-                      value={regYear}
-                      onChange={(e) => setRegYear(e.target.value)}
-                      style={{ padding: '8px 12px', fontSize: '0.85rem' }}
-                    />
+                    <label style={{ fontSize: '0.76rem', fontWeight: 700, color: '#222', display: 'block', marginBottom: '4px' }}>Year:</label>
+                    <input type="text" className="input-field" placeholder="3rd Year" value={regYear} onChange={(e) => setRegYear(e.target.value)} />
                   </div>
                 </div>
               </>
             )}
 
-            {/* Email */}
-            <div style={{ marginBottom: '12px' }}>
-              <label style={{ fontSize: '0.78rem', color: '#e2e8f0', display: 'block', marginBottom: '4px' }}>
-                Campus Email Address:
+            <div style={{ marginBottom: '10px' }}>
+              <label style={{ fontSize: '0.76rem', fontWeight: 700, color: '#222', display: 'block', marginBottom: '4px' }}>
+                📧 Campus Email:
               </label>
               <input 
-                type="email"
-                className="input-field"
-                required
-                placeholder="yourname@tsec.edu"
+                type="email" className="input-field" required placeholder="yourname@tsec.edu"
                 value={authMode === 'register' ? regEmail : email}
                 onChange={(e) => authMode === 'register' ? setRegEmail(e.target.value) : setEmail(e.target.value)}
-                style={{ padding: '8px 12px', fontSize: '0.85rem' }}
               />
             </div>
 
-            {/* Password */}
             <div style={{ marginBottom: '16px' }}>
-              <label style={{ fontSize: '0.78rem', color: '#e2e8f0', display: 'block', marginBottom: '4px' }}>
-                Password:
+              <label style={{ fontSize: '0.76rem', fontWeight: 700, color: '#222', display: 'block', marginBottom: '4px' }}>
+                🔒 Password:
               </label>
               <input 
-                type="password"
-                className="input-field"
-                required
-                placeholder="Enter password"
+                type={showPassword ? 'text' : 'password'} className="input-field" required placeholder="Enter password"
                 value={authMode === 'register' ? regPassword : password}
                 onChange={(e) => authMode === 'register' ? setRegPassword(e.target.value) : setPassword(e.target.value)}
-                style={{ padding: '8px 12px', fontSize: '0.85rem' }}
               />
             </div>
 
-            {/* Submit CTA */}
             <button 
               type="submit"
               disabled={isSubmitting}
-              className="btn btn-emerald"
+              className="btn"
               style={{
                 width: '100%',
-                padding: '12px',
-                fontSize: '0.95rem',
-                fontWeight: 700
+                padding: '14px',
+                fontSize: '1rem',
+                background: selectedRole === 'admin' ? '#FF6B9D' : '#4ECDC4',
+                color: '#222',
+                borderRadius: '8px',
+                opacity: isSubmitting ? 0.7 : 1
               }}
             >
-              {isSubmitting ? (
-                'Processing...'
-              ) : authMode === 'register' ? (
-                <>
-                  <UserPlus size={16} />
-                  Create Profile & Sign In
-                </>
+              {isSubmitting ? '⏳ Processing...' : authMode === 'register' ? (
+                <><UserPlus size={16} /> Create Profile & Sign In</>
               ) : (
-                <>
-                  <LogIn size={16} />
-                  Sign In as {selectedRole === 'admin' ? 'Campus Admin' : 'Student'}
-                </>
+                <><LogIn size={16} /> Sign In as {selectedRole === 'admin' ? 'Admin 🛡️' : 'Student 🎓'}</>
               )}
             </button>
           </form>
 
+          {/* Demo Credentials */}
+          {authMode === 'login' && (
+            <div style={{
+              marginTop: '14px',
+              padding: '10px 12px',
+              background: '#fff',
+              border: '2px solid #222',
+              borderRadius: '8px',
+              fontSize: '0.74rem',
+              color: '#555',
+              boxShadow: '2px 2px 0px #222'
+            }}>
+              <div style={{ fontWeight: 700, color: '#222', marginBottom: '2px', textTransform: 'uppercase', fontSize: '0.68rem' }}>
+                💡 Demo Credentials (auto-filled):
+              </div>
+              <div>🎓 <strong>Student</strong>: rahul.sharma@tsec.edu / campus2026</div>
+              <div>🛡️ <strong>Admin</strong>: admin@tsec.edu / admin2026</div>
+            </div>
+          )}
+
         </div>
 
       </div>
-
     </div>
   );
 }
