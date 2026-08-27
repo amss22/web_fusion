@@ -27,6 +27,8 @@ function CampusApp({ onLogout }) {
     exchanges,
     createExchangeRequest,
     advanceExchangeStage,
+    raiseDispute,
+    resolveDispute,
     toastMessage 
   } = useCampus();
 
@@ -230,8 +232,8 @@ function CampusApp({ onLogout }) {
                   <LifecycleTracker 
                     key={ex.id} 
                     exchange={ex} 
-                    onRaiseDispute={() => {}} 
-                    onResolveDispute={() => {}} 
+                    onRaiseDispute={(exchangeId, reason, amount) => raiseDispute(exchangeId, reason, amount)} 
+                    onResolveDispute={(exchangeId, deduction, note) => resolveDispute(exchangeId, deduction, note)} 
                     onOpenRating={(exData) => setRatingExchange(exData)} 
                   />
                 ))
