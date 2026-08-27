@@ -17,15 +17,15 @@ export default function ItemCard({ item, owner, onSelectItem }) {
         cursor: 'pointer',
         overflow: 'hidden',
         background: '#FFFFFF',
-        border: '2.5px solid #1E1E1E',
-        borderRadius: '20px',
-        boxShadow: '4px 4px 0px #1E1E1E',
-        transition: 'all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)',
+        border: '3px solid #000000',
+        borderRadius: '16px',
+        boxShadow: '5px 5px 0px #000000',
+        transition: 'all 0.15s ease',
         position: 'relative'
       }}
     >
-      {/* Clean Cover Image */}
-      <div style={{ position: 'relative', height: '190px', background: '#F3EFE6', overflow: 'hidden', borderBottom: '2.5px solid #1E1E1E' }}>
+      {/* Cover Image */}
+      <div style={{ position: 'relative', height: '190px', background: 'var(--bg-secondary)', overflow: 'hidden', borderBottom: '3px solid #000000' }}>
         <img 
           src={item.image} 
           alt={item.title}
@@ -57,12 +57,13 @@ export default function ItemCard({ item, owner, onSelectItem }) {
         <div>
           {/* Title */}
           <h3 style={{ 
-            fontSize: '1.08rem', 
-            fontWeight: 800, 
-            color: '#1E1E1E', 
+            fontSize: '1.15rem', 
+            fontWeight: 900, 
+            color: '#000000', 
             marginBottom: '10px', 
-            lineHeight: '1.35',
-            fontFamily: 'var(--font-heading)'
+            lineHeight: '1.3',
+            fontFamily: 'var(--font-heading)',
+            letterSpacing: '-0.02em'
           }}>
             {item.title}
           </h3>
@@ -72,20 +73,21 @@ export default function ItemCard({ item, owner, onSelectItem }) {
             <img 
               src={owner?.avatar || item.image} 
               alt={owner?.name || "Owner"}
-              style={{ width: '24px', height: '24px', borderRadius: '50%', border: '1.5px solid #1E1E1E' }}
+              style={{ width: '24px', height: '24px', borderRadius: '4px', border: '1.5px solid #000000' }}
             />
-            <span style={{ fontSize: '0.8rem', color: '#555', fontWeight: 700 }}>
+            <span style={{ fontSize: '0.82rem', color: '#222222', fontWeight: 800 }}>
               {owner?.name || "Campus Member"}
             </span>
             {owner?.trustScore && (
               <span style={{ 
-                fontSize: '0.7rem', 
-                background: '#B5EAD7', 
-                color: '#1E1E1E', 
+                fontSize: '0.72rem', 
+                background: 'var(--pop-periwinkle)', 
+                color: '#000000', 
                 padding: '2px 6px', 
-                borderRadius: 'var(--radius-full)', 
-                border: '1.5px solid #1E1E1E',
-                fontWeight: 800
+                borderRadius: '4px', 
+                border: '1.5px solid #000000',
+                fontWeight: 900,
+                boxShadow: '1.5px 1.5px 0px #000000'
               }}>
                 {owner.trustScore}% Trust
               </span>
@@ -93,8 +95,8 @@ export default function ItemCard({ item, owner, onSelectItem }) {
           </div>
 
           {/* Location */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.78rem', color: '#666', marginBottom: '16px', fontWeight: 600 }}>
-            <MapPin size={14} color="#FF85A1" />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.8rem', color: '#444444', marginBottom: '16px', fontWeight: 700 }}>
+            <MapPin size={14} color="#FF6699" />
             <span>{item.location}</span>
           </div>
         </div>
@@ -102,14 +104,14 @@ export default function ItemCard({ item, owner, onSelectItem }) {
         {/* Rates & CTA */}
         <div style={{ 
           paddingTop: '14px', 
-          borderTop: '2px dashed #1E1E1E', 
+          borderTop: '2.5px dashed #000000', 
           display: 'flex', 
           alignItems: 'center', 
           justifyContent: 'space-between' 
         }}>
           <div>
-            <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#1E1E1E', fontFamily: 'var(--font-heading)' }}>
-              ₹{item.dailyRate}<span style={{ fontSize: '0.78rem', fontWeight: 600, color: '#666' }}>/day</span>
+            <div style={{ fontSize: '1.25rem', fontWeight: 900, color: '#000000', fontFamily: 'var(--font-heading)' }}>
+              ₹{item.dailyRate}<span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#555555' }}>/day</span>
             </div>
           </div>
 

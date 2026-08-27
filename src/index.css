@@ -1,46 +1,48 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800;12..96,900&family=Space+Grotesk:wght@500;600;700;800&family=Syne:wght@700;800;900&display=swap');
 
 :root {
-  /* === MINIMAL MODERN CARTOONISH PALETTE === */
-  --bg-primary: #FAF7F2;          /* Clean warm pastel canvas */
-  --bg-secondary: #F3EFE6;
+  /* === AUTHENTIC NEO-BRUTALISM UI PALETTE === */
+  --bg-primary: #ECEFFE;          /* Soft periwinkle canvas */
+  --bg-secondary: #DFE3FC;
   --bg-card: #FFFFFF;
   --bg-card-hover: #FFFFFF;
-  --bg-input: #FAFAFA;
+  --bg-input: #FFFFFF;
   
-  --border-dark: #1E1E1E;         /* Sharp clean cartoon outline */
-  --border-width: 2.5px;
+  --border-dark: #000000;         /* 100% pure black outlines */
+  --border-width: 3px;
   
-  /* Soft Vibrant Cartoon Pastels */
-  --pop-pink: #FF85A1;
-  --pop-yellow: #FFD166;
-  --pop-mint: #06D6A0;
-  --pop-blue: #118AB2;
-  --pop-purple: #C490E4;
-  --pop-orange: #FF9F1C;
-  --pop-lime: #B5EAD7;
+  /* Bold Eye-Catching Neo-Brutalist Colors */
+  --pop-periwinkle: #A3A8F5;      /* Featured in reference image */
+  --pop-pink: #FF6699;
+  --pop-yellow: #FFE853;
+  --pop-mint: #2CE89B;
+  --pop-blue: #3A86FF;
+  --pop-purple: #B5838D;
+  --pop-orange: #FF8811;
+  --pop-cyan: #48CAE4;
   
-  --text-primary: #1E1E1E;
-  --text-secondary: #555555;
-  --text-muted: #888888;
+  --text-primary: #000000;
+  --text-secondary: #222222;
+  --text-muted: #666666;
   
-  --font-heading: 'Outfit', 'Space Grotesk', sans-serif;
-  --font-body: 'Plus Jakarta Sans', sans-serif;
+  --font-heading: 'Syne', 'Bricolage Grotesque', sans-serif;
+  --font-body: 'Space Grotesk', sans-serif;
   --font-mono: 'Space Grotesk', monospace;
   
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
-  --radius-xl: 26px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
   --radius-full: 9999px;
   
-  /* Playful Cartoon Offset Shadows */
-  --shadow-card: 4px 4px 0px #1E1E1E;
-  --shadow-card-hover: 6px 6px 0px #1E1E1E;
-  --shadow-button: 3px 3px 0px #1E1E1E;
-  --shadow-button-active: 1px 1px 0px #1E1E1E;
+  /* Hard Offset Neo-Brutalist Shadows */
+  --shadow-card: 5px 5px 0px #000000;
+  --shadow-card-hover: 7px 7px 0px #000000;
+  --shadow-button: 3px 3px 0px #000000;
+  --shadow-button-active: 1px 1px 0px #000000;
   
-  --transition-normal: 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-fast: 0.12s ease;
+  --transition-normal: 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 * {
@@ -54,22 +56,24 @@ body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   min-height: 100vh;
-  line-height: 1.6;
-  /* Minimal subtle dot grid background */
-  background-image: radial-gradient(rgba(30, 30, 30, 0.08) 1.2px, transparent 1.2px);
-  background-size: 24px 24px;
+  line-height: 1.5;
+  /* Crisp neo-brutalist subtle grid */
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.05) 1.5px, transparent 1.5px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1.5px, transparent 1.5px);
+  background-size: 28px 28px;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
-  font-weight: 800;
+  font-weight: 900;
   color: var(--text-primary);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
 }
 
-/* === MINIMAL CARTOON CARD === */
+/* === NEO-BRUTALIST PANELS & CARDS === */
 .glass-panel {
   background: var(--bg-card);
   border: var(--border-width) solid var(--border-dark);
@@ -79,48 +83,54 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .glass-panel:hover {
-  transform: translateY(-3px);
+  transform: translate(-2px, -2px);
   box-shadow: var(--shadow-card-hover);
 }
 
-/* === SQUISHY CARTOON BUTTONS === */
+/* === NEO-BRUTALIST BUTTONS === */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   font-family: var(--font-heading);
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   font-weight: 800;
   padding: 10px 22px;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-md);
   border: var(--border-width) solid var(--border-dark);
   cursor: pointer;
-  transition: all var(--transition-normal);
+  transition: all var(--transition-fast);
   text-decoration: none;
   white-space: nowrap;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   box-shadow: var(--shadow-button);
 }
 
 .btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 5px 5px 0px #1E1E1E;
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0px #000000;
 }
 
 .btn:active {
-  transform: scale(0.95);
+  transform: translate(1px, 1px);
   box-shadow: var(--shadow-button-active);
 }
 
 .btn-primary {
-  background: var(--pop-blue);
-  color: #fff;
+  background: var(--pop-periwinkle);
+  color: #000000;
+}
+.btn-primary:hover {
+  background: #9499F7;
 }
 
 .btn-emerald {
   background: var(--pop-mint);
-  color: #1E1E1E;
+  color: #000000;
+}
+.btn-emerald:hover {
+  background: #17E390;
 }
 
 .btn-secondary {
@@ -133,62 +143,68 @@ h1, h2, h3, h4, h5, h6 {
 
 .btn-danger {
   background: var(--pop-pink);
-  color: #1E1E1E;
+  color: #000000;
+}
+.btn-danger:hover {
+  background: #FF4D88;
 }
 
 .btn-sm {
   padding: 6px 16px;
-  font-size: 0.8rem;
-  border-radius: var(--radius-full);
-  box-shadow: 2px 2px 0px #1E1E1E;
+  font-size: 0.82rem;
+  border-radius: var(--radius-md);
+  box-shadow: 2.5px 2.5px 0px #000000;
 }
 
 .btn-lg {
-  padding: 14px 32px;
+  padding: 14px 30px;
   font-size: 1.05rem;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-lg);
+  box-shadow: 4px 4px 0px #000000;
 }
 
-/* === PLAYFUL PILLS === */
+/* === NEO-BRUTALIST BADGES === */
 .badge {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   padding: 5px 12px;
-  font-size: 0.75rem;
+  font-size: 0.76rem;
   font-weight: 800;
-  border-radius: var(--radius-full);
-  border: 2px solid var(--border-dark);
-  box-shadow: 2px 2px 0px #1E1E1E;
+  border-radius: var(--radius-sm);
+  border: 2.5px solid var(--border-dark);
+  box-shadow: 2px 2px 0px #000000;
   font-family: var(--font-heading);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 
 .badge-cyan {
-  background: #BEE9E8;
-  color: #1E1E1E;
+  background: var(--pop-periwinkle);
+  color: #000000;
 }
 
 .badge-emerald {
-  background: #B5EAD7;
-  color: #1E1E1E;
+  background: var(--pop-mint);
+  color: #000000;
 }
 
 .badge-amber {
   background: var(--pop-yellow);
-  color: #1E1E1E;
+  color: #000000;
 }
 
 .badge-purple {
-  background: #E2F0CB;
-  color: #1E1E1E;
+  background: var(--pop-periwinkle);
+  color: #000000;
 }
 
 .badge-rose {
-  background: #FFDAC1;
-  color: #1E1E1E;
+  background: var(--pop-pink);
+  color: #000000;
 }
 
-/* === MINIMAL FORM INPUTS === */
+/* === NEO-BRUTALIST FORM INPUTS === */
 .input-field {
   width: 100%;
   background: var(--bg-input);
@@ -199,23 +215,27 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-body);
   font-size: 0.95rem;
   font-weight: 600;
-  transition: all var(--transition-normal);
+  transition: all var(--transition-fast);
   outline: none;
-  box-shadow: 2px 2px 0px #1E1E1E;
+  box-shadow: 3px 3px 0px #000000;
 }
 
 .input-field:focus {
-  border-color: var(--pop-pink);
-  box-shadow: 4px 4px 0px var(--pop-pink);
-  background: #fff;
+  border-color: #000000;
+  background: #FFFFFF;
+  box-shadow: 5px 5px 0px var(--pop-pink);
+  transform: translate(-1px, -1px);
 }
 
-/* === CARTOON MODAL === */
+.input-field::placeholder {
+  color: var(--text-muted);
+}
+
+/* === NEO-BRUTALIST MODAL === */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(30, 30, 30, 0.4);
-  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.6);
   z-index: 1000;
   display: flex;
   align-items: center;
@@ -230,29 +250,30 @@ h1, h2, h3, h4, h5, h6 {
   border: var(--border-width) solid var(--border-dark);
   border-radius: var(--radius-xl);
   width: 100%;
-  max-width: 720px;
+  max-width: 740px;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 8px 8px 0px #1E1E1E;
-  animation: bounceIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 8px 8px 0px #000000;
+  animation: popIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
 }
 
 .modal-header {
-  padding: 18px 24px;
+  padding: 16px 24px;
   border-bottom: var(--border-width) solid var(--border-dark);
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: sticky;
   top: 0;
-  background: var(--pop-yellow);
+  background: var(--pop-periwinkle);
   z-index: 10;
   border-radius: var(--radius-xl) var(--radius-xl) 0 0;
 }
 
 .modal-body {
   padding: 28px;
+  background: #FFFFFF;
 }
 
 .modal-footer {
@@ -262,7 +283,7 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   justify-content: flex-end;
   gap: 12px;
-  background: #FAF7F2;
+  background: #ECEFFE;
   position: sticky;
   bottom: 0;
   z-index: 10;
@@ -284,7 +305,7 @@ h1, h2, h3, h4, h5, h6 {
 .toast {
   pointer-events: auto;
   padding: 14px 24px;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-md);
   font-size: 0.92rem;
   font-weight: 800;
   font-family: var(--font-heading);
@@ -292,23 +313,23 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   gap: 12px;
   border: var(--border-width) solid var(--border-dark);
-  box-shadow: 4px 4px 0px #1E1E1E;
-  animation: bounceIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 4px 4px 0px #000000;
+  animation: popIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .toast-success {
   background: var(--pop-mint);
-  color: #1E1E1E;
+  color: #000000;
 }
 
 .toast-info {
-  background: var(--pop-yellow);
-  color: #1E1E1E;
+  background: var(--pop-periwinkle);
+  color: #000000;
 }
 
 .toast-warning {
-  background: var(--pop-pink);
-  color: #1E1E1E;
+  background: var(--pop-yellow);
+  color: #000000;
 }
 
 /* === KEYFRAMES === */
@@ -317,15 +338,14 @@ h1, h2, h3, h4, h5, h6 {
   to { opacity: 1; }
 }
 
-@keyframes bounceIn {
-  0% { transform: scale(0.85); opacity: 0; }
-  60% { transform: scale(1.02); }
-  100% { transform: scale(1); opacity: 1; }
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 /* === UTILITY LAYOUTS === */
 .container {
-  max-width: 1240px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 0 24px;
 }

@@ -99,7 +99,7 @@ function CampusApp({ onLogout }) {
                 }}
               />
 
-              {/* Minimal Search & Sort Bar */}
+              {/* Neo-Brutalist Search & Sort Bar */}
               <div style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -111,27 +111,27 @@ function CampusApp({ onLogout }) {
                 
                 {/* Search Bar */}
                 <div style={{ position: 'relative', flex: '1', minWidth: '280px' }}>
-                  <Search size={18} color="#1E1E1E" style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)' }} />
+                  <Search size={18} color="#000000" style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)' }} />
                   <input 
                     type="text" 
                     className="input-field" 
-                    placeholder="Search campus resources..." 
+                    placeholder="Search campus resources by name, category, or location..." 
                     value={searchFilter}
                     onChange={(e) => setSearchFilter(e.target.value)}
-                    style={{ paddingLeft: '44px', background: '#fff', borderRadius: 'var(--radius-full)' }}
+                    style={{ paddingLeft: '46px', background: '#FFFFFF' }}
                   />
                 </div>
 
                 {/* Sort selector */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#1E1E1E', textTransform: 'uppercase' }}>
+                  <span style={{ fontSize: '0.82rem', fontWeight: 900, color: '#000000', textTransform: 'uppercase', fontFamily: 'var(--font-heading)' }}>
                     Sort:
                   </span>
                   <select 
                     className="input-field"
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    style={{ width: '180px', padding: '10px 16px', background: '#fff', borderRadius: 'var(--radius-full)' }}
+                    style={{ width: '190px', padding: '11px 16px', background: '#FFFFFF' }}
                   >
                     <option value="trust">Trust Score</option>
                     <option value="priceAsc">Price: Low to High</option>
@@ -141,7 +141,7 @@ function CampusApp({ onLogout }) {
 
               </div>
 
-              {/* Minimal Category Pills Bar */}
+              {/* Category Pills Bar */}
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap', marginBottom: '32px' }}>
                 {categories.map((cat) => (
                   <button
@@ -149,10 +149,11 @@ function CampusApp({ onLogout }) {
                     onClick={() => setSelectedCategory(cat)}
                     className="btn btn-sm"
                     style={{
-                      background: selectedCategory === cat ? 'var(--pop-pink)' : '#fff',
-                      color: selectedCategory === cat ? '#fff' : '#1E1E1E',
-                      boxShadow: selectedCategory === cat ? '3px 3px 0px #1E1E1E' : 'none',
-                      border: '2px solid #1E1E1E'
+                      background: selectedCategory === cat ? 'var(--pop-pink)' : '#FFFFFF',
+                      color: '#000000',
+                      boxShadow: selectedCategory === cat ? '3.5px 3.5px 0px #000000' : '2px 2px 0px #000000',
+                      border: '2.5px solid #000000',
+                      transform: selectedCategory === cat ? 'translate(-2px, -2px)' : 'none'
                     }}
                   >
                     <Tag size={13} />
@@ -164,18 +165,18 @@ function CampusApp({ onLogout }) {
               {/* Grid */}
               {filteredItems.length === 0 ? (
                 <div style={{
-                  background: '#fff',
-                  border: '2.5px solid #1E1E1E',
-                  borderRadius: '24px',
+                  background: '#FFFFFF',
+                  border: '3px solid #000000',
+                  borderRadius: '16px',
                   padding: '56px 20px',
                   textAlign: 'center',
-                  boxShadow: '4px 4px 0px #1E1E1E'
+                  boxShadow: '6px 6px 0px #000000'
                 }}>
-                  <PackageSearch size={52} color="var(--pop-pink)" style={{ marginBottom: '16px' }} />
-                  <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#1E1E1E', marginBottom: '8px', fontFamily: 'var(--font-heading)' }}>
+                  <PackageSearch size={52} color="#000000" style={{ marginBottom: '16px' }} />
+                  <h3 style={{ fontSize: '1.35rem', fontWeight: 900, color: '#000000', marginBottom: '8px', fontFamily: 'var(--font-heading)' }}>
                     No resources found
                   </h3>
-                  <p style={{ fontSize: '0.88rem', color: '#666', marginBottom: '20px', fontWeight: 500 }}>
+                  <p style={{ fontSize: '0.9rem', color: '#444444', marginBottom: '20px', fontWeight: 600 }}>
                     Try searching for another keyword or list your own equipment!
                   </p>
                   <button onClick={() => setShowAddModal(true)} className="btn btn-emerald btn-sm">
@@ -206,26 +207,26 @@ function CampusApp({ onLogout }) {
           {activeTab === 'exchanges' && (
             <div>
               <div style={{
-                background: 'var(--pop-yellow)',
-                border: '2.5px solid #1E1E1E',
-                borderRadius: '24px',
-                padding: '28px',
+                background: 'var(--pop-periwinkle)',
+                border: '3px solid #000000',
+                borderRadius: '16px',
+                padding: '30px',
                 marginBottom: '32px',
-                boxShadow: '4px 4px 0px #1E1E1E'
+                boxShadow: '6px 6px 0px #000000'
               }}>
-                <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1E1E1E', marginBottom: '6px', fontFamily: 'var(--font-heading)' }}>
+                <h1 style={{ fontSize: '1.8rem', fontWeight: 900, color: '#000000', marginBottom: '6px', fontFamily: 'var(--font-heading)', letterSpacing: '-0.03em' }}>
                   My Exchanges & Borrowing Status
                 </h1>
-                <p style={{ fontSize: '0.88rem', color: '#333', fontWeight: 600 }}>
+                <p style={{ fontSize: '0.92rem', color: '#111111', fontWeight: 700 }}>
                   Track your 10-stage exchange status, physical inspection checklists, and escrow refunds.
                 </p>
               </div>
 
               {exchanges.length === 0 ? (
-                <div style={{ background: '#fff', border: '2.5px solid #1E1E1E', borderRadius: '24px', padding: '56px', textAlign: 'center', boxShadow: '4px 4px 0px #1E1E1E' }}>
+                <div style={{ background: '#FFFFFF', border: '3px solid #000000', borderRadius: '16px', padding: '56px', textAlign: 'center', boxShadow: '6px 6px 0px #000000' }}>
                   <PackageSearch size={48} color="var(--pop-blue)" style={{ marginBottom: '16px' }} />
-                  <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#1E1E1E' }}>No active exchanges</h3>
-                  <p style={{ fontSize: '0.88rem', color: '#666', fontWeight: 500 }}>Browse the campus catalog to borrow gear!</p>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: 900, color: '#000000', fontFamily: 'var(--font-heading)' }}>No active exchanges</h3>
+                  <p style={{ fontSize: '0.9rem', color: '#444444', fontWeight: 600 }}>Browse the campus catalog to borrow gear!</p>
                 </div>
               ) : (
                 exchanges.map((ex) => (
@@ -290,22 +291,22 @@ function CampusApp({ onLogout }) {
         </div>
       )}
 
-      {/* Minimal Footer */}
+      {/* Neo-Brutalist Footer */}
       <footer style={{
         background: '#FFFFFF',
-        borderTop: '2.5px solid #1E1E1E',
-        padding: '24px 0',
+        borderTop: '3px solid #000000',
+        padding: '28px 0',
         marginTop: 'auto',
-        fontSize: '0.85rem',
-        color: '#555',
+        fontSize: '0.88rem',
+        color: '#222222',
         textAlign: 'center',
-        fontWeight: 600
+        fontWeight: 700
       }}>
         <div className="container">
-          <div style={{ fontWeight: 800, color: '#1E1E1E', marginBottom: '4px' }}>
-            Campus Circular • Minimal Modern & Cartoonish UI
+          <div style={{ fontWeight: 900, color: '#000000', marginBottom: '4px', fontSize: '1rem', fontFamily: 'var(--font-heading)' }}>
+            Campus Circular • Neo-Brutalism Interface
           </div>
-          <div style={{ fontSize: '0.78rem', color: '#777' }}>
+          <div style={{ fontSize: '0.82rem', color: '#555555' }}>
             Built with React, Express REST API, SQLite & AI Need-Based Discovery
           </div>
         </div>

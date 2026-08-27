@@ -33,42 +33,42 @@ export default function AiDiscovery({ items, onSelectItem, onSelectBundle }) {
 
   return (
     <div style={{
-      background: '#FFF9E6',
-      border: '2.5px solid #1E1E1E',
-      borderRadius: '24px',
-      padding: '28px',
-      marginBottom: '32px',
-      boxShadow: '4px 4px 0px #1E1E1E',
+      background: 'var(--pop-periwinkle)',
+      border: '3px solid #000000',
+      borderRadius: '20px',
+      padding: '32px',
+      marginBottom: '36px',
+      boxShadow: '6px 6px 0px #000000',
       position: 'relative'
     }}>
       
       {/* Title */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '22px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
           <div style={{
-            width: '42px',
-            height: '42px',
-            borderRadius: '14px',
-            background: 'var(--pop-pink)',
-            border: '2.5px solid #1E1E1E',
-            boxShadow: '2px 2px 0px #1E1E1E',
+            width: '46px',
+            height: '46px',
+            borderRadius: '12px',
+            background: 'var(--pop-yellow)',
+            border: '3px solid #000000',
+            boxShadow: '3px 3px 0px #000000',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center'
           }}>
-            <Bot size={24} color="#fff" />
+            <Bot size={26} color="#000000" />
           </div>
           <div>
-            <h2 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#1E1E1E', margin: 0, fontFamily: 'var(--font-heading)' }}>
+            <h2 style={{ fontSize: '1.45rem', fontWeight: 900, color: '#000000', margin: 0, fontFamily: 'var(--font-heading)', letterSpacing: '-0.03em' }}>
               AI Need-Based Discovery Engine
             </h2>
-            <div style={{ fontSize: '0.82rem', color: '#555', fontWeight: 600 }}>
-              Tell us what project you are working on to match gear automatically!
+            <div style={{ fontSize: '0.84rem', color: '#111111', fontWeight: 700 }}>
+              Tell us what project or exam you are preparing for to match gear bundles instantly!
             </div>
           </div>
         </div>
 
-        <span className="badge badge-purple" style={{ fontSize: '0.75rem' }}>
+        <span className="badge badge-amber" style={{ fontSize: '0.78rem' }}>
           Smart NLP Match
         </span>
       </div>
@@ -83,13 +83,13 @@ export default function AiDiscovery({ items, onSelectItem, onSelectBundle }) {
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleRunAI(query)}
           style={{
-            paddingRight: '140px',
-            background: '#fff',
-            fontSize: '0.95rem',
-            fontWeight: 600,
-            borderRadius: 'var(--radius-full)',
-            border: '2.5px solid #1E1E1E',
-            boxShadow: '3px 3px 0px #1E1E1E',
+            paddingRight: '150px',
+            background: '#FFFFFF',
+            fontSize: '0.96rem',
+            fontWeight: 700,
+            borderRadius: '12px',
+            border: '3px solid #000000',
+            boxShadow: '4px 4px 0px #000000',
             paddingLeft: '20px'
           }}
         />
@@ -102,15 +102,16 @@ export default function AiDiscovery({ items, onSelectItem, onSelectBundle }) {
             right: '6px',
             top: '50%',
             transform: 'translateY(-50%)',
-            padding: '8px 20px',
-            fontSize: '0.85rem'
+            padding: '8px 22px',
+            fontSize: '0.88rem',
+            borderRadius: '8px'
           }}
         >
           {isAnalyzing ? (
             'Parsing...'
           ) : (
             <>
-              <Zap size={15} />
+              <Zap size={16} />
               Match Gear
             </>
           )}
@@ -119,7 +120,7 @@ export default function AiDiscovery({ items, onSelectItem, onSelectBundle }) {
 
       {/* Preset Prompts */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-        <span style={{ fontSize: '0.78rem', fontWeight: 800, color: '#1E1E1E', textTransform: 'uppercase' }}>
+        <span style={{ fontSize: '0.8rem', fontWeight: 900, color: '#000000', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
           Presets:
         </span>
         {PRESET_AI_PROMPTS.map((preset) => (
@@ -128,15 +129,16 @@ export default function AiDiscovery({ items, onSelectItem, onSelectBundle }) {
             onClick={() => handleSelectPreset(preset)}
             style={{
               padding: '6px 14px',
-              borderRadius: 'var(--radius-full)',
-              background: '#fff',
-              border: '2px solid #1E1E1E',
-              fontSize: '0.78rem',
-              fontWeight: 700,
-              color: '#1E1E1E',
+              borderRadius: '8px',
+              background: '#FFFFFF',
+              border: '2.5px solid #000000',
+              fontSize: '0.8rem',
+              fontWeight: 800,
+              color: '#000000',
               cursor: 'pointer',
-              boxShadow: '2px 2px 0px #1E1E1E',
-              transition: 'all 0.15s ease'
+              boxShadow: '2.5px 2.5px 0px #000000',
+              transition: 'all 0.12s ease',
+              fontFamily: 'var(--font-heading)'
             }}
           >
             {preset.label}
@@ -147,24 +149,24 @@ export default function AiDiscovery({ items, onSelectItem, onSelectBundle }) {
       {/* AI Result Panel */}
       {aiResult && (
         <div style={{
-          background: '#fff',
-          border: '2.5px solid #1E1E1E',
-          borderRadius: '20px',
+          background: '#FFFFFF',
+          border: '3px solid #000000',
+          borderRadius: '16px',
           padding: '24px',
-          boxShadow: '4px 4px 0px #1E1E1E',
-          marginTop: '20px',
-          animation: 'bounceIn 0.3s ease-out'
+          boxShadow: '5px 5px 0px #000000',
+          marginTop: '24px',
+          animation: 'popIn 0.25s ease-out'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-            <div style={{ fontWeight: 800, color: '#1E1E1E', fontSize: '1.05rem', fontFamily: 'var(--font-heading)' }}>
-              Match Found: <span style={{ color: 'var(--pop-pink)' }}>{aiResult.bundleName || "Smart Recommendation"}</span>
+            <div style={{ fontWeight: 900, color: '#000000', fontSize: '1.15rem', fontFamily: 'var(--font-heading)' }}>
+              Match Found: <span style={{ background: 'var(--pop-yellow)', padding: '2px 8px', border: '2px solid #000000', borderRadius: '4px' }}>{aiResult.bundleName || "Smart Recommendation"}</span>
             </div>
-            <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#06D6A0' }}>
+            <div style={{ fontSize: '0.84rem', fontWeight: 900, color: '#000000', background: 'var(--pop-mint)', padding: '3px 8px', border: '2px solid #000000', borderRadius: '6px' }}>
               {aiResult.confidence || 95}% Confidence
             </div>
           </div>
 
-          <p style={{ fontSize: '0.88rem', color: '#555', marginBottom: '18px', fontWeight: 500 }}>
+          <p style={{ fontSize: '0.9rem', color: '#333333', marginBottom: '18px', fontWeight: 600 }}>
             {aiResult.explanation}
           </p>
 
@@ -174,23 +176,23 @@ export default function AiDiscovery({ items, onSelectItem, onSelectBundle }) {
                 key={item.id}
                 onClick={() => onSelectItem(item)}
                 style={{
-                  background: '#FAF7F2',
-                  border: '2px solid #1E1E1E',
-                  borderRadius: '14px',
+                  background: 'var(--bg-primary)',
+                  border: '2.5px solid #000000',
+                  borderRadius: '10px',
                   padding: '12px',
                   cursor: 'pointer',
-                  boxShadow: '2px 2px 0px #1E1E1E',
+                  boxShadow: '3px 3px 0px #000000',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '12px'
                 }}
               >
-                <img src={item.image} alt={item.title} style={{ width: '44px', height: '44px', borderRadius: '10px', objectFit: 'cover', border: '1.5px solid #1E1E1E' }} />
+                <img src={item.image} alt={item.title} style={{ width: '46px', height: '46px', borderRadius: '6px', objectFit: 'cover', border: '1.5px solid #000000' }} />
                 <div style={{ flex: 1, overflow: 'hidden' }}>
-                  <div style={{ fontSize: '0.85rem', fontWeight: 800, color: '#1E1E1E', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden' }}>
+                  <div style={{ fontSize: '0.88rem', fontWeight: 900, color: '#000000', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', fontFamily: 'var(--font-heading)' }}>
                     {item.title}
                   </div>
-                  <div style={{ fontSize: '0.78rem', color: 'var(--pop-blue)', fontWeight: 800 }}>
+                  <div style={{ fontSize: '0.8rem', color: '#000000', fontWeight: 900 }}>
                     ₹{item.dailyRate}/day
                   </div>
                 </div>
@@ -200,20 +202,21 @@ export default function AiDiscovery({ items, onSelectItem, onSelectBundle }) {
 
           {aiResult.discount > 0 && (
             <div style={{
-              background: '#B5EAD7',
-              border: '2px solid #1E1E1E',
-              borderRadius: '16px',
+              background: 'var(--pop-yellow)',
+              border: '2.5px solid #000000',
+              borderRadius: '12px',
               padding: '16px 20px',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'space-between'
+              justifyContent: 'space-between',
+              boxShadow: '3px 3px 0px #000000'
             }}>
               <div>
-                <div style={{ fontSize: '0.92rem', fontWeight: 800, color: '#1E1E1E' }}>
+                <div style={{ fontSize: '0.96rem', fontWeight: 900, color: '#000000', fontFamily: 'var(--font-heading)' }}>
                   Recommended Bundle Package ({aiResult.discount}% Discount)
                 </div>
-                <div style={{ fontSize: '0.8rem', color: '#333', fontWeight: 600 }}>
-                  Combined bundle offer for all matched gear
+                <div style={{ fontSize: '0.82rem', color: '#222222', fontWeight: 700 }}>
+                  Combined bundle offer for all matched resources
                 </div>
               </div>
               <button 
