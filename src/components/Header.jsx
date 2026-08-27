@@ -45,10 +45,10 @@ export default function Header({ activeTab, setActiveTab, onOpenAddModal, onOpen
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        height: '58px',
-        gap: '10px',
-        maxWidth: '100%',
-        padding: '0 16px'
+        height: '68px',
+        gap: '16px',
+        maxWidth: '1280px',
+        padding: '0 24px'
       }}>
         
         {/* Playful Brand Logo */}
@@ -57,7 +57,7 @@ export default function Header({ activeTab, setActiveTab, onOpenAddModal, onOpen
           style={{ 
             display: 'flex', 
             alignItems: 'center', 
-            gap: '8px', 
+            gap: '10px', 
             cursor: 'pointer',
             transform: 'rotate(-1deg)',
             transition: 'transform 0.15s ease',
@@ -65,51 +65,54 @@ export default function Header({ activeTab, setActiveTab, onOpenAddModal, onOpen
           }}
         >
           <div style={{
-            width: '34px',
-            height: '34px',
-            borderRadius: '8px',
+            width: '38px',
+            height: '38px',
+            borderRadius: '9px',
             background: 'var(--pop-yellow)',
             border: '2.5px solid #000000',
-            boxShadow: '2px 2px 0px #000000',
+            boxShadow: '2.5px 2.5px 0px #000000',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center'
           }}>
-            <Repeat size={18} color="#000000" />
+            <Repeat size={20} color="#000000" />
           </div>
           <div>
             <span style={{ 
               fontFamily: 'var(--font-heading)', 
               fontWeight: 900, 
-              fontSize: '1.15rem', 
+              fontSize: '1.25rem', 
               color: '#000000',
-              letterSpacing: '-0.03em'
+              letterSpacing: '-0.03em',
+              display: 'block',
+              lineHeight: 1.1
             }}>
               Campus<span style={{ color: 'var(--pop-periwinkle)', textShadow: '1px 1px 0px #000000' }}>Circular</span>
             </span>
-            <div style={{ fontSize: '0.6rem', color: '#000000', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+            <div style={{ fontSize: '0.64rem', color: '#333333', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.04em', marginTop: '2px' }}>
               Trusted Peer Sharing
             </div>
           </div>
         </div>
 
         {/* Neo-Brutalist Navigation Tabs */}
-        <nav style={{ display: 'flex', alignItems: 'center', gap: '5px', flexWrap: 'nowrap' }}>
+        <nav style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'nowrap' }}>
           <button
             onClick={() => setActiveTab('browse')}
             className="btn btn-sm"
             style={{
               background: activeTab === 'browse' ? 'var(--pop-yellow)' : '#FFFFFF',
               color: '#000000',
-              boxShadow: activeTab === 'browse' ? '2px 2px 0px #000000' : '1.5px 1.5px 0px #000000',
+              boxShadow: activeTab === 'browse' ? '2.5px 2.5px 0px #000000' : '1.5px 1.5px 0px #000000',
               border: '2px solid #000000',
               transform: activeTab === 'browse' ? 'translate(-1px, -1px)' : 'none',
-              fontSize: '0.72rem',
-              padding: '4px 10px',
-              gap: '4px'
+              fontSize: '0.8rem',
+              padding: '6px 13px',
+              gap: '6px',
+              fontWeight: 800
             }}
           >
-            <Sparkles size={13} />
+            <Sparkles size={14} />
             Browse & AI
           </button>
 
@@ -119,15 +122,16 @@ export default function Header({ activeTab, setActiveTab, onOpenAddModal, onOpen
             style={{
               background: activeTab === 'exchanges' ? 'var(--pop-periwinkle)' : '#FFFFFF',
               color: '#000000',
-              boxShadow: activeTab === 'exchanges' ? '2px 2px 0px #000000' : '1.5px 1.5px 0px #000000',
+              boxShadow: activeTab === 'exchanges' ? '2.5px 2.5px 0px #000000' : '1.5px 1.5px 0px #000000',
               border: '2px solid #000000',
               transform: activeTab === 'exchanges' ? 'translate(-1px, -1px)' : 'none',
-              fontSize: '0.72rem',
-              padding: '4px 10px',
-              gap: '4px'
+              fontSize: '0.8rem',
+              padding: '6px 13px',
+              gap: '6px',
+              fontWeight: 800
             }}
           >
-            <Layers size={13} />
+            <Layers size={14} />
             Exchanges
             {activeExchangesCount > 0 && (
               <span style={{
@@ -150,15 +154,16 @@ export default function Header({ activeTab, setActiveTab, onOpenAddModal, onOpen
             style={{
               background: activeTab === 'community' ? 'var(--pop-mint)' : '#FFFFFF',
               color: '#000000',
-              boxShadow: activeTab === 'community' ? '2px 2px 0px #000000' : '1.5px 1.5px 0px #000000',
+              boxShadow: activeTab === 'community' ? '2.5px 2.5px 0px #000000' : '1.5px 1.5px 0px #000000',
               border: '2px solid #000000',
               transform: activeTab === 'community' ? 'translate(-1px, -1px)' : 'none',
-              fontSize: '0.72rem',
-              padding: '4px 10px',
-              gap: '4px'
+              fontSize: '0.8rem',
+              padding: '6px 13px',
+              gap: '6px',
+              fontWeight: 800
             }}
           >
-            <Radio size={13} />
+            <Radio size={14} />
             Requests
             {activeRequestsCount > 0 && (
               <span style={{
@@ -181,15 +186,16 @@ export default function Header({ activeTab, setActiveTab, onOpenAddModal, onOpen
             style={{
               background: activeTab === 'impact' ? 'var(--pop-cyan)' : '#FFFFFF',
               color: '#000000',
-              boxShadow: activeTab === 'impact' ? '2px 2px 0px #000000' : '1.5px 1.5px 0px #000000',
+              boxShadow: activeTab === 'impact' ? '2.5px 2.5px 0px #000000' : '1.5px 1.5px 0px #000000',
               border: '2px solid #000000',
               transform: activeTab === 'impact' ? 'translate(-1px, -1px)' : 'none',
-              fontSize: '0.72rem',
-              padding: '4px 10px',
-              gap: '4px'
+              fontSize: '0.8rem',
+              padding: '6px 13px',
+              gap: '6px',
+              fontWeight: 800
             }}
           >
-            <BarChart3 size={13} />
+            <BarChart3 size={14} />
             Impact
           </button>
 
@@ -199,15 +205,16 @@ export default function Header({ activeTab, setActiveTab, onOpenAddModal, onOpen
             style={{
               background: activeTab === 'admin' ? 'var(--pop-pink)' : '#FFFFFF',
               color: '#000000',
-              boxShadow: activeTab === 'admin' ? '2px 2px 0px #000000' : '1.5px 1.5px 0px #000000',
+              boxShadow: activeTab === 'admin' ? '2.5px 2.5px 0px #000000' : '1.5px 1.5px 0px #000000',
               border: '2px solid #000000',
               transform: activeTab === 'admin' ? 'translate(-1px, -1px)' : 'none',
-              fontSize: '0.72rem',
-              padding: '4px 10px',
-              gap: '4px'
+              fontSize: '0.8rem',
+              padding: '6px 13px',
+              gap: '6px',
+              fontWeight: 800
             }}
           >
-            <ShieldCheck size={13} />
+            <ShieldCheck size={14} />
             Admin
             {pendingDisputesCount > 0 && (
               <span style={{
@@ -226,14 +233,14 @@ export default function Header({ activeTab, setActiveTab, onOpenAddModal, onOpen
         </nav>
 
         {/* Right Actions */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
           
           <button 
             onClick={onOpenAddModal}
             className="btn btn-emerald btn-sm"
-            style={{ fontSize: '0.72rem', padding: '4px 10px', gap: '4px' }}
+            style={{ fontSize: '0.78rem', padding: '6px 12px', gap: '5px', fontWeight: 800 }}
           >
-            <PlusCircle size={13} />
+            <PlusCircle size={14} />
             + List Item
           </button>
 
@@ -244,19 +251,19 @@ export default function Header({ activeTab, setActiveTab, onOpenAddModal, onOpen
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '4px',
+                gap: '5px',
                 background: 'var(--pop-yellow)',
                 border: '2px solid #000',
                 borderRadius: '8px',
-                padding: '3px 8px',
+                padding: '5px 10px',
                 cursor: 'pointer',
-                boxShadow: '1.5px 1.5px 0px #000',
-                fontSize: '0.75rem',
+                boxShadow: '2px 2px 0px #000',
+                fontSize: '0.78rem',
                 fontWeight: 800,
                 color: '#000'
               }}
             >
-              <Coins size={14} color="#000" />
+              <Coins size={15} color="#000" />
               {currentUser.tokenBalance || 0}
             </button>
 
@@ -365,24 +372,24 @@ export default function Header({ activeTab, setActiveTab, onOpenAddModal, onOpen
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '5px',
+                gap: '6px',
                 background: '#FFFFFF',
                 border: '2px solid #000000',
                 borderRadius: '8px',
-                padding: '3px 8px 3px 4px',
+                padding: '4px 10px 4px 6px',
                 cursor: 'pointer',
-                boxShadow: '1.5px 1.5px 0px #000000'
+                boxShadow: '2px 2px 0px #000000'
               }}
             >
               <img 
                 src={currentUser.avatar} 
                 alt={currentUser.name}
-                style={{ width: '24px', height: '24px', borderRadius: '4px', border: '1.5px solid #000000' }}
+                style={{ width: '26px', height: '26px', borderRadius: '4px', border: '1.5px solid #000000' }}
               />
-              <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#000000', fontFamily: 'var(--font-body)' }}>
+              <span style={{ fontSize: '0.78rem', fontWeight: 800, color: '#000000', fontFamily: 'var(--font-body)' }}>
                 {currentUser.name.split(' ')[0]}
               </span>
-              <ChevronDown size={12} color="#000000" />
+              <ChevronDown size={13} color="#000000" />
             </button>
 
             {showUserDropdown && (
@@ -435,7 +442,7 @@ export default function Header({ activeTab, setActiveTab, onOpenAddModal, onOpen
             onClick={onLogout}
             className="btn btn-sm btn-secondary"
             title="Sign out"
-            style={{ padding: '4px 8px' }}
+            style={{ padding: '6px 10px' }}
           >
             <LogOut size={15} />
           </button>
